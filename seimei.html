@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>姓名判断 - Celestia</title>
+  <meta name="description" content="姓名判断であなたの名前に宿る運命を読み解きます。五格の画数から性格・運勢を鑑定。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="index.html" class="nav__link"><span class="nav__icon">&#9671;</span> TOP</a>
+    <a href="seimei.html" class="nav__link nav__link--active"><span class="nav__icon">筆</span> 姓名判断</a>
+  </nav>
+
+  <!-- Input Form -->
+  <div id="phase-input">
+    <section class="section-dark">
+      <div class="container">
+        <div class="page-hero">
+          <div class="deco-divider">&#10023; &#10023; &#10023;</div>
+          <h1 class="page-hero__title">姓名判断</h1>
+          <p class="page-hero__desc">
+            名前に宿る運命を、五格の画数から読み解きます。<br>
+            姓と名を入力して、あなたの姓名に秘められた<br>
+            性格と運勢を鑑定しましょう。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-light">
+      <div class="container">
+        <div class="form-section">
+          <div class="form-group">
+            <label class="form-group__label">姓（苗字）</label>
+            <input id="input-sei" type="text" class="form-group__input" placeholder="例：山田" maxlength="10">
+          </div>
+
+          <div class="form-group">
+            <label class="form-group__label">名（名前）</label>
+            <input id="input-mei" type="text" class="form-group__input" placeholder="例：太郎" maxlength="10">
+          </div>
+
+          <div class="text-center mt-24">
+            <button class="btn btn--dark" onclick="startSeimei()">
+              鑑定する
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Loading -->
+  <div id="phase-loading" class="section-dark hidden">
+    <div class="container">
+      <div class="loading">
+        <div class="loading__spinner"></div>
+        <p class="loading__text">画数を計算しています...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div id="phase-result" class="section-dark hidden">
+    <div class="container">
+      <div class="astro-result">
+        <div class="astro-result__header">
+          <div class="astro-result__symbol">筆</div>
+          <h2 id="result-name-display" class="astro-result__title"></h2>
+          <p id="result-subtitle" class="astro-result__subtitle"></p>
+        </div>
+
+        <!-- Five Kaku Grid -->
+        <div id="seimei-grid" class="seimei-result__grid"></div>
+
+        <!-- Detailed Results -->
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 総合的な性格</div>
+          <p id="result-personality" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 人生の運勢</div>
+          <p id="result-fortune" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 対人関係</div>
+          <p id="result-relationship" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 仕事・才能</div>
+          <p id="result-career" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; アドバイス</div>
+          <p id="result-advice" class="result__box-text"></p>
+        </div>
+
+        <div class="share-section">
+          <p class="share-section__label">S H A R E</p>
+          <div class="share">
+            <button class="share__btn" onclick="shareTwitter()" title="Xでシェア">&#120143;</button>
+            <button class="share__btn" onclick="shareLine()" title="LINEでシェア">L</button>
+          </div>
+        </div>
+
+        <div class="result__actions">
+          <button class="btn btn--dark" onclick="resetSeimei()">もう一度鑑定する</button>
+          <a href="numerology.html" class="btn btn--outline-light">数秘術も試す</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__logo">C E L E S T I A</div>
+    <p class="footer__text">&copy; 2026 Celestia. All rights reserved.</p>
+    <div class="footer__links">
+      <a href="#">利用規約</a>
+      <a href="#">プライバシーポリシー</a>
+    </div>
+  </footer>
+
+  <script src="js/seimei.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>horoscope</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <header class="header">
+      <h1 class="logo">horoscope</h1>
+      <p class="date" id="currentDate"></p>
+    </header>
+
+    <!-- Zodiac Selection -->
+    <main id="selectionView" class="view">
+      <div class="grid">
+        <button class="sign" data-index="0">
+          <span class="sign-ja">牡羊座</span>
+          <span class="sign-en">aries</span>
+        </button>
+        <button class="sign" data-index="1">
+          <span class="sign-ja">牡牛座</span>
+          <span class="sign-en">taurus</span>
+        </button>
+        <button class="sign" data-index="2">
+          <span class="sign-ja">双子座</span>
+          <span class="sign-en">gemini</span>
+        </button>
+        <button class="sign" data-index="3">
+          <span class="sign-ja">蟹座</span>
+          <span class="sign-en">cancer</span>
+        </button>
+        <button class="sign" data-index="4">
+          <span class="sign-ja">獅子座</span>
+          <span class="sign-en">leo</span>
+        </button>
+        <button class="sign" data-index="5">
+          <span class="sign-ja">乙女座</span>
+          <span class="sign-en">virgo</span>
+        </button>
+        <button class="sign" data-index="6">
+          <span class="sign-ja">天秤座</span>
+          <span class="sign-en">libra</span>
+        </button>
+        <button class="sign" data-index="7">
+          <span class="sign-ja">蠍座</span>
+          <span class="sign-en">scorpio</span>
+        </button>
+        <button class="sign" data-index="8">
+          <span class="sign-ja">射手座</span>
+          <span class="sign-en">sagittarius</span>
+        </button>
+        <button class="sign" data-index="9">
+          <span class="sign-ja">山羊座</span>
+          <span class="sign-en">capricorn</span>
+        </button>
+        <button class="sign" data-index="10">
+          <span class="sign-ja">水瓶座</span>
+          <span class="sign-en">aquarius</span>
+        </button>
+        <button class="sign" data-index="11">
+          <span class="sign-ja">魚座</span>
+          <span class="sign-en">pisces</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- Result Display -->
+    <section id="resultView" class="view hidden">
+      <div class="result">
+        <div class="result-header">
+          <h2 class="result-name" id="resultName"></h2>
+          <p class="result-en" id="resultEn"></p>
+          <p class="result-period" id="resultPeriod"></p>
+        </div>
+
+        <hr class="divider">
+
+        <div class="energy">
+          <p class="energy-label">today's energy</p>
+          <p class="energy-score">
+            <span class="energy-number" id="energyNumber"></span><span class="energy-total">/100</span>
+          </p>
+        </div>
+
+        <hr class="divider">
+
+        <div class="categories">
+          <div class="category-row">
+            <span class="category-label">love</span>
+            <span class="category-dots"></span>
+            <span class="category-stars" id="starsLove"></span>
+          </div>
+          <div class="category-row">
+            <span class="category-label">work</span>
+            <span class="category-dots"></span>
+            <span class="category-stars" id="starsWork"></span>
+          </div>
+          <div class="category-row">
+            <span class="category-label">money</span>
+            <span class="category-dots"></span>
+            <span class="category-stars" id="starsMoney"></span>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="keywords">
+          <p class="keywords-label">keywords</p>
+          <p class="keywords-value" id="keywords"></p>
+        </div>
+
+        <hr class="divider">
+
+        <div class="message">
+          <p id="fortuneMessage"></p>
+        </div>
+
+        <a href="#" class="back-link" id="backLink">back</a>
+      </div>
+    </section>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,646 @@
+/* ============================================
+   BOLD EDITORIAL FORTUNE - STYLE
+   Inspired by VOGUE / ELLE / High Fashion
+   ============================================ */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #FFFFFF;
+  --text: #000000;
+  --accent: #FF0000;
+  --secondary: #F5F5F5;
+  --border: #000000;
+  --font-jp: 'Noto Sans JP', sans-serif;
+  --font-en: 'Playfair Display', serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-jp);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---- VIEW MANAGEMENT ---- */
+
+.view {
+  display: none;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.view.active {
+  display: block;
+}
+
+/* ---- HEADER ---- */
+
+.site-header {
+  padding: 60px 0 0;
+  text-align: center;
+}
+
+.header-label {
+  font-family: var(--font-en);
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.header-title {
+  line-height: 0.9;
+  margin-bottom: 20px;
+}
+
+.title-en-weekly {
+  display: block;
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 4.5rem;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.title-en-horoscope {
+  display: block;
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-style: italic;
+  font-size: 2.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.header-jp {
+  font-family: var(--font-jp);
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  margin-bottom: 8px;
+}
+
+.header-date {
+  font-family: var(--font-en);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: #999;
+  margin-bottom: 30px;
+}
+
+.header-line {
+  width: 100%;
+  height: 4px;
+  background: var(--accent);
+}
+
+/* ---- RANKING LIST ---- */
+
+.ranking-list {
+  padding: 0 0 40px;
+}
+
+/* ---- #1 RANK (HERO) ---- */
+
+.rank-hero {
+  padding: 40px 0 36px;
+  border-bottom: 2px solid var(--border);
+  cursor: pointer;
+  position: relative;
+  transition: opacity 0.2s;
+}
+
+.rank-hero:hover {
+  opacity: 0.8;
+}
+
+.rank-hero .hero-accent-bar {
+  position: absolute;
+  left: 0;
+  top: 40px;
+  bottom: 36px;
+  width: 5px;
+  background: var(--accent);
+}
+
+.rank-hero .hero-inner {
+  padding-left: 24px;
+}
+
+.rank-hero .hero-rank-label {
+  font-family: var(--font-en);
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.rank-hero .hero-rank-number {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 7rem;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  margin-bottom: 12px;
+}
+
+.rank-hero .hero-sign-name {
+  font-family: var(--font-jp);
+  font-weight: 900;
+  font-size: 2rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.rank-hero .hero-sign-en {
+  font-family: var(--font-en);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.rank-hero .hero-score {
+  display: inline-block;
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+
+.rank-hero .hero-score .score-unit {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  margin-left: 2px;
+}
+
+.rank-hero .hero-keyword-label {
+  font-family: var(--font-en);
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.rank-hero .hero-keyword {
+  font-family: var(--font-jp);
+  font-weight: 900;
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+}
+
+.rank-hero .hero-message {
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: #333;
+}
+
+/* ---- #2-3 RANK (MEDIUM) ---- */
+
+.rank-medium {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.rank-medium:hover {
+  opacity: 0.7;
+}
+
+.rank-medium .medium-rank {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 3.2rem;
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  flex-shrink: 0;
+  width: 56px;
+}
+
+.rank-medium .medium-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.rank-medium .medium-sign-name {
+  font-weight: 900;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 1px;
+}
+
+.rank-medium .medium-sign-en {
+  font-family: var(--font-en);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.rank-medium .medium-score {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.rank-medium .medium-score .score-unit {
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+.rank-medium .medium-message {
+  font-size: 0.82rem;
+  line-height: 1.75;
+  color: #444;
+}
+
+/* ---- #4-12 RANK (COMPACT) ---- */
+
+.rank-compact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid #E0E0E0;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.rank-compact:hover {
+  opacity: 0.65;
+}
+
+.rank-compact .compact-rank {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+  width: 32px;
+  text-align: right;
+  flex-shrink: 0;
+  color: #999;
+}
+
+.rank-compact .compact-sign {
+  font-weight: 900;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  width: 70px;
+}
+
+.rank-compact .compact-fortune {
+  flex: 1;
+  font-size: 0.78rem;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.rank-compact .compact-score {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+}
+
+.rank-compact .compact-score .score-unit {
+  font-size: 0.55rem;
+  font-weight: 400;
+}
+
+/* ---- DETAIL VIEW ---- */
+
+.detail-content {
+  padding: 40px 0 60px;
+}
+
+.detail-back {
+  display: inline-block;
+  font-family: var(--font-en);
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text);
+  border-bottom: 1px solid var(--text);
+  padding-bottom: 2px;
+  margin-bottom: 40px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.detail-back:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.detail-rank-label {
+  font-family: var(--font-en);
+  font-size: 0.6rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.detail-rank-number {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 6rem;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  margin-bottom: 16px;
+}
+
+.detail-sign-name {
+  font-weight: 900;
+  font-size: 2.4rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.detail-sign-en {
+  font-family: var(--font-en);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.detail-sign-dates {
+  font-size: 0.75rem;
+  color: #aaa;
+  letter-spacing: 0.1em;
+  margin-bottom: 32px;
+}
+
+.detail-line {
+  width: 100%;
+  height: 3px;
+  background: var(--accent);
+  margin-bottom: 32px;
+}
+
+/* Score hero */
+.detail-score-hero {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.detail-score-hero .score-label {
+  font-family: var(--font-en);
+  font-size: 0.6rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.detail-score-hero .score-value {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 5rem;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.detail-score-hero .score-value .score-unit-large {
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin-left: 4px;
+}
+
+/* Category scores */
+.detail-categories {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  margin-bottom: 36px;
+}
+
+.detail-cat-item {
+  padding: 20px 16px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.detail-cat-item .cat-label {
+  font-family: var(--font-en);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.detail-cat-item .cat-score {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.detail-cat-item .cat-score .cat-unit {
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+/* Keyword */
+.detail-keyword-section {
+  margin-bottom: 32px;
+}
+
+.detail-keyword-section .kw-label {
+  font-family: var(--font-en);
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.detail-keyword-section .kw-value {
+  font-weight: 900;
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+}
+
+/* Message */
+.detail-message-section {
+  margin-bottom: 36px;
+}
+
+.detail-message-section .msg-label {
+  font-family: var(--font-en);
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 10px;
+}
+
+.detail-message-section .msg-text {
+  font-size: 0.92rem;
+  line-height: 2;
+  color: #333;
+}
+
+/* Lucky items */
+.detail-lucky {
+  display: flex;
+  gap: 0;
+  border-top: 2px solid var(--border);
+  margin-bottom: 40px;
+}
+
+.detail-lucky-item {
+  flex: 1;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.detail-lucky-item:first-child {
+  border-right: 1px solid #E0E0E0;
+}
+
+.detail-lucky-item .lucky-label {
+  font-family: var(--font-en);
+  font-size: 0.55rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.detail-lucky-item .lucky-value {
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+
+/* Detail back bottom */
+.detail-back-bottom {
+  display: block;
+  text-align: center;
+  font-family: var(--font-en);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text);
+  padding: 18px 0;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.detail-back-bottom:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* ---- FOOTER ---- */
+
+.site-footer {
+  padding: 0 0 60px;
+  text-align: center;
+}
+
+.footer-line {
+  width: 100%;
+  height: 2px;
+  background: var(--border);
+  margin-bottom: 24px;
+}
+
+.footer-text {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.footer-sub {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: #aaa;
+}
+
+/* ---- TRANSITIONS ---- */
+
+.view {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.view.active {
+  opacity: 1;
+}
+
+/* ---- RESPONSIVE ---- */
+
+@media (max-width: 520px) {
+  .title-en-weekly {
+    font-size: 3.2rem;
+  }
+
+  .title-en-horoscope {
+    font-size: 2rem;
+  }
+
+  .rank-hero .hero-rank-number {
+    font-size: 5rem;
+  }
+
+  .rank-medium .medium-rank {
+    font-size: 2.4rem;
+    width: 44px;
+  }
+
+  .detail-rank-number {
+    font-size: 4.5rem;
+  }
+
+  .detail-score-hero .score-value {
+    font-size: 3.8rem;
+  }
+
+  .detail-sign-name {
+    font-size: 1.8rem;
+  }
+}

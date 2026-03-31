@@ -903,6 +903,427 @@ a:hover {
 .hidden { display: none !important; }
 
 /* ===== Responsive ===== */
+/* ===== Portal Grid (Top page) ===== */
+.portal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.portal-grid .menu-card {
+  padding: 24px 16px;
+}
+
+.portal-grid .menu-card__icon {
+  font-size: 1.5rem;
+}
+
+.portal-grid .menu-card__title {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.portal-grid .menu-card__desc {
+  font-size: 0.7rem;
+}
+
+/* Full-width card for the first item */
+.menu-card--featured {
+  grid-column: 1 / -1;
+}
+
+/* ===== Zodiac Grid (Horoscope) ===== */
+.zodiac-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.zodiac-card {
+  background: #fff;
+  border: 1px solid var(--border-light);
+  padding: 16px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.zodiac-card:hover {
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.zodiac-card__symbol {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.zodiac-card__name {
+  font-size: 0.85rem;
+  color: var(--text-dark);
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
+}
+
+.zodiac-card__date {
+  font-size: 0.6rem;
+  color: var(--text-muted-dark);
+}
+
+.zodiac-card--active {
+  background: var(--navy);
+  border-color: var(--gold);
+}
+
+.zodiac-card--active .zodiac-card__symbol {
+  color: var(--gold-light);
+}
+
+.zodiac-card--active .zodiac-card__name {
+  color: #fff;
+}
+
+.zodiac-card--active .zodiac-card__date {
+  color: var(--text-muted-light);
+}
+
+/* ===== Star Rating ===== */
+.star-rating {
+  display: flex;
+  gap: 2px;
+  justify-content: flex-end;
+}
+
+.star-rating__star {
+  color: var(--gold);
+  font-size: 0.9rem;
+}
+
+.star-rating__star--empty {
+  color: var(--border-dark);
+}
+
+/* ===== Fortune Ranking ===== */
+.ranking-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-bottom: 8px;
+}
+
+.fortune-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-dark);
+  font-size: 0.85rem;
+}
+
+.fortune-row:last-child {
+  border-bottom: none;
+}
+
+.fortune-row__label {
+  color: var(--text-muted-light);
+  letter-spacing: 0.1em;
+}
+
+/* ===== Omikuji Specific ===== */
+.omikuji-ornament {
+  font-size: 2.8rem;
+  color: var(--gold-light);
+  letter-spacing: 0.4em;
+  text-align: center;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.omikuji-btn {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  background: transparent;
+  color: var(--gold-light);
+  font-family: "游明朝", "Yu Mincho", serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 0.2em;
+}
+
+.omikuji-btn:hover {
+  animation: omikujiShake 0.4s ease-in-out;
+  background: rgba(201, 169, 110, 0.1);
+}
+
+@keyframes omikujiShake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+  75% { transform: rotate(-4deg); }
+}
+
+.omikuji-shaking {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.omikuji-shaking__box {
+  width: 80px;
+  height: 80px;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--gold-light);
+  animation: omikujiShakeLoop 0.3s ease-in-out infinite;
+}
+
+@keyframes omikujiShakeLoop {
+  0%, 100% { transform: rotate(0deg) translateX(0); }
+  25% { transform: rotate(-10deg) translateX(-5px); }
+  75% { transform: rotate(10deg) translateX(5px); }
+}
+
+@keyframes omikujiReveal {
+  0% { transform: scale(0.3) rotate(180deg); opacity: 0; }
+  50% { transform: scale(1.2) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.omikuji-result__level {
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin-bottom: 16px;
+  animation: omikujiReveal 0.8s ease-out;
+}
+
+.omikuji-result__level--daikichi { color: #f59e0b; }
+.omikuji-result__level--kichi { color: #34d399; }
+.omikuji-result__level--chukichi { color: #60a5fa; }
+.omikuji-result__level--shokichi { color: #a78bfa; }
+.omikuji-result__level--suekichi { color: #94a3b8; }
+.omikuji-result__level--kyo { color: #f87171; }
+
+.omikuji-category {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-dark);
+  font-size: 0.8rem;
+}
+
+.omikuji-category:last-child {
+  border-bottom: none;
+}
+
+.omikuji-category__label {
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  min-width: 48px;
+}
+
+.omikuji-category__text {
+  color: var(--text-light);
+  text-align: right;
+}
+
+.omikuji-poem {
+  text-align: center;
+  padding: 24px;
+  margin: 24px 0;
+  border: 1px solid var(--border-dark);
+  font-size: 0.85rem;
+  color: var(--text-light);
+  line-height: 2.4;
+  font-style: italic;
+  letter-spacing: 0.1em;
+  white-space: pre-line;
+}
+
+/* ===== Compatibility Specific ===== */
+.compat-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 4px solid var(--border-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  position: relative;
+  background: conic-gradient(var(--gold) var(--compat-pct), transparent var(--compat-pct));
+}
+
+.compat-circle__inner {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.compat-circle__number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1;
+}
+
+.compat-circle__unit {
+  font-size: 0.8rem;
+  color: var(--text-muted-light);
+}
+
+.compat-level {
+  text-align: center;
+  font-size: 1rem;
+  color: #fff;
+  letter-spacing: 0.15em;
+  margin-bottom: 24px;
+}
+
+.compat-names {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted-light);
+  margin-bottom: 8px;
+  letter-spacing: 0.1em;
+}
+
+.form-divider {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--gold);
+  padding: 16px 0;
+  letter-spacing: 0.3em;
+}
+
+.person-label {
+  font-size: 0.75rem;
+  color: var(--gold-dark);
+  letter-spacing: 0.2em;
+  text-align: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* ===== Seimei specific ===== */
+.seimei-result__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--border-dark);
+  margin-bottom: 24px;
+}
+
+.seimei-kaku {
+  background: var(--navy);
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.seimei-kaku__name {
+  font-size: 0.8rem;
+  color: var(--text-muted-light);
+  letter-spacing: 0.1em;
+}
+
+.seimei-kaku__strokes {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.seimei-kaku__fortune {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 2px 12px;
+  border-radius: 2px;
+}
+
+.seimei-kaku__fortune--daikichi {
+  color: #f59e0b;
+  border: 1px solid #f59e0b;
+}
+
+.seimei-kaku__fortune--kichi {
+  color: #34d399;
+  border: 1px solid #34d399;
+}
+
+.seimei-kaku__fortune--chukichi {
+  color: #60a5fa;
+  border: 1px solid #60a5fa;
+}
+
+.seimei-kaku__fortune--shokichi {
+  color: #a78bfa;
+  border: 1px solid #a78bfa;
+}
+
+.seimei-kaku__fortune--kyo {
+  color: #f87171;
+  border: 1px solid #f87171;
+}
+
+/* ===== Numerology specific ===== */
+.numerology-number {
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.numerology-calc {
+  font-size: 0.7rem;
+  color: var(--text-muted-light);
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.numerology-label {
+  font-size: 0.7rem;
+  color: var(--text-muted-light);
+  letter-spacing: 0.15em;
+  margin-bottom: 4px;
+}
+
+.numerology-title {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 16px;
+  letter-spacing: 0.1em;
+}
+
+/* ===== Responsive ===== */
 @media (min-width: 768px) {
   .container {
     max-width: 680px;
@@ -924,5 +1345,13 @@ a:hover {
   .tarot-card {
     width: 65px;
     height: 97px;
+  }
+
+  .zodiac-grid {
+    max-width: 480px;
+  }
+
+  .portal-grid {
+    max-width: 560px;
   }
 }

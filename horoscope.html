@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星座占い - Celestia</title>
+  <meta name="description" content="12星座の今日の運勢を占います。総合運・恋愛運・仕事運・金運から、ラッキーカラー・ナンバーまで。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="index.html" class="nav__link"><span class="nav__icon">&#9671;</span> TOP</a>
+    <a href="horoscope.html" class="nav__link nav__link--active"><span class="nav__icon">&#9789;</span> 星座占い</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-visual">
+    <div class="hero-visual__inner">
+      <div class="page-hero__icon">&#9789;</div>
+      <h1 class="page-hero__title">12星座占い</h1>
+      <p class="page-hero__desc">今日の運勢を星座から読み解きます</p>
+    </div>
+  </section>
+
+  <!-- 星座選択セクション -->
+  <section class="section-light" id="zodiac-select-section">
+    <div class="container">
+      <h2 class="section-title section-title--dark">あなたの星座を選んでください</h2>
+      <p class="section-lead section-lead--dark" id="today-date"></p>
+
+      <div class="zodiac-grid" id="zodiac-grid">
+        <!-- JS で生成 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 結果セクション -->
+  <section class="section-dark hidden" id="result-section">
+    <div class="container">
+      <div id="fortune-result">
+        <!-- JS で生成 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__logo">C E L E S T I A</div>
+    <p class="footer__text">&copy; 2026 Celestia. All rights reserved.</p>
+    <div class="footer__links">
+      <a href="#">利用規約</a>
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">お問い合わせ</a>
+    </div>
+  </footer>
+
+  <script src="js/horoscope.js"></script>
+</body>
+</html>

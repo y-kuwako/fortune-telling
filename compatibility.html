@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>相性診断 - Celestia</title>
+  <meta name="description" content="二人の名前と生年月日から、恋愛・仕事・コミュニケーションの相性を占います。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="index.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> TOP
+    </a>
+    <a href="compatibility.html" class="nav__link nav__link--active">
+      <span class="nav__icon">&#9825;</span> 相性診断
+    </a>
+  </nav>
+
+  <!-- Phase 1: Hero + Form -->
+  <div id="phase-form">
+    <section class="section-dark">
+      <div class="container">
+        <div class="page-hero">
+          <div class="deco-divider">&#10023; &#10023; &#10023;</div>
+          <h1 class="page-hero__title">相性診断</h1>
+          <p class="page-hero__desc">二人の運命を占う</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-light">
+      <div class="container">
+        <div class="form-section">
+          <!-- Person 1 -->
+          <p class="person-label">あなた</p>
+          <div class="form-group">
+            <label class="form-group__label">名前</label>
+            <input type="text" id="name1" class="form-group__input" placeholder="例：山田 太郎">
+          </div>
+          <div class="form-group">
+            <label class="form-group__label">生年月日</label>
+            <div class="form-group__row">
+              <select id="year1" class="form-group__select"></select>
+              <select id="month1" class="form-group__select"></select>
+              <select id="day1" class="form-group__select"></select>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="form-divider">&times;</div>
+
+          <!-- Person 2 -->
+          <p class="person-label">お相手</p>
+          <div class="form-group">
+            <label class="form-group__label">名前</label>
+            <input type="text" id="name2" class="form-group__input" placeholder="例：佐藤 花子">
+          </div>
+          <div class="form-group">
+            <label class="form-group__label">生年月日</label>
+            <div class="form-group__row">
+              <select id="year2" class="form-group__select"></select>
+              <select id="month2" class="form-group__select"></select>
+              <select id="day2" class="form-group__select"></select>
+            </div>
+          </div>
+
+          <button id="btn-diagnose" class="btn btn--dark btn--block" onclick="startDiagnosis()">
+            相性を占う
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Phase 2: Loading -->
+  <div id="phase-loading" class="section-dark hidden">
+    <div class="container">
+      <div class="loading" style="min-height: 60vh;">
+        <div class="loading__spinner"></div>
+        <p class="loading__text">二人の星を読み解いています...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3: Result -->
+  <div id="phase-result" class="section-dark hidden">
+    <div class="container">
+      <div class="result">
+        <div class="result__card-display">
+          <p id="result-names" class="compat-names"></p>
+          <div id="compat-circle" class="compat-circle">
+            <div class="compat-circle__inner">
+              <span id="result-pct" class="compat-circle__number"></span>
+              <span class="compat-circle__unit">%</span>
+            </div>
+          </div>
+          <p id="result-level" class="compat-level"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 総合相性</div>
+          <p id="result-overall" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 恋愛の相性</div>
+          <p id="result-love" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 仕事の相性</div>
+          <p id="result-work" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; コミュニケーションの相性</div>
+          <p id="result-comm" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; アドバイス</div>
+          <p id="result-advice" class="result__box-text"></p>
+        </div>
+
+        <div class="share-section">
+          <p class="share-section__label">S H A R E</p>
+          <div class="share">
+            <button class="share__btn" onclick="shareTwitter()" title="Xでシェア">&#120143;</button>
+            <button class="share__btn" onclick="shareLine()" title="LINEでシェア">L</button>
+          </div>
+        </div>
+
+        <div class="result__actions">
+          <button class="btn btn--outline-light" onclick="resetDiagnosis()">もう一度占う</button>
+          <a href="index.html" class="btn btn--outline-light" style="border-color: var(--text-muted-light); color: var(--text-muted-light);">TOPに戻る</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__logo">C E L E S T I A</div>
+    <p class="footer__text">&copy; 2026 Celestia. All rights reserved.</p>
+    <div class="footer__links">
+      <a href="#">利用規約</a>
+      <a href="#">プライバシーポリシー</a>
+    </div>
+  </footer>
+
+  <script src="js/compatibility.js"></script>
+</body>
+</html>

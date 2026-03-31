@@ -3,100 +3,568 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Celestia - 星が導く運命の占い</title>
-  <meta name="description" content="タロット占い・四柱推命・インド占星術であなたの運命を読み解く。無料で今すぐ占えます。">
+  <title>Fortune Telling Portfolio - 占いサイトコレクション</title>
+  <meta name="description" content="7つの異なるデザインテイストで作られた占いサイトのポートフォリオ。50以上の占いサイトを調査・分析し、主要デザインパターンを網羅。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #FAFAFA;
+      --text: #111;
+      --muted: #888;
+      --border: #E0E0E0;
+      --accent: #111;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    .header {
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header__label {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .header__title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .header__subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* Stats bar */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat__number {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .stat__label {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Section */
+    .section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+
+    .section__label {
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .section__title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 32px;
+    }
+
+    /* Portfolio Grid */
+    .portfolio {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      display: block;
+      background: #fff;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      transform: translateY(-4px);
+    }
+
+    .card__preview {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card__body {
+      padding: 20px 24px 24px;
+    }
+
+    .card__number {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .card__title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .card__desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* Preview Themes */
+    .preview-mystical {
+      background: linear-gradient(135deg, #1a1a3e, #0e0e2a);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .preview-mystical::after {
+      content: 'C E L E S T I A';
+      font-family: 'Playfair Display', serif;
+      color: rgba(201,169,110,0.7);
+      font-size: 1.2rem;
+      letter-spacing: 0.4em;
+    }
+
+    .preview-pop {
+      background: linear-gradient(135deg, #FFF5F0, #FFE66D);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .preview-pop::after {
+      content: '\2728 きょうの星占い';
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      color: #FF6B6B;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .preview-luxury {
+      background: linear-gradient(135deg, #0a0a0a, #1a0a0a);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .preview-luxury::before {
+      content: '';
+      position: absolute;
+      inset: 20px;
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+    .preview-luxury::after {
+      content: '\904B \547D \661F \5360 \3044';
+      font-family: 'Noto Serif JP', serif;
+      color: #D4AF37;
+      font-size: 1.5rem;
+      letter-spacing: 0.5em;
+    }
+
+    .preview-minimal {
+      background: #FFFFFF;
+      border-bottom: 1px solid #E0E0E0;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 4px;
+    }
+    .preview-minimal::before {
+      content: 'horoscope';
+      font-family: 'Inter', sans-serif;
+      color: #111;
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+    }
+    .preview-minimal::after {
+      content: '2026.04.01';
+      font-family: 'Inter', monospace;
+      color: #999;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    .preview-japanese {
+      background: linear-gradient(180deg, #F5F0E8, #EBE3D4);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .preview-japanese::before {
+      content: '\2501\2501\2501 \25C9 \2501\2501\2501';
+      position: absolute;
+      top: 20px;
+      color: #C4B99A;
+      font-size: 0.8rem;
+    }
+    .preview-japanese::after {
+      content: '\5FA1\795E\7C64';
+      font-family: 'Noto Serif JP', serif;
+      color: #B33B24;
+      font-size: 2rem;
+      letter-spacing: 0.3em;
+    }
+
+    .preview-pastel {
+      background: linear-gradient(135deg, #FDF6F8, #E8D5F0);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 4px;
+    }
+    .preview-pastel::before {
+      content: 'Love Tarot';
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #D4A0B9;
+      font-size: 1.5rem;
+    }
+    .preview-pastel::after {
+      content: '\604B\306E\3086\304F\3048\3092\5360\3044\307E\3057\3087\3046';
+      font-size: 0.7rem;
+      color: #9E95A7;
+      letter-spacing: 0.1em;
+    }
+
+    .preview-editorial {
+      background: #FFFFFF;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+      position: relative;
+    }
+    .preview-editorial::before {
+      content: 'WEEKLY';
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #000;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .preview-editorial::after {
+      content: 'HOROSCOPE';
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: #FF0000;
+      letter-spacing: 0.2em;
+      margin-top: 4px;
+    }
+
+    /* Research section */
+    .research {
+      background: #fff;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .research-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .research-item {
+      padding: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .research-item__category {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .research-item__title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .research-item__desc {
+      font-size: 0.65rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .research-item__count {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer__text {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* Responsive */
+    @media (min-width: 640px) {
+      .portfolio {
+        grid-template-columns: 1fr 1fr;
+      }
+      .card--featured {
+        grid-column: 1 / -1;
+      }
+      .card--featured .card__preview {
+        height: 240px;
+      }
+      .research-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .header__title {
+        font-size: 3rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Navigation -->
-  <nav class="nav">
-    <a href="index.html" class="nav__link nav__link--active">
-      <span class="nav__icon">&#9671;</span> TOP
-    </a>
-    <a href="tarot.html" class="nav__link">
-      <span class="nav__icon">&#9826;</span> TAROT
-    </a>
-    <a href="astrology.html" class="nav__link">
-      <span class="nav__icon">&#9734;</span> ASTROLOGY
-    </a>
-  </nav>
+  <!-- Header -->
+  <header class="header">
+    <p class="header__label">Fortune Telling Site Collection</p>
+    <h1 class="header__title">占いサイト<br>ポートフォリオ</h1>
+    <p class="header__subtitle">
+      50以上の占いサイトを調査・分析。<br>
+      7つの主要デザインパターンを、それぞれ異なるテイストの占いサイトとして制作しました。
+    </p>
+  </header>
 
-  <!-- Hero Key Visual -->
-  <section class="hero-visual">
-    <div class="hero-visual__inner">
-      <p class="hero-visual__catchcopy">- 自分を見つめる5分のルーティン -</p>
-      <h1 class="hero-visual__title">
-        星が導く運命の占い
-        <strong>Celestia</strong>
-      </h1>
-      <p class="hero-visual__subtitle">TAROT</p>
-      <p class="hero-visual__desc">
-        古代から伝わるタロットの智慧と、東洋の四柱推命、<br>
-        インド占星術を融合した占いサイトです。<br>
-        直感でカードを選び、あなただけのメッセージを<br>
-        受け取ってください。
-      </p>
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat__number">50+</div>
+      <div class="stat__label">Sites Analyzed</div>
+    </div>
+    <div class="stat">
+      <div class="stat__number">7</div>
+      <div class="stat__label">Design Patterns</div>
+    </div>
+    <div class="stat">
+      <div class="stat__number">7</div>
+      <div class="stat__label">Sites Built</div>
+    </div>
+  </div>
+
+  <!-- Portfolio -->
+  <section class="section">
+    <p class="section__label">Portfolio</p>
+    <h2 class="section__title">制作サイト一覧</h2>
+
+    <div class="portfolio">
+
+      <!-- 1. Mystical-Dark (Celestia) -->
+      <a href="tarot.html" class="card card--featured">
+        <div class="card__preview preview-mystical"></div>
+        <div class="card__body">
+          <div class="card__number">01</div>
+          <h3 class="card__title">Celestia - 星が導く運命の占い</h3>
+          <p class="card__desc">深いネイビーとゴールドの配色。明朝体、扇形カード配置。タロット・四柱推命・星座占い・姓名判断・数秘術・おみくじ・相性診断の7種を収録したポータル型。</p>
+          <div class="card__tags">
+            <span class="tag">Mystical-Dark</span>
+            <span class="tag">7種の占い</span>
+            <span class="tag">星ひとみ / 鏡リュウジ風</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 2. Pop-Kawaii -->
+      <a href="site-pop/index.html" class="card">
+        <div class="card__preview preview-pop"></div>
+        <div class="card__body">
+          <div class="card__number">02</div>
+          <h3 class="card__title">きょうの星占い</h3>
+          <p class="card__desc">コーラル×ティール×イエロー。丸ゴシック体、丸みのあるカード。ポップで親しみやすいデザイン。</p>
+          <div class="card__tags">
+            <span class="tag">Pop-Kawaii</span>
+            <span class="tag">12星座占い</span>
+            <span class="tag">しいたけ占い風</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 3. Luxury-Elegant -->
+      <a href="site-luxury/index.html" class="card">
+        <div class="card__preview preview-luxury"></div>
+        <div class="card__body">
+          <div class="card__number">03</div>
+          <h3 class="card__title">運命星占い</h3>
+          <p class="card__desc">漆黒×ゴールド×深紅。権威的で重厚感のあるプレミアムデザイン。六星占術風の運命星鑑定。</p>
+          <div class="card__tags">
+            <span class="tag">Luxury-Elegant</span>
+            <span class="tag">運命星鑑定</span>
+            <span class="tag">細木数子 / 木下レオン風</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 4. Minimalist-Modern -->
+      <a href="site-minimal/index.html" class="card">
+        <div class="card__preview preview-minimal"></div>
+        <div class="card__body">
+          <div class="card__number">04</div>
+          <h3 class="card__title">horoscope</h3>
+          <p class="card__desc">モノクロ、装飾ゼロ、余白で語るミニマルデザイン。タイポグラフィのみで構成されたアプリ的UI。</p>
+          <div class="card__tags">
+            <span class="tag">Minimalist-Modern</span>
+            <span class="tag">デイリー星座</span>
+            <span class="tag">Co-Star / LINE占い風</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 5. Traditional-Japanese -->
+      <a href="site-japanese/index.html" class="card">
+        <div class="card__preview preview-japanese"></div>
+        <div class="card__body">
+          <div class="card__number">05</div>
+          <h3 class="card__title">御神籤 ・ 九星気学</h3>
+          <p class="card__desc">和紙テクスチャ、朱色、筆文字風。デジタルの中に神社の厳かさを再現した和風デザイン。</p>
+          <div class="card__tags">
+            <span class="tag">Traditional-Japanese</span>
+            <span class="tag">おみくじ + 九星</span>
+            <span class="tag">銀座の母風</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 6. Pastel-Soft -->
+      <a href="site-pastel/index.html" class="card">
+        <div class="card__preview preview-pastel"></div>
+        <div class="card__body">
+          <div class="card__number">06</div>
+          <h3 class="card__title">Love Tarot</h3>
+          <p class="card__desc">ブラッシュピンク×ラベンダー。ドット罫線、柔らかな影。手紙のような温もりの恋愛タロット。</p>
+          <div class="card__tags">
+            <span class="tag">Pastel-Soft</span>
+            <span class="tag">恋愛タロット</span>
+            <span class="tag">さちこい / Chani Nicholas風</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 7. Bold-Editorial -->
+      <a href="site-editorial/index.html" class="card">
+        <div class="card__preview preview-editorial"></div>
+        <div class="card__body">
+          <div class="card__number">07</div>
+          <h3 class="card__title">WEEKLY HOROSCOPE</h3>
+          <p class="card__desc">白黒×赤のハイコントラスト。超太字タイポグラフィ、雑誌風レイアウト。ランキング形式の星座占い。</p>
+          <div class="card__tags">
+            <span class="tag">Bold-Editorial</span>
+            <span class="tag">星座ランキング</span>
+            <span class="tag">VOGUE / ELLE風</span>
+          </div>
+        </div>
+      </a>
+
     </div>
   </section>
 
-  <!-- Intro Section (cream) -->
-  <section class="section-light">
-    <div class="container">
-      <h2 class="section-title section-title--dark">占いメニュー</h2>
-      <p class="section-lead section-lead--dark">お好きな占いをお選びください</p>
+  <!-- Research Summary -->
+  <section class="research">
+    <div class="section">
+      <p class="section__label">Research</p>
+      <h2 class="section__title">調査・分析サマリ</h2>
 
-      <div class="menu">
-        <a href="tarot.html" class="menu-card">
-          <div class="menu-card__icon">&#9826;</div>
-          <h3 class="menu-card__title">タロット占い</h3>
-          <p class="menu-card__desc">
-            カードをシャッフルして直感で1枚選びましょう。<br>
-            今のあなたへのメッセージが届きます。
-          </p>
-        </a>
-
-        <a href="astrology.html" class="menu-card">
-          <div class="menu-card__icon">&#9734;</div>
-          <h3 class="menu-card__title">四柱推命 &times; インド占星術</h3>
-          <p class="menu-card__desc">
-            生年月日から、東洋と西洋の叡智を融合した<br>
-            あなただけの運命鑑定をお届けします。
-          </p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Section (dark) -->
-  <section class="section-dark">
-    <div class="container">
-      <div class="deco-divider">&#10023; &#10023; &#10023;</div>
-      <h2 class="section-title section-title--light">Celestiaについて</h2>
-      <p class="section-lead section-lead--light">About Celestia</p>
-      <div class="about-box">
-        <p>
-          Celestiaは、古代の占術を現代に蘇らせた占いサービスです。
-          タロットカードによる直感的な占いと、
-          四柱推命・インド占星術による精密な運命鑑定。
-          二つの柱で、あなたの人生に光を灯します。
-        </p>
+      <div class="research-grid">
+        <div class="research-item">
+          <div class="research-item__count">15</div>
+          <div class="research-item__category">Japanese Celebrity</div>
+          <div class="research-item__desc">しいたけ占い、細木かおり、ゲッターズ飯田、星ひとみ、水晶玉子、石井ゆかり、鏡リュウジ ほか</div>
+        </div>
+        <div class="research-item">
+          <div class="research-item__count">15</div>
+          <div class="research-item__category">Japanese Media / Portal</div>
+          <div class="research-item__desc">VOGUE、ELLE、an・an、SPUR、LINE占い、cocoloni、エキサイト占い ほか</div>
+        </div>
+        <div class="research-item">
+          <div class="research-item__count">20</div>
+          <div class="research-item__category">Western / International</div>
+          <div class="research-item__desc">Co-Star、Sanctuary、Cafe Astrology、Chani Nicholas、Labyrinthos、Nebula ほか</div>
+        </div>
+        <div class="research-item">
+          <div class="research-item__count">7</div>
+          <div class="research-item__category">Design Patterns</div>
+          <div class="research-item__desc">Mystical-Dark、Pop-Kawaii、Luxury-Elegant、Minimalist-Modern、Traditional-Japanese、Pastel-Soft、Bold-Editorial</div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="footer__logo">C E L E S T I A</div>
-    <p class="footer__text">&copy; 2026 Celestia. All rights reserved.</p>
-    <div class="footer__links">
-      <a href="#">利用規約</a>
-      <a href="#">プライバシーポリシー</a>
-      <a href="#">お問い合わせ</a>
-    </div>
+    <p class="footer__text">Fortune Telling Portfolio &mdash; 50+ sites analyzed, 7 design patterns, 7 sites built.</p>
   </footer>
 
 </body>
