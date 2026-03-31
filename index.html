@@ -7,85 +7,95 @@
   <meta name="description" content="タロット占い・四柱推命・インド占星術であなたの運命を読み解く。無料で今すぐ占えます。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header__logo">Celestia</div>
-    <h1 class="header__title">星が導く運命の占い</h1>
-    <p class="header__subtitle">タロット・四柱推命・インド占星術</p>
-  </header>
-
   <!-- Navigation -->
   <nav class="nav">
     <a href="index.html" class="nav__link nav__link--active">
-      <span class="nav__icon">🏠</span>TOP
+      <span class="nav__icon">&#9671;</span> TOP
     </a>
     <a href="tarot.html" class="nav__link">
-      <span class="nav__icon">🃏</span>タロット
+      <span class="nav__icon">&#9826;</span> TAROT
     </a>
     <a href="astrology.html" class="nav__link">
-      <span class="nav__icon">🌟</span>命術占い
+      <span class="nav__icon">&#9734;</span> ASTROLOGY
     </a>
   </nav>
 
-  <div class="container">
-
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero__symbol">🔮</div>
-      <h2 class="hero__heading">あなたの運命を<br>紐解きましょう</h2>
-      <p class="hero__text">
-        古代から伝わるタロットの智慧と、<br>
-        東洋の四柱推命・インド占星術を融合。<br>
-        あなただけの運命のメッセージをお届けします。
+  <!-- Hero Key Visual -->
+  <section class="hero-visual">
+    <div class="hero-visual__inner">
+      <p class="hero-visual__catchcopy">- 自分を見つめる5分のルーティン -</p>
+      <h1 class="hero-visual__title">
+        星が導く運命の占い
+        <strong>Celestia</strong>
+      </h1>
+      <p class="hero-visual__subtitle">TAROT</p>
+      <p class="hero-visual__desc">
+        古代から伝わるタロットの智慧と、東洋の四柱推命、<br>
+        インド占星術を融合した占いサイトです。<br>
+        直感でカードを選び、あなただけのメッセージを<br>
+        受け取ってください。
       </p>
-    </section>
+    </div>
+  </section>
 
-    <!-- Menu -->
-    <section class="menu">
-      <a href="tarot.html" class="menu-card">
-        <div class="menu-card__icon">🃏</div>
-        <h3 class="menu-card__title">タロット占い</h3>
-        <p class="menu-card__desc">
-          カードをシャッフルして直感で1枚選びましょう。<br>
-          今のあなたへのメッセージが届きます。
-        </p>
-      </a>
+  <!-- Intro Section (cream) -->
+  <section class="section-light">
+    <div class="container">
+      <h2 class="section-title section-title--dark">占いメニュー</h2>
+      <p class="section-lead section-lead--dark">お好きな占いをお選びください</p>
 
-      <a href="astrology.html" class="menu-card">
-        <div class="menu-card__icon">🌟</div>
-        <h3 class="menu-card__title">四柱推命 × インド占星術</h3>
-        <p class="menu-card__desc">
-          生年月日から、東洋と西洋の叡智を融合した<br>
-          あなただけの運命鑑定をお届けします。
-        </p>
-      </a>
-    </section>
+      <div class="menu">
+        <a href="tarot.html" class="menu-card">
+          <div class="menu-card__icon">&#9826;</div>
+          <h3 class="menu-card__title">タロット占い</h3>
+          <p class="menu-card__desc">
+            カードをシャッフルして直感で1枚選びましょう。<br>
+            今のあなたへのメッセージが届きます。
+          </p>
+        </a>
 
-    <!-- About -->
-    <section class="section">
-      <h2 class="section__title">Celestiaについて</h2>
-      <div class="result__box">
-        <p class="result__box-text">
-          Celestiaは、古代の占術とAIの力を融合した次世代の占いサービスです。
-          タロットカードによる直感的な占いと、四柱推命・インド占星術による
-          精密な運命鑑定の2つの柱で、あなたの人生をサポートします。
+        <a href="astrology.html" class="menu-card">
+          <div class="menu-card__icon">&#9734;</div>
+          <h3 class="menu-card__title">四柱推命 &times; インド占星術</h3>
+          <p class="menu-card__desc">
+            生年月日から、東洋と西洋の叡智を融合した<br>
+            あなただけの運命鑑定をお届けします。
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section (dark) -->
+  <section class="section-dark">
+    <div class="container">
+      <div class="deco-divider">&#10023; &#10023; &#10023;</div>
+      <h2 class="section-title section-title--light">Celestiaについて</h2>
+      <p class="section-lead section-lead--light">About Celestia</p>
+      <div class="about-box">
+        <p>
+          Celestiaは、古代の占術を現代に蘇らせた占いサービスです。
+          タロットカードによる直感的な占いと、
+          四柱推命・インド占星術による精密な運命鑑定。
+          二つの柱で、あなたの人生に光を灯します。
         </p>
       </div>
-    </section>
-
-  </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="footer">
-    <p class="footer__text">&copy; 2026 Celestia - All rights reserved.</p>
+    <div class="footer__logo">C E L E S T I A</div>
+    <p class="footer__text">&copy; 2026 Celestia. All rights reserved.</p>
     <div class="footer__links">
       <a href="#">利用規約</a>
       <a href="#">プライバシーポリシー</a>
+      <a href="#">お問い合わせ</a>
     </div>
   </footer>
 

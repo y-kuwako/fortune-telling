@@ -7,85 +7,89 @@
   <meta name="description" content="生年月日から四柱推命とインド占星術を融合したあなただけの運命鑑定。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header__logo">Celestia</div>
-    <h1 class="header__title">四柱推命 × インド占星術</h1>
-    <p class="header__subtitle">東洋と西洋の叡智を融合した運命鑑定</p>
-  </header>
-
   <!-- Navigation -->
   <nav class="nav">
     <a href="index.html" class="nav__link">
-      <span class="nav__icon">🏠</span>TOP
+      <span class="nav__icon">&#9671;</span> TOP
     </a>
     <a href="tarot.html" class="nav__link">
-      <span class="nav__icon">🃏</span>タロット
+      <span class="nav__icon">&#9826;</span> TAROT
     </a>
     <a href="astrology.html" class="nav__link nav__link--active">
-      <span class="nav__icon">🌟</span>命術占い
+      <span class="nav__icon">&#9734;</span> ASTROLOGY
     </a>
   </nav>
 
-  <div class="container">
-
-    <!-- Input Form -->
-    <div id="phase-input">
-      <section class="hero" style="padding-bottom: 16px;">
-        <div class="hero__symbol">🌟</div>
-        <h2 class="hero__heading">運命を鑑定する</h2>
-        <p class="hero__text">
-          あなたの生年月日を入力してください。<br>
-          四柱推命とインド占星術の叡智で鑑定します。
-        </p>
-      </section>
-
-      <div class="form-section">
-        <div class="form-group">
-          <label class="form-group__label">生年月日</label>
-          <div class="form-group__row">
-            <select id="birth-year" class="form-group__select">
-              <option value="">年</option>
-            </select>
-            <select id="birth-month" class="form-group__select">
-              <option value="">月</option>
-            </select>
-            <select id="birth-day" class="form-group__select">
-              <option value="">日</option>
-            </select>
-          </div>
+  <!-- Input Form -->
+  <div id="phase-input">
+    <section class="section-dark">
+      <div class="container">
+        <div class="page-hero">
+          <div class="deco-divider">&#10023; &#10023; &#10023;</div>
+          <h1 class="page-hero__title">四柱推命 &times; インド占星術</h1>
+          <p class="page-hero__desc">
+            あなたの生年月日から、東洋の四柱推命と<br>
+            インド占星術の叡智を融合して鑑定します。
+          </p>
         </div>
-
-        <div class="form-group">
-          <label class="form-group__label">性別（任意）</label>
-          <div class="form-group__row">
-            <button id="gender-male" class="btn btn--outline" style="flex:1" onclick="selectGender('male')">男性</button>
-            <button id="gender-female" class="btn btn--outline" style="flex:1" onclick="selectGender('female')">女性</button>
-            <button id="gender-other" class="btn btn--outline" style="flex:1" onclick="selectGender('other')">その他</button>
-          </div>
-        </div>
-
-        <button class="btn btn--gold btn--block mt-24" onclick="startAstrology()">
-          鑑定する
-        </button>
       </div>
-    </div>
+    </section>
 
-    <!-- Loading -->
-    <div id="phase-loading" class="hidden">
+    <section class="section-light">
+      <div class="container">
+        <div class="form-section">
+          <div class="form-group">
+            <label class="form-group__label">生年月日</label>
+            <div class="form-group__row">
+              <select id="birth-year" class="form-group__select">
+                <option value="">年</option>
+              </select>
+              <select id="birth-month" class="form-group__select">
+                <option value="">月</option>
+              </select>
+              <select id="birth-day" class="form-group__select">
+                <option value="">日</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-group__label">性別（任意）</label>
+            <div class="form-group__row">
+              <button id="gender-male" class="gender-btn" onclick="selectGender('male')">男性</button>
+              <button id="gender-female" class="gender-btn" onclick="selectGender('female')">女性</button>
+              <button id="gender-other" class="gender-btn" onclick="selectGender('other')">その他</button>
+            </div>
+          </div>
+
+          <div class="text-center mt-24">
+            <button class="btn btn--dark" onclick="startAstrology()">
+              鑑定する
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Loading -->
+  <div id="phase-loading" class="section-dark hidden">
+    <div class="container">
       <div class="loading">
         <div class="loading__spinner"></div>
         <p class="loading__text">星の配置を読み解いています...</p>
       </div>
     </div>
+  </div>
 
-    <!-- Result -->
-    <div id="phase-result" class="hidden">
+  <!-- Result -->
+  <div id="phase-result" class="section-dark hidden">
+    <div class="container">
       <div class="astro-result">
         <div class="astro-result__header">
           <div id="astro-symbol" class="astro-result__symbol"></div>
@@ -94,54 +98,54 @@
         </div>
 
         <!-- Chart Overview -->
-        <div id="astro-chart" class="astro-result__chart">
-          <!-- Generated by JS -->
-        </div>
+        <div id="astro-chart" class="astro-result__chart"></div>
 
         <!-- Detailed Results -->
         <div class="result__box">
-          <div class="result__box-title">🌟 総合運</div>
+          <div class="result__box-title">&#10023; 総合運</div>
           <p id="astro-overall" class="result__box-text"></p>
         </div>
 
         <div class="result__box">
-          <div class="result__box-title">💼 仕事運</div>
+          <div class="result__box-title">&#10023; 仕事運</div>
           <p id="astro-career" class="result__box-text"></p>
         </div>
 
         <div class="result__box">
-          <div class="result__box-title">💕 恋愛運</div>
+          <div class="result__box-title">&#10023; 恋愛運</div>
           <p id="astro-love" class="result__box-text"></p>
         </div>
 
         <div class="result__box">
-          <div class="result__box-title">💰 金運</div>
+          <div class="result__box-title">&#10023; 金運</div>
           <p id="astro-money" class="result__box-text"></p>
         </div>
 
         <div class="result__box">
-          <div class="result__box-title">🏥 健康運</div>
+          <div class="result__box-title">&#10023; 健康運</div>
           <p id="astro-health" class="result__box-text"></p>
         </div>
 
-        <div class="divider">share</div>
-        <div class="share">
-          <button class="share__btn" onclick="shareTwitter()" title="Xでシェア">𝕏</button>
-          <button class="share__btn" onclick="shareLine()" title="LINEでシェア">💬</button>
+        <div class="share-section">
+          <p class="share-section__label">S H A R E</p>
+          <div class="share">
+            <button class="share__btn" onclick="shareTwitter()" title="Xでシェア">&#120143;</button>
+            <button class="share__btn" onclick="shareLine()" title="LINEでシェア">L</button>
+          </div>
         </div>
 
         <div class="result__actions">
-          <button class="btn btn--primary btn--block" onclick="resetAstrology()">もう一度鑑定する</button>
-          <a href="tarot.html" class="btn btn--outline btn--block">タロット占いも試す →</a>
+          <button class="btn btn--dark" onclick="resetAstrology()">もう一度鑑定する</button>
+          <a href="tarot.html" class="btn btn--outline-light">タロット占いも試す</a>
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- Footer -->
   <footer class="footer">
-    <p class="footer__text">&copy; 2026 Celestia - All rights reserved.</p>
+    <div class="footer__logo">C E L E S T I A</div>
+    <p class="footer__text">&copy; 2026 Celestia. All rights reserved.</p>
     <div class="footer__links">
       <a href="#">利用規約</a>
       <a href="#">プライバシーポリシー</a>
