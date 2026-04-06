@@ -178,6 +178,32 @@
     }
 
     /* Preview Themes */
+    .preview-ai {
+      background: linear-gradient(135deg, #0e0e2a 0%, #1a1a3e 50%, #2a1a3e 100%);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .preview-ai::before {
+      content: '☆';
+      font-size: 2rem;
+      color: rgba(201,169,110,0.6);
+      animation: pulse-ai 2s ease-in-out infinite;
+    }
+    .preview-ai::after {
+      content: 'AI FORTUNE ENGINE';
+      font-family: 'Inter', sans-serif;
+      color: rgba(201,169,110,0.8);
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      font-weight: 600;
+    }
+    @keyframes pulse-ai {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
     .preview-mystical {
       background: linear-gradient(135deg, #1a1a3e, #0e0e2a);
       display: flex; align-items: center; justify-content: center;
@@ -423,8 +449,23 @@
 
     <div class="portfolio">
 
+      <!-- 0. AI Fortune Engine (NEW) -->
+      <a href="astrology-v2.html" class="card card--featured">
+        <div class="card__preview preview-ai"></div>
+        <div class="card__body">
+          <div class="card__number">NEW</div>
+          <h3 class="card__title">AI命術解析エンジン - 四柱推命 × インド占星術</h3>
+          <p class="card__desc">四柱推命とインド占星術をAIが統合解析する3層構造エンジン。CORE（自己リソース）・FLOW（勝負タイミング）・HACK（日常最適化）の3レイヤーで人生戦略を導く次世代鑑定。</p>
+          <div class="card__tags">
+            <span class="tag">AI × 命術</span>
+            <span class="tag">3層解析</span>
+            <span class="tag">四柱推命 × ヴェーダ占星術</span>
+          </div>
+        </div>
+      </a>
+
       <!-- 1. Mystical-Dark (Celestia) -->
-      <a href="tarot.html" class="card card--featured">
+      <a href="celestia/tarot.html" class="card card--featured">
         <div class="card__preview preview-mystical"></div>
         <div class="card__body">
           <div class="card__number">01</div>

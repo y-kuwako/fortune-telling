@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI命術解析 - 四柱推命 × インド占星術 - Celestia</title>
+  <meta name="description" content="四柱推命とインド占星術をAIが統合解析。あなたの才能・運気・最適行動を3層構造で鑑定。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/fortune-v2.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="index.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> TOP
+    </a>
+    <a href="celestia/tarot.html" class="nav__link">
+      <span class="nav__icon">&#9826;</span> TAROT
+    </a>
+    <a href="astrology-v2.html" class="nav__link nav__link--active">
+      <span class="nav__icon">&#9734;</span> AI ANALYSIS
+    </a>
+  </nav>
+
+  <!-- ========== Phase: Input ========== -->
+  <div id="phase-input">
+    <section class="section-dark">
+      <div class="container">
+        <div class="page-hero">
+          <div class="deco-divider">&#10023; &#10023; &#10023;</div>
+          <h1 class="page-hero__title">AI命術解析エンジン</h1>
+          <p class="page-hero__desc">
+            四柱推命 &times; インド占星術の膨大なデータを<br>
+            AIが統合解析し、あなたの人生戦略を導きます。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-light">
+      <div class="container">
+        <div class="form-section">
+
+          <!-- 生年月日（必須） -->
+          <div class="form-group">
+            <label class="form-group__label">生年月日</label>
+            <div class="form-group__row">
+              <select id="birth-year" class="form-group__select">
+                <option value="">年</option>
+              </select>
+              <select id="birth-month" class="form-group__select">
+                <option value="">月</option>
+              </select>
+              <select id="birth-day" class="form-group__select">
+                <option value="">日</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 出生時刻（任意） -->
+          <div class="form-group" id="time-group">
+            <label class="form-group__label">出生時刻（任意）</label>
+            <div class="form-group__row">
+              <select id="birth-hour" class="form-group__select">
+                <option value="">時</option>
+              </select>
+              <select id="birth-minute" class="form-group__select">
+                <option value="">分</option>
+              </select>
+            </div>
+            <div class="form-group__toggle">
+              <input type="checkbox" id="time-unknown">
+              <label for="time-unknown">出生時刻がわからない</label>
+            </div>
+          </div>
+
+          <!-- 出生地（任意） -->
+          <div class="form-group" id="place-group">
+            <label class="form-group__label">出生地（任意）</label>
+            <div class="form-group__row">
+              <select id="birth-place" class="form-group__select" style="flex: 1;">
+                <option value="">都道府県を選択</option>
+              </select>
+            </div>
+            <div class="form-group__toggle">
+              <input type="checkbox" id="place-unknown">
+              <label for="place-unknown">出生地がわからない</label>
+            </div>
+          </div>
+
+          <!-- 性別（任意） -->
+          <div class="form-group">
+            <label class="form-group__label">性別（任意）</label>
+            <div class="form-group__row">
+              <button id="gender-male" class="gender-btn" data-gender="male">男性</button>
+              <button id="gender-female" class="gender-btn" data-gender="female">女性</button>
+              <button id="gender-other" class="gender-btn" data-gender="other">その他</button>
+            </div>
+          </div>
+
+          <div class="text-center mt-24">
+            <button class="btn btn--dark" id="btn-analyze">
+              AI解析を開始する
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== Phase: Loading ========== -->
+  <div id="phase-loading" class="section-dark hidden">
+    <div class="container">
+      <div class="loading-v2">
+        <div class="loading-v2__ring"></div>
+        <div class="loading-v2__steps">
+          <div class="loading-v2__step" data-step="1">
+            <span class="loading-v2__step-dot"></span>
+            <span class="loading-v2__step-check">&#10003;</span>
+            <span class="loading-v2__step-text">四柱推命データを照合中...</span>
+          </div>
+          <div class="loading-v2__step" data-step="2">
+            <span class="loading-v2__step-dot"></span>
+            <span class="loading-v2__step-check">&#10003;</span>
+            <span class="loading-v2__step-text">インド占星術との統合解析中...</span>
+          </div>
+          <div class="loading-v2__step" data-step="3">
+            <span class="loading-v2__step-dot"></span>
+            <span class="loading-v2__step-check">&#10003;</span>
+            <span class="loading-v2__step-text">AI解析エンジンで鑑定生成中...</span>
+          </div>
+          <div class="loading-v2__step" data-step="4">
+            <span class="loading-v2__step-dot"></span>
+            <span class="loading-v2__step-check">&#10003;</span>
+            <span class="loading-v2__step-text">解析完了</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== Phase: Result ========== -->
+  <div id="phase-result" class="section-dark hidden">
+    <div class="container">
+      <div class="astro-result">
+
+        <!-- Header -->
+        <div class="astro-result__header">
+          <div id="astro-symbol" class="astro-result__symbol"></div>
+          <h2 id="astro-title" class="astro-result__title"></h2>
+          <p id="astro-subtitle" class="astro-result__subtitle"></p>
+        </div>
+
+        <!-- Layer Tabs -->
+        <div class="layer-tabs">
+          <button class="layer-tabs__tab layer-tabs__tab--active" data-layer="core">
+            <span class="layer-tabs__icon">&#9734;</span>
+            CORE
+            <span class="layer-tabs__label-sub">自己リソース</span>
+          </button>
+          <button class="layer-tabs__tab layer-tabs__tab" data-layer="flow">
+            <span class="layer-tabs__icon">&#8986;</span>
+            FLOW
+            <span class="layer-tabs__label-sub">勝負タイミング</span>
+          </button>
+          <button class="layer-tabs__tab layer-tabs__tab" data-layer="hack">
+            <span class="layer-tabs__icon">&#9881;</span>
+            HACK
+            <span class="layer-tabs__label-sub">日常最適化</span>
+          </button>
+        </div>
+
+        <!-- ===== CORE Layer Content ===== -->
+        <div class="layer-content layer-content--active" data-layer-content="core">
+
+          <!-- FREE: スコア表示 -->
+          <div id="free-score" class="free-score"></div>
+
+          <!-- 的中体験 -->
+          <div id="hit-experience" class="hit-experience" style="display:none;"></div>
+
+          <!-- 矛盾提示 -->
+          <div id="contradiction" class="contradiction" style="display:none;"></div>
+
+          <!-- 四柱一覧 -->
+          <div id="pillars-chart" class="pillars-chart"></div>
+
+          <!-- 五行バランス -->
+          <div class="element-chart">
+            <div class="element-chart__title">&#9672; 五 行 バ ラ ン ス</div>
+            <div id="element-bars"></div>
+          </div>
+
+          <!-- ヴェーダ占星術情報 -->
+          <div id="vedic-info" class="vedic-info"></div>
+
+          <!-- 強み・弱み -->
+          <div id="traits-grid" class="traits-grid"></div>
+
+          <!-- 今日のアドバイス -->
+          <div class="daily-advice" id="daily-advice-box" style="display:none;">
+            <div class="daily-advice__label">&#9734; TODAY'S HACK</div>
+            <p id="daily-advice" class="daily-advice__text"></p>
+          </div>
+
+          <div class="section-divider">&#10023; &#10023; &#10023;</div>
+
+          <!-- 詳細鑑定 -->
+          <div class="result__box result__box--highlight">
+            <div class="result__box-title">&#10023; 総合分析</div>
+            <p id="astro-overall" class="result__box-text"></p>
+          </div>
+
+          <div class="result__box">
+            <div class="result__box-title">&#10023; 仕事・キャリア</div>
+            <p id="astro-career" class="result__box-text"></p>
+          </div>
+
+          <div class="result__box">
+            <div class="result__box-title">&#10023; 対人関係</div>
+            <p id="astro-love" class="result__box-text"></p>
+          </div>
+
+          <div class="result__box">
+            <div class="result__box-title">&#10023; 財運・資産</div>
+            <p id="astro-money" class="result__box-text"></p>
+          </div>
+
+          <div class="result__box">
+            <div class="result__box-title">&#10023; 健康・エネルギー</div>
+            <p id="astro-health" class="result__box-text"></p>
+          </div>
+
+          <!-- シェアカード画像 -->
+          <div id="share-card-container" class="share-card-container" style="display:none;">
+            <canvas id="share-card-canvas" width="600" height="315"></canvas>
+            <br>
+            <button class="share-card__download" id="btn-download-card">画像をダウンロード</button>
+          </div>
+        </div>
+
+        <!-- ===== FLOW Layer Content ===== -->
+        <div class="layer-content" data-layer-content="flow">
+
+          <!-- 天中殺情報 -->
+          <div id="flow-tenchusatsu" class="result__box result__box--highlight"></div>
+
+          <!-- 大運（10年サイクル） -->
+          <div id="flow-taiun" class="result__box"></div>
+
+          <!-- 運気カレンダー（3年間） -->
+          <div id="flow-calendar" class="energy-calendar"></div>
+
+          <!-- 宿曜情報 -->
+          <div id="flow-shukuyo" class="vedic-info"></div>
+
+        </div>
+
+        <!-- ===== HACK Layer Content ===== -->
+        <div class="layer-content" data-layer-content="hack">
+
+          <!-- AIキャラクター（軍師） -->
+          <div id="hack-character" class="ai-character"></div>
+
+          <!-- 今日のスコア概要 -->
+          <div id="hack-scores" class="vedic-info"></div>
+
+          <!-- 時間帯別最適化チャート -->
+          <div id="hack-hourly" class="hourly-chart"></div>
+
+          <!-- TODOリスト -->
+          <div id="hack-todos" class="todo-list"></div>
+
+        </div>
+
+        <!-- Share -->
+        <div class="share-section">
+          <p class="share-section__label">S H A R E</p>
+          <div class="share">
+            <button class="share__btn" id="btn-share-x" title="Xでシェア">&#120143;</button>
+            <button class="share__btn" id="btn-share-line" title="LINEでシェア">L</button>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="result__actions">
+          <button class="btn btn--dark" id="btn-reset">もう一度解析する</button>
+          <a href="celestia/tarot.html" class="btn btn--outline-light">タロット占いも試す</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__logo">C E L E S T I A</div>
+    <p class="footer__text">&copy; 2026 Celestia. All rights reserved.</p>
+    <div class="footer__links">
+      <a href="#">利用規約</a>
+      <a href="#">プライバシーポリシー</a>
+    </div>
+  </footer>
+
+  <script type="module" src="js/ui-controller.js"></script>
+</body>
+</html>

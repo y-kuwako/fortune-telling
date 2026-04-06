@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数秘術 - Celestia</title>
+  <meta name="description" content="生年月日から運命数を算出し、あなたの人生の道を数秘術で読み解きます。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="../index.html" class="nav__link"><span class="nav__icon">&#9671;</span> TOP</a>
+    <a href="numerology.html" class="nav__link nav__link--active"><span class="nav__icon">数</span> 数秘術</a>
+  </nav>
+
+  <!-- Input Form -->
+  <div id="phase-input">
+    <section class="section-dark">
+      <div class="container">
+        <div class="page-hero">
+          <div class="deco-divider">&#10023; &#10023; &#10023;</div>
+          <h1 class="page-hero__title">数秘術</h1>
+          <p class="page-hero__desc">
+            誕生数が示す人生の道。<br>
+            あなたの生年月日から運命数を算出し、<br>
+            魂が選んだ人生のテーマを読み解きます。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-light">
+      <div class="container">
+        <div class="form-section">
+          <div class="form-group">
+            <label class="form-group__label">生年月日</label>
+            <div class="form-group__row">
+              <select id="birth-year" class="form-group__select">
+                <option value="">年</option>
+              </select>
+              <select id="birth-month" class="form-group__select">
+                <option value="">月</option>
+              </select>
+              <select id="birth-day" class="form-group__select">
+                <option value="">日</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="text-center mt-24">
+            <button class="btn btn--dark" onclick="startNumerology()">
+              運命数を算出
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Loading -->
+  <div id="phase-loading" class="section-dark hidden">
+    <div class="container">
+      <div class="loading">
+        <div class="loading__spinner"></div>
+        <p class="loading__text">運命の数字を導いています...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div id="phase-result" class="section-dark hidden">
+    <div class="container">
+      <div class="astro-result">
+        <div class="astro-result__header">
+          <div id="result-number" class="numerology-number"></div>
+          <h2 id="result-title" class="astro-result__title"></h2>
+          <p id="result-calc" class="numerology-calc"></p>
+        </div>
+
+        <!-- Life Path Number Reading -->
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 基本性格</div>
+          <p id="result-personality" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 人生のテーマ</div>
+          <p id="result-theme" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 仕事・才能</div>
+          <p id="result-career" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 恋愛傾向</div>
+          <p id="result-love" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="numerology-label">TODAY'S PERSONAL YEAR</div>
+          <div id="result-py-number" class="numerology-title"></div>
+          <p id="result-personal-year" class="result__box-text"></p>
+        </div>
+
+        <div class="share-section">
+          <p class="share-section__label">S H A R E</p>
+          <div class="share">
+            <button class="share__btn" onclick="shareTwitter()" title="Xでシェア">&#120143;</button>
+            <button class="share__btn" onclick="shareLine()" title="LINEでシェア">L</button>
+          </div>
+        </div>
+
+        <div class="result__actions">
+          <button class="btn btn--dark" onclick="resetNumerology()">もう一度占う</button>
+          <a href="seimei.html" class="btn btn--outline-light">姓名判断も試す</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__logo">C E L E S T I A</div>
+    <p class="footer__text">&copy; 2026 Celestia. All rights reserved.</p>
+    <div class="footer__links">
+      <a href="#">利用規約</a>
+      <a href="#">プライバシーポリシー</a>
+    </div>
+  </footer>
+
+  <script src="../js/numerology.js"></script>
+</body>
+</html>

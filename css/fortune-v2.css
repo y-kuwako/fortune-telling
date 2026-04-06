@@ -1,0 +1,971 @@
+/* ========================================
+   Fortune Engine V2 - Additional Components
+   Extends style.css with new UI elements
+   ======================================== */
+
+/* --- Form Toggles (「わからない」チェック) --- */
+.form-group__toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.form-group__toggle input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.form-group__toggle input[type="checkbox"]:checked {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+
+.form-group__toggle input[type="checkbox"]:checked::after {
+  content: "✓";
+  color: #fff;
+  font-size: 11px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form-group__toggle label {
+  font-size: 0.75rem;
+  color: var(--text-muted-dark);
+  cursor: pointer;
+  letter-spacing: 0.05em;
+}
+
+.form-group--disabled .form-group__row {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.form-group--disabled .form-group__label {
+  opacity: 0.5;
+}
+
+/* --- Multi-Step Loading Animation --- */
+.loading-v2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 40px 0;
+}
+
+.loading-v2__ring {
+  width: 80px;
+  height: 80px;
+  border: 2px solid var(--border-dark);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+  margin-bottom: 40px;
+}
+
+.loading-v2__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.loading-v2__step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.3;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateX(-8px);
+}
+
+.loading-v2__step--active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.loading-v2__step--done {
+  opacity: 0.7;
+}
+
+.loading-v2__step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-dark);
+  flex-shrink: 0;
+  transition: background 0.3s ease;
+}
+
+.loading-v2__step--active .loading-v2__step-dot {
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(201, 169, 110, 0.5);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+.loading-v2__step--done .loading-v2__step-dot {
+  background: var(--gold-dark);
+}
+
+.loading-v2__step-text {
+  font-size: 0.8rem;
+  color: var(--text-muted-light);
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+}
+
+.loading-v2__step--active .loading-v2__step-text {
+  color: var(--text-light);
+}
+
+.loading-v2__step--done .loading-v2__step-text {
+  color: var(--text-muted-light);
+}
+
+.loading-v2__step-check {
+  display: none;
+  color: var(--gold);
+  font-size: 0.7rem;
+}
+
+.loading-v2__step--done .loading-v2__step-check {
+  display: inline;
+}
+
+.loading-v2__step--done .loading-v2__step-dot {
+  display: none;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+/* --- Layer Tabs (CORE / FLOW / HACK) --- */
+.layer-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-dark);
+  margin-bottom: 32px;
+}
+
+.layer-tabs__tab {
+  flex: 1;
+  padding: 16px 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted-light);
+  font-family: inherit;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  line-height: 1.6;
+}
+
+.layer-tabs__tab::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+.layer-tabs__tab--active {
+  color: var(--gold);
+}
+
+.layer-tabs__tab--active::after {
+  background: var(--gold);
+}
+
+.layer-tabs__tab:hover:not(.layer-tabs__tab--active):not(.layer-tabs__tab--locked) {
+  color: var(--text-light);
+}
+
+.layer-tabs__tab--locked {
+  cursor: default;
+  opacity: 0.4;
+}
+
+.layer-tabs__icon {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.layer-tabs__label-sub {
+  display: block;
+  font-size: 0.6rem;
+  margin-top: 2px;
+  letter-spacing: 0.08em;
+}
+
+/* --- Layer Content Panels --- */
+.layer-content {
+  display: none;
+}
+
+.layer-content--active {
+  display: block;
+  animation: fadeInContent 0.4s ease;
+}
+
+@keyframes fadeInContent {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Layer Placeholder (Coming Soon) --- */
+.layer-placeholder {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.layer-placeholder__icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.layer-placeholder h3 {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 12px;
+  letter-spacing: 0.1em;
+}
+
+.layer-placeholder p {
+  font-size: 0.8rem;
+  color: var(--text-muted-light);
+  line-height: 1.8;
+}
+
+.layer-placeholder__status {
+  margin-top: 20px;
+  display: inline-block;
+  padding: 6px 24px;
+  border: 1px solid var(--border-dark);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+}
+
+/* --- Five Elements Balance Chart --- */
+.element-chart {
+  margin: 24px 0;
+  padding: 20px;
+  border: 1px solid var(--border-dark);
+}
+
+.element-chart__title {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted-light);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.element-chart__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.element-chart__row:last-child {
+  margin-bottom: 0;
+}
+
+.element-chart__label {
+  width: 36px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  text-align: right;
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+}
+
+.element-chart__bar-bg {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.element-chart__bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  width: 0;
+}
+
+.element-chart__bar--wood { background: linear-gradient(90deg, #4a7c59, #7ab648); }
+.element-chart__bar--fire { background: linear-gradient(90deg, #c44536, #e76f51); }
+.element-chart__bar--earth { background: linear-gradient(90deg, #b5891c, #daa520); }
+.element-chart__bar--metal { background: linear-gradient(90deg, #8a8a8a, #c0c0c0); }
+.element-chart__bar--water { background: linear-gradient(90deg, #2a6496, #4a9bd9); }
+
+.element-chart__value {
+  width: 36px;
+  font-size: 0.7rem;
+  color: var(--text-muted-light);
+  text-align: left;
+  flex-shrink: 0;
+}
+
+/* --- Extended Chart Grid (四柱一覧) --- */
+.pillars-chart {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border-dark);
+  border: 1px solid var(--border-dark);
+  margin-bottom: 24px;
+}
+
+.pillars-chart--three-col {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.pillars-chart__item {
+  background: var(--navy);
+  padding: 16px 8px;
+  text-align: center;
+}
+
+.pillars-chart__pillar-name {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted-light);
+  margin-bottom: 8px;
+}
+
+.pillars-chart__pillar-value {
+  font-size: 1.3rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.pillars-chart__pillar-detail {
+  font-size: 0.65rem;
+  color: var(--text-muted-light);
+}
+
+/* --- Highlight Result Box --- */
+.result__box--highlight {
+  border-left: 3px solid var(--gold);
+  padding-left: 20px;
+}
+
+/* --- Strengths & Weaknesses --- */
+.traits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.traits-box {
+  border: 1px solid var(--border-dark);
+  padding: 16px;
+}
+
+.traits-box__title {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.traits-box__list {
+  list-style: none;
+  padding: 0;
+}
+
+.traits-box__list li {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  padding: 4px 0;
+  line-height: 1.6;
+}
+
+.traits-box__list li::before {
+  content: "▸ ";
+  color: var(--gold);
+  font-size: 0.7rem;
+}
+
+.traits-box--weakness .traits-box__title {
+  color: var(--text-muted-light);
+}
+
+.traits-box--weakness li::before {
+  content: "△ ";
+  color: var(--text-muted-light);
+}
+
+/* --- Vedic Info Row --- */
+.vedic-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border-dark);
+  border: 1px solid var(--border-dark);
+  margin: 24px 0;
+}
+
+.vedic-info__item {
+  background: var(--navy);
+  padding: 16px;
+  text-align: center;
+}
+
+.vedic-info__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted-light);
+  margin-bottom: 6px;
+}
+
+.vedic-info__value {
+  font-size: 0.9rem;
+  color: var(--gold-light);
+  letter-spacing: 0.05em;
+}
+
+.vedic-info__sub {
+  font-size: 0.65rem;
+  color: var(--text-muted-light);
+  margin-top: 4px;
+}
+
+/* --- Daily Advice Card --- */
+.daily-advice {
+  background: linear-gradient(135deg, rgba(201, 169, 110, 0.1), rgba(201, 169, 110, 0.05));
+  border: 1px solid var(--border-dark);
+  padding: 20px;
+  text-align: center;
+  margin: 24px 0;
+}
+
+.daily-advice__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.daily-advice__text {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  line-height: 1.8;
+}
+
+/* --- Section Divider --- */
+.section-divider {
+  text-align: center;
+  padding: 8px 0;
+  color: var(--border-dark);
+  font-size: 0.6rem;
+  letter-spacing: 0.5em;
+}
+
+/* --- FREE Score Display --- */
+.free-score {
+  text-align: center;
+  padding: 32px 0;
+}
+
+.free-score__number {
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.free-score__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--text-muted-light);
+  margin-top: 8px;
+}
+
+.free-score__element {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 6px 20px;
+  border: 1px solid var(--border-dark);
+  font-size: 0.75rem;
+  color: var(--gold-light);
+  letter-spacing: 0.15em;
+}
+
+.free-score__insight {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  line-height: 1.8;
+}
+
+/* --- Hit Experience (的中体験) --- */
+.hit-experience {
+  background: linear-gradient(135deg, rgba(201, 169, 110, 0.15), rgba(201, 169, 110, 0.05));
+  border: 1px solid var(--gold-dark);
+  padding: 20px;
+  margin: 24px 0;
+  text-align: center;
+}
+
+.hit-experience__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.hit-experience__text {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.8;
+}
+
+.hit-experience__year {
+  font-size: 1.2rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* --- Contradiction Hook (矛盾提示) --- */
+.contradiction {
+  border: 1px solid var(--border-dark);
+  padding: 20px;
+  margin: 24px 0;
+}
+
+.contradiction__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.contradiction__grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.contradiction__side {
+  text-align: center;
+  padding: 12px;
+  border: 1px solid var(--border-dark);
+}
+
+.contradiction__side-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted-light);
+  margin-bottom: 4px;
+}
+
+.contradiction__side-value {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.contradiction__vs {
+  font-size: 0.7rem;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.contradiction__resolution {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  line-height: 1.8;
+  text-align: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-dark);
+}
+
+/* --- TODO List --- */
+.todo-list {
+  margin: 24px 0;
+}
+
+.todo-list__title {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.todo-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-dark);
+  align-items: flex-start;
+}
+
+.todo-item:last-child {
+  border-bottom: none;
+}
+
+.todo-item__priority {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.todo-item__priority--high { background: #e76f51; }
+.todo-item__priority--medium { background: var(--gold); }
+.todo-item__priority--low { background: var(--text-muted-light); }
+
+.todo-item__content {
+  flex: 1;
+}
+
+.todo-item__time {
+  font-size: 0.65rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
+}
+
+.todo-item__action {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.todo-item__reason {
+  font-size: 0.65rem;
+  color: var(--text-muted-light);
+  margin-top: 2px;
+}
+
+/* --- Hourly Chart (時間帯別スコア) --- */
+.hourly-chart {
+  margin: 24px 0;
+}
+
+.hourly-chart__title {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted-light);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.hourly-chart__row {
+  display: grid;
+  grid-template-columns: 72px 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  align-items: center;
+  font-size: 0.7rem;
+}
+
+.hourly-chart__row:first-child {
+  color: var(--text-muted-light);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid var(--border-dark);
+  padding-bottom: 8px;
+}
+
+.hourly-chart__label {
+  color: var(--text-muted-light);
+}
+
+.hourly-chart__cell {
+  text-align: center;
+  padding: 4px;
+  border-radius: 2px;
+}
+
+.hourly-chart__cell--high {
+  background: rgba(201, 169, 110, 0.15);
+  color: var(--gold);
+}
+
+.hourly-chart__cell--mid {
+  color: var(--text-light);
+}
+
+.hourly-chart__cell--low {
+  color: var(--text-muted-light);
+  opacity: 0.7;
+}
+
+/* --- FLOW: Energy Calendar --- */
+.energy-calendar {
+  margin: 24px 0;
+}
+
+.energy-calendar__year {
+  margin-bottom: 24px;
+}
+
+.energy-calendar__year-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--text-light);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.energy-calendar__year-tag {
+  font-size: 0.55rem;
+  padding: 2px 8px;
+  border: 1px solid var(--gold-dark);
+  color: var(--gold);
+}
+
+.energy-calendar__year-tag--danger {
+  border-color: #e76f51;
+  color: #e76f51;
+}
+
+.energy-calendar__months {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2px;
+}
+
+.energy-calendar__month {
+  text-align: center;
+  padding: 8px 2px;
+  border: 1px solid var(--border-dark);
+  font-size: 0.6rem;
+}
+
+.energy-calendar__month-num {
+  color: var(--text-muted-light);
+  margin-bottom: 4px;
+}
+
+.energy-calendar__month-bar {
+  height: 24px;
+  width: 6px;
+  margin: 4px auto;
+  border-radius: 3px;
+  background: var(--border-dark);
+}
+
+.energy-calendar__month-bar--high { background: var(--gold); }
+.energy-calendar__month-bar--mid { background: var(--text-muted-light); }
+.energy-calendar__month-bar--low { background: #e76f51; }
+
+/* --- AI Character (軍師キャラ) --- */
+.ai-character {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(201, 169, 110, 0.08), transparent);
+  border: 1px solid var(--border-dark);
+  margin: 24px 0;
+  align-items: flex-start;
+}
+
+.ai-character__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--navy-light);
+  border: 1px solid var(--gold-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.ai-character__body {
+  flex: 1;
+}
+
+.ai-character__name {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.ai-character__message {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  line-height: 1.8;
+}
+
+/* --- Share Card Canvas --- */
+.share-card-container {
+  text-align: center;
+  margin: 16px 0;
+}
+
+.share-card-container canvas {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border-dark);
+}
+
+.share-card__download {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 24px;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  border: 1px solid var(--border-dark);
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.3s;
+}
+
+.share-card__download:hover {
+  background: rgba(201, 169, 110, 0.1);
+}
+
+/* --- Paywall Blur --- */
+.result__box--locked {
+  position: relative;
+  overflow: hidden;
+}
+
+.result__box--locked .result__box-text {
+  filter: blur(4px);
+  user-select: none;
+  pointer-events: none;
+}
+
+.result__box--locked::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(transparent, var(--navy));
+  pointer-events: none;
+}
+
+.paywall-cta {
+  text-align: center;
+  padding: 24px 20px;
+  margin: 24px 0;
+  border: 1px solid var(--gold-dark);
+  background: linear-gradient(135deg, rgba(201, 169, 110, 0.1), rgba(201, 169, 110, 0.03));
+}
+
+.paywall-cta__hook {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.paywall-cta__btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: var(--gold);
+  color: var(--navy-deep);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.3s;
+}
+
+.paywall-cta__btn:hover {
+  background: var(--gold-light);
+}
+
+.paywall-cta__note {
+  font-size: 0.6rem;
+  color: var(--text-muted-light);
+  margin-top: 12px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+  .pillars-chart {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .traits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vedic-info {
+    grid-template-columns: 1fr;
+  }
+
+  .layer-tabs__tab {
+    padding: 12px 4px;
+    font-size: 0.6rem;
+  }
+
+  .layer-tabs__icon {
+    font-size: 1rem;
+  }
+
+  .contradiction__grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .contradiction__vs {
+    text-align: center;
+  }
+
+  .hourly-chart__row {
+    grid-template-columns: 56px 1fr 1fr 1fr;
+    font-size: 0.6rem;
+  }
+
+  .energy-calendar__months {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .ai-character {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>おみくじ - Celestia</title>
+  <meta name="description" content="一日一回の運試し。御神籤を引いて今日の運勢を占いましょう。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="../index.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> TOP
+    </a>
+    <a href="omikuji.html" class="nav__link nav__link--active">
+      <span class="nav__icon">御</span> おみくじ
+    </a>
+  </nav>
+
+  <!-- Phase 1: Draw -->
+  <div id="phase-draw" class="section-dark">
+    <div class="container">
+      <div class="page-hero">
+        <div class="deco-divider">&#10023; &#10023; &#10023;</div>
+        <div class="omikuji-ornament">御神籤</div>
+        <p class="page-hero__desc">一日一回、運試し</p>
+      </div>
+      <div class="tarot-stage">
+        <button id="btn-draw" class="omikuji-btn" onclick="drawOmikuji()">引く</button>
+        <p class="tarot-stage__message--sub" style="margin-top: 24px;">心を静めてボタンを押してください</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2: Shaking -->
+  <div id="phase-shaking" class="section-dark hidden">
+    <div class="container">
+      <div class="tarot-stage">
+        <div class="omikuji-shaking">
+          <div class="omikuji-shaking__box">籤</div>
+        </div>
+        <p class="tarot-stage__message" style="margin-top: 24px;">神様にお伺いを立てています...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3: Result -->
+  <div id="phase-result" class="section-dark hidden">
+    <div class="container">
+      <div class="result">
+        <div class="result__card-display">
+          <div id="result-level" class="omikuji-result__level"></div>
+          <p class="result__card-subtitle">今日のあなたの運勢</p>
+        </div>
+
+        <div id="result-categories" class="result__box">
+          <!-- Categories injected by JS -->
+        </div>
+
+        <div id="result-poem" class="omikuji-poem"></div>
+
+        <div class="share-section">
+          <p class="share-section__label">S H A R E</p>
+          <div class="share">
+            <button class="share__btn" onclick="shareTwitter()" title="Xでシェア">&#120143;</button>
+            <button class="share__btn" onclick="shareLine()" title="LINEでシェア">L</button>
+          </div>
+        </div>
+
+        <div class="result__actions">
+          <button class="btn btn--outline-light" onclick="resetOmikuji()">もう一度引く</button>
+          <a href="../index.html" class="btn btn--outline-light" style="border-color: var(--text-muted-light); color: var(--text-muted-light);">TOPに戻る</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__logo">C E L E S T I A</div>
+    <p class="footer__text">&copy; 2026 Celestia. All rights reserved.</p>
+    <div class="footer__links">
+      <a href="#">利用規約</a>
+      <a href="#">プライバシーポリシー</a>
+    </div>
+  </footer>
+
+  <script src="../js/omikuji.js"></script>
+</body>
+</html>
