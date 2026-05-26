@@ -9,6 +9,27 @@ import { runFortuneEngine } from './fortune-engine.js';
 import { calcFlowLayer } from './sanmei.js';
 import { calcShukuyoFlow } from './shukuyo.js';
 import { calcHackLayer } from './shibi.js';
+import { getPlan, setPlan, canAccess, PLAN_DEFS } from './plan-manager.js';
+import { signup, login, logout, getAccount, isLoggedIn } from './account.js';
+import {
+  recordTodayPrediction,
+  recordActual,
+  getMonthEntries,
+  getMonthlySummary,
+  ensureSeed,
+  FOCUS_LABELS
+} from './sync-log.js';
+import {
+  ensureMonthPlan,
+  getMonthPlan,
+  toggleAction,
+  submitReflection,
+  getOrCreateThisMonthPlan
+} from './ai-coach.js';
+
+const PLANS_REQUIRING_LOGIN = new Set(['basic', 'premium']);
+let pendingPlanAfterAuth = null;
+let syncLogMonthKey = null; // 表示中の月 'yyyy-mm'
 
 // --- State ---
 let selectedGender = null;
@@ -39,6 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
   initLayerTabs();
   initShareButtons();
   initDownloadButton();
+  initPlanBadge();
+  initPlanModal();
+  initAuthModal();
+  initSyncLogModal();
+  initCoachModal();
+  refreshPlanBadge();
+  refreshSyncLogButton();
+  refreshCoachButton();
 });
 
 function initDateSelectors() {
@@ -235,8 +264,23 @@ async function startAnalysis() {
   displayResult(currentResult, pillarsData, vedicData);
   displayFlowLayer(flowData, shukuyoData);
   displayHackLayer(hackData, pillarsData, vedicData);
+  applyPaywall();
+  maybeRecordTodayInLog();
+  maybeEnsureCoachPlan();
+  refreshSyncLogButton();
+  refreshCoachButton();
   showPhase('phase-result');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function maybeRecordTodayInLog() {
+  if (!currentResult) return;
+  if (!canAccess('sync_log')) return;
+  recordTodayPrediction({
+    pillarsData: currentResult.pillarsData,
+    hackData: currentResult.hackData,
+    shukuyoData: currentResult.shukuyoData
+  });
 }
 
 // ========================================
@@ -248,8 +292,8 @@ function displayResult(result, pillarsData, vedicData) {
   document.getElementById('astro-title').textContent = result.title;
   document.getElementById('astro-subtitle').textContent = result.subtitle;
 
-  // FREE Score
-  renderFreeScore(result, pillarsData);
+  // FREE Score (FREE層も見える簡易ブリーフィング: スコア + 五行 + 最適時間)
+  renderFreeScore(result, pillarsData, result.hackData);
 
   // Hit Experience (的中体験)
   renderHitExperience(result.birthData, pillarsData);
@@ -292,16 +336,27 @@ function displayResult(result, pillarsData, vedicData) {
   document.querySelector('[data-layer-content="core"]').classList.add('layer-content--active');
 }
 
-function renderFreeScore(result, pillarsData) {
+function renderFreeScore(result, pillarsData, hackData) {
   const score = calcOverallScore(pillarsData);
   const el = pillarsData.dominantElement;
   const elInfo = FIVE_ELEMENTS[el];
+
+  // 最適時間帯（HACK簡易: FREEでも見せる）
+  let bestSlotLabel = '';
+  if (hackData?.hourlyOptimization?.length) {
+    const best = hackData.hourlyOptimization.reduce((b, s) =>
+      (s.concentration + s.social + s.creativity) > (b.concentration + b.social + b.creativity) ? s : b,
+      hackData.hourlyOptimization[0]);
+    bestSlotLabel = `本日の最適時間帯: <strong>${best.label}（${best.range}）</strong>`;
+  }
+
   const container = document.getElementById('free-score');
   container.innerHTML = `
     <div class="free-score__number">${score}</div>
     <div class="free-score__label">TODAY'S SCORE</div>
     <div class="free-score__element">${elInfo.symbol} ${el}の気質</div>
     <div class="free-score__insight">${result.dailyAdvice || ''}</div>
+    ${bestSlotLabel ? `<div class="free-score__insight" style="font-size:0.78rem;opacity:0.85;">${bestSlotLabel}</div>` : ''}
   `;
 }
 
@@ -655,51 +710,67 @@ function renderShareCard(result, pillarsData) {
   const ctx = canvas.getContext('2d');
   const w = 600, h = 315;
 
-  // Background
+  // Background - warm brown gradient
   const grad = ctx.createLinearGradient(0, 0, w, h);
-  grad.addColorStop(0, '#0e0e2a');
-  grad.addColorStop(1, '#1a1a3e');
+  grad.addColorStop(0, '#2a1508');
+  grad.addColorStop(0.5, '#3a2210');
+  grad.addColorStop(1, '#4a2a15');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, w, h);
 
+  // Watercolor splash accents
+  const splashes = [
+    { x: 50, y: 60, r: 80, color: 'rgba(232, 112, 64, 0.08)' },
+    { x: w - 60, y: 40, r: 60, color: 'rgba(212, 64, 128, 0.06)' },
+    { x: w / 2, y: h - 40, r: 100, color: 'rgba(240, 200, 48, 0.07)' },
+    { x: 80, y: h - 50, r: 50, color: 'rgba(58, 154, 138, 0.06)' }
+  ];
+  splashes.forEach(s => {
+    const sg = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r);
+    sg.addColorStop(0, s.color);
+    sg.addColorStop(1, 'transparent');
+    ctx.fillStyle = sg;
+    ctx.fillRect(0, 0, w, h);
+  });
+
   // Border
-  ctx.strokeStyle = 'rgba(201, 169, 110, 0.3)';
+  ctx.strokeStyle = 'rgba(212, 160, 32, 0.3)';
   ctx.lineWidth = 1;
   ctx.strokeRect(16, 16, w - 32, h - 32);
 
   // Title
-  ctx.fillStyle = 'rgba(201, 169, 110, 0.6)';
+  ctx.fillStyle = 'rgba(212, 160, 32, 0.6)';
   ctx.font = '10px sans-serif';
   ctx.textAlign = 'center';
   ctx.fillText('C E L E S T I A   A I   A N A L Y S I S', w / 2, 50);
 
   // Score
   const score = calcOverallScore(pillarsData);
-  ctx.fillStyle = '#c9a96e';
+  ctx.fillStyle = '#e8bf4a';
   ctx.font = 'bold 72px sans-serif';
   ctx.fillText(String(score), w / 2, 140);
 
-  ctx.fillStyle = 'rgba(201, 169, 110, 0.5)';
+  ctx.fillStyle = 'rgba(212, 160, 32, 0.5)';
   ctx.font = '10px sans-serif';
   ctx.fillText("TODAY'S SCORE", w / 2, 160);
 
   // Element
   const el = pillarsData.dominantElement;
   const elInfo = FIVE_ELEMENTS[el];
-  ctx.fillStyle = '#dcc28e';
+  ctx.fillStyle = '#e8bf4a';
   ctx.font = '14px sans-serif';
   ctx.fillText(`${elInfo.symbol} ${el}の気質 × ${result.title}`, w / 2, 200);
 
   // Insight
   if (result.dailyAdvice) {
-    ctx.fillStyle = 'rgba(232, 228, 220, 0.7)';
+    ctx.fillStyle = 'rgba(250, 243, 230, 0.7)';
     ctx.font = '11px sans-serif';
     const adviceText = result.dailyAdvice.length > 40 ? result.dailyAdvice.slice(0, 40) + '...' : result.dailyAdvice;
     ctx.fillText(adviceText, w / 2, 235);
   }
 
   // CTA
-  ctx.fillStyle = 'rgba(201, 169, 110, 0.4)';
+  ctx.fillStyle = 'rgba(212, 160, 32, 0.4)';
   ctx.font = '9px sans-serif';
   ctx.fillText('あなたも診断する →', w / 2, 285);
 
@@ -750,6 +821,683 @@ function shareLine() {
     `🌟 Celestia AI命術解析：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...`
   );
   window.open(`https://social-plugins.line.me/lineit/share?text=${text}`, '_blank');
+}
+
+// ========================================
+// Paywall Control
+// ========================================
+function applyPaywall() {
+  // 1. data-feature を持つ要素を走査して is-locked を付け外し
+  document.querySelectorAll('[data-feature]').forEach(el => {
+    const feature = el.dataset.feature;
+    if (canAccess(feature)) {
+      el.classList.remove('is-locked');
+    } else {
+      el.classList.add('is-locked');
+    }
+  });
+
+  // 2. CTA スロットを更新
+  renderCtaSlot('core', {
+    feature: 'core.detail',
+    plan: 'shot',
+    hook: '四柱推命 × インド占星術 × 紫微斗数。<br>あなたの仕事・対人・財運・健康まで、本日の行動レベルで解析します。',
+    btn: '本日のフル鑑定をアンロック ¥100',
+    note: '当日24時まで全鑑定が解放されます。'
+  });
+
+  renderCtaSlot('flow', {
+    feature: 'flow.monthly',
+    plan: 'basic',
+    hook: '算命学 × 宿曜占星術による<strong>月間運勢</strong>。<br>天中殺・大運・宿曜の関係性を読み解きます。',
+    btn: '月間運勢を見る ¥300/月',
+    note: 'いつでも解約可能。'
+  }, {
+    // monthly が解除済みで yearly がロックなら年間用CTAに差し替え
+    altFeature: 'flow.yearly',
+    altPlan: 'premium',
+    altHook: '<strong>年間カレンダー</strong>で1〜3年の運気の波を俯瞰。<br>AI対話タスク管理 / 運気ログ（Sync Log）も解放されます。',
+    altBtn: '年間まで開く ¥500/月',
+    altNote: 'PREMIUM: 月間+年間+AI対話+運気ログ。'
+  });
+
+  renderCtaSlot('hack', {
+    feature: 'hack.full',
+    plan: 'shot',
+    hook: '時間帯別の<strong>集中力・対人運・創造力</strong>と、<br>本日のアクションプランをAI軍師がご提案。',
+    btn: '本日のフル鑑定をアンロック ¥100',
+    note: '当日24時まで全鑑定が解放されます。'
+  });
+}
+
+function renderCtaSlot(slotId, primary, alt) {
+  const slot = document.querySelector(`[data-cta-slot="${slotId}"]`);
+  if (!slot) return;
+
+  // primary 機能にアクセス可能なら、alt の判定へ
+  if (canAccess(primary.feature)) {
+    if (alt && !canAccess(alt.altFeature)) {
+      slot.innerHTML = ctaHtml(alt.altHook, alt.altBtn, alt.altPlan, alt.altNote);
+      bindCtaButton(slot, alt.altPlan);
+      return;
+    }
+    slot.innerHTML = '';
+    return;
+  }
+
+  slot.innerHTML = ctaHtml(primary.hook, primary.btn, primary.plan, primary.note);
+  bindCtaButton(slot, primary.plan);
+}
+
+function ctaHtml(hook, btn, plan, note) {
+  return `
+    <div class="paywall-cta">
+      <p class="paywall-cta__hook">${hook}</p>
+      <button class="paywall-cta__btn" type="button" data-cta-target-plan="${plan}">${btn}</button>
+      <p class="paywall-cta__note">${note}</p>
+    </div>
+  `;
+}
+
+function bindCtaButton(scope, targetPlan) {
+  const btn = scope.querySelector('[data-cta-target-plan]');
+  if (!btn) return;
+  btn.addEventListener('click', () => openPlanModal(targetPlan));
+}
+
+// ========================================
+// Plan Badge & Modal
+// ========================================
+function initPlanBadge() {
+  const badge = document.getElementById('plan-badge');
+  if (!badge) return;
+  badge.addEventListener('click', () => openPlanModal());
+}
+
+function refreshPlanBadge() {
+  const badge = document.getElementById('plan-badge');
+  if (!badge) return;
+  const planId = getPlan();
+  const def = PLAN_DEFS[planId];
+  badge.dataset.plan = planId;
+  const valueEl = document.getElementById('plan-badge-value');
+  if (valueEl) valueEl.textContent = def.label;
+
+  const nicknameEl = document.getElementById('plan-badge-nickname');
+  const account = getAccount();
+  if (nicknameEl) {
+    if (account?.nickname) {
+      nicknameEl.textContent = account.nickname;
+      nicknameEl.hidden = false;
+    } else {
+      nicknameEl.textContent = '';
+      nicknameEl.hidden = true;
+    }
+  }
+}
+
+function initPlanModal() {
+  const modal = document.getElementById('plan-modal');
+  if (!modal) return;
+
+  modal.querySelector('#plan-modal-close')?.addEventListener('click', closePlanModal);
+  modal.querySelectorAll('[data-modal-close]').forEach(el => {
+    el.addEventListener('click', closePlanModal);
+  });
+  modal.querySelectorAll('[data-plan-select]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const planId = btn.dataset.planSelect;
+      handlePlanSelect(planId);
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closePlanModal();
+  });
+}
+
+function openPlanModal(highlightPlan) {
+  const modal = document.getElementById('plan-modal');
+  if (!modal) return;
+  syncPlanModalState(highlightPlan);
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePlanModal() {
+  const modal = document.getElementById('plan-modal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function syncPlanModalState(highlightPlan) {
+  const current = getPlan();
+  document.querySelectorAll('.plan-card').forEach(card => {
+    const planId = card.dataset.plan;
+    card.classList.toggle('is-current', planId === current);
+    if (highlightPlan && planId === highlightPlan) {
+      card.classList.add('plan-card--highlight');
+    } else {
+      card.classList.remove('plan-card--highlight');
+    }
+    const btn = card.querySelector('[data-plan-select]');
+    if (!btn) return;
+    if (planId === current) {
+      btn.classList.add('is-current');
+      btn.textContent = '現在のプラン';
+      btn.disabled = true;
+    } else {
+      btn.classList.remove('is-current');
+      btn.disabled = false;
+      const labels = {
+        free: '無料に戻す',
+        shot: '本日のフル鑑定',
+        basic: '月間まで開く',
+        premium: '年間まで開く'
+      };
+      btn.textContent = labels[planId];
+    }
+  });
+
+  // アカウント情報表示
+  const accountBox = document.getElementById('plan-modal-account');
+  if (!accountBox) return;
+  const account = getAccount();
+  if (account) {
+    accountBox.hidden = false;
+    document.getElementById('plan-modal-account-name').textContent = account.nickname;
+    document.getElementById('plan-modal-account-email').textContent = `(${account.email})`;
+  } else {
+    accountBox.hidden = true;
+  }
+}
+
+function handlePlanSelect(planId) {
+  // BASIC/PREMIUM は要ログイン
+  if (PLANS_REQUIRING_LOGIN.has(planId) && !isLoggedIn()) {
+    pendingPlanAfterAuth = planId;
+    closePlanModal();
+    openAuthModal({ targetPlan: planId });
+    return;
+  }
+  applyPlanChange(planId);
+  setTimeout(closePlanModal, 250);
+}
+
+function applyPlanChange(planId) {
+  setPlan(planId);
+  refreshPlanBadge();
+  if (currentResult) applyPaywall();
+  // PREMIUM になった瞬間にSync Log + Coach を初期化
+  if (planId === 'premium' && currentResult) {
+    ensureSeed({ pillarsData: currentResult.pillarsData });
+    maybeRecordTodayInLog();
+    maybeEnsureCoachPlan();
+  }
+  refreshSyncLogButton();
+  refreshCoachButton();
+  syncPlanModalState();
+}
+
+function maybeEnsureCoachPlan() {
+  if (!currentResult) return;
+  if (!canAccess('ai_dialogue')) return;
+  getOrCreateThisMonthPlan({
+    pillarsData: currentResult.pillarsData,
+    hackData: currentResult.hackData,
+    flowData: currentResult.flowData
+  });
+}
+
+// ========================================
+// Auth Modal
+// ========================================
+function initAuthModal() {
+  const modal = document.getElementById('auth-modal');
+  if (!modal) return;
+
+  modal.querySelector('#auth-modal-close')?.addEventListener('click', closeAuthModal);
+  modal.querySelectorAll('[data-auth-close]').forEach(el => {
+    el.addEventListener('click', closeAuthModal);
+  });
+
+  // タブ切り替え
+  modal.querySelectorAll('[data-auth-tab]').forEach(tab => {
+    tab.addEventListener('click', () => switchAuthTab(tab.dataset.authTab));
+  });
+
+  // 新規登録
+  document.getElementById('auth-signup-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    handleSignupSubmit();
+  });
+
+  // ログイン
+  document.getElementById('auth-login-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    handleLoginSubmit();
+  });
+
+  // Esc で閉じる
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeAuthModal();
+  });
+
+  // ログアウトボタン
+  document.getElementById('plan-modal-logout')?.addEventListener('click', handleLogout);
+}
+
+function openAuthModal({ targetPlan } = {}) {
+  const modal = document.getElementById('auth-modal');
+  if (!modal) return;
+  // フォームを初期化
+  ['auth-signup-form', 'auth-login-form'].forEach(id => {
+    const f = document.getElementById(id);
+    if (f) f.reset();
+  });
+  hideAuthError('signup');
+  hideAuthError('login');
+  switchAuthTab('signup');
+
+  const lead = document.getElementById('auth-modal-lead');
+  if (lead && targetPlan) {
+    const def = PLAN_DEFS[targetPlan];
+    lead.innerHTML = `<strong>${def.label}（${def.priceLabel}）</strong>のご利用には<br>簡単なアカウント登録が必要です。`;
+  } else if (lead) {
+    lead.innerHTML = 'BASIC・PREMIUM プランをご利用には<br>簡単なアカウント登録が必要です。';
+  }
+
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('auth-nickname')?.focus(), 50);
+}
+
+function closeAuthModal() {
+  const modal = document.getElementById('auth-modal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+  pendingPlanAfterAuth = null;
+}
+
+function switchAuthTab(tab) {
+  document.querySelectorAll('[data-auth-tab]').forEach(el => {
+    el.classList.toggle('auth-tabs__tab--active', el.dataset.authTab === tab);
+  });
+  document.querySelectorAll('[data-auth-form]').forEach(form => {
+    form.hidden = form.dataset.authForm !== tab;
+  });
+  hideAuthError('signup');
+  hideAuthError('login');
+}
+
+function showAuthError(kind, message) {
+  const el = document.getElementById(`auth-${kind}-error`);
+  if (!el) return;
+  el.textContent = message;
+  el.hidden = false;
+}
+
+function hideAuthError(kind) {
+  const el = document.getElementById(`auth-${kind}-error`);
+  if (!el) return;
+  el.textContent = '';
+  el.hidden = true;
+}
+
+function handleSignupSubmit() {
+  const nickname = document.getElementById('auth-nickname').value;
+  const email = document.getElementById('auth-signup-email').value;
+  const result = signup({ nickname, email, plan: 'free' });
+  if (!result.ok) {
+    showAuthError('signup', result.error);
+    return;
+  }
+  finalizeAuth();
+}
+
+function handleLoginSubmit() {
+  const email = document.getElementById('auth-login-email').value;
+  const result = login({ email });
+  if (!result.ok) {
+    showAuthError('login', result.error);
+    return;
+  }
+  finalizeAuth();
+}
+
+function finalizeAuth() {
+  const nextPlan = pendingPlanAfterAuth;
+  pendingPlanAfterAuth = null;
+  if (nextPlan) {
+    applyPlanChange(nextPlan);
+  } else {
+    refreshPlanBadge();
+    if (currentResult) applyPaywall();
+  }
+  closeAuthModal();
+}
+
+function handleLogout() {
+  logout();
+  refreshPlanBadge();
+  if (currentResult) applyPaywall();
+  syncPlanModalState();
+}
+
+// ========================================
+// Sync Log (PREMIUM)
+// ========================================
+function refreshSyncLogButton() {
+  const btn = document.getElementById('sync-log-btn');
+  if (!btn) return;
+  btn.hidden = !canAccess('sync_log');
+}
+
+function initSyncLogModal() {
+  const btn = document.getElementById('sync-log-btn');
+  btn?.addEventListener('click', openSyncLogModal);
+
+  const modal = document.getElementById('synclog-modal');
+  if (!modal) return;
+
+  modal.querySelector('#synclog-modal-close')?.addEventListener('click', closeSyncLogModal);
+  modal.querySelectorAll('[data-synclog-close]').forEach(el => {
+    el.addEventListener('click', closeSyncLogModal);
+  });
+  modal.querySelector('#synclog-prev')?.addEventListener('click', () => shiftSyncLogMonth(-1));
+  modal.querySelector('#synclog-next')?.addEventListener('click', () => shiftSyncLogMonth(1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeSyncLogModal();
+  });
+}
+
+function openSyncLogModal() {
+  if (!canAccess('sync_log')) return;
+  if (!syncLogMonthKey) syncLogMonthKey = monthKeyToday();
+  const modal = document.getElementById('synclog-modal');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  renderSyncLog();
+}
+
+function closeSyncLogModal() {
+  const modal = document.getElementById('synclog-modal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function monthKeyToday() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+
+function shiftSyncLogMonth(delta) {
+  const [y, m] = syncLogMonthKey.split('-').map(Number);
+  const d = new Date(y, m - 1 + delta, 1);
+  const newKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  // 翌月は今月までしか見せない
+  if (newKey > monthKeyToday()) return;
+  syncLogMonthKey = newKey;
+  renderSyncLog();
+}
+
+function renderSyncLog() {
+  const monthEl = document.getElementById('synclog-current-month');
+  const summaryEl = document.getElementById('synclog-summary');
+  const entriesEl = document.getElementById('synclog-entries');
+  if (!monthEl || !summaryEl || !entriesEl) return;
+
+  const [y, m] = syncLogMonthKey.split('-').map(Number);
+  monthEl.textContent = `${y}年 ${m}月`;
+
+  // 翌月ボタンのdisable切替
+  const nextBtn = document.getElementById('synclog-next');
+  if (nextBtn) nextBtn.disabled = (syncLogMonthKey >= monthKeyToday());
+
+  const summary = getMonthlySummary(syncLogMonthKey);
+  const focusLabel = summary.topFocus ? FOCUS_LABELS[summary.topFocus] || summary.topFocus : '—';
+  summaryEl.innerHTML = `
+    <div class="synclog-summary__item">
+      <span class="synclog-summary__label">記録</span>
+      <span class="synclog-summary__value">${summary.recorded}/${summary.total}</span>
+    </div>
+    <div class="synclog-summary__item">
+      <span class="synclog-summary__label">的中率</span>
+      <span class="synclog-summary__value synclog-summary__value--accent">${summary.hitRate}%</span>
+    </div>
+    <div class="synclog-summary__item">
+      <span class="synclog-summary__label">平均一致度</span>
+      <span class="synclog-summary__value">${summary.avgRating || '—'}</span>
+    </div>
+    <div class="synclog-summary__item">
+      <span class="synclog-summary__label">的中分野</span>
+      <span class="synclog-summary__value" style="font-size:0.85rem;">${focusLabel}</span>
+    </div>
+  `;
+
+  const entries = getMonthEntries(syncLogMonthKey);
+  if (!entries.length) {
+    entriesEl.innerHTML = '<div class="synclog-empty">この月のログはまだありません。</div>';
+    return;
+  }
+  // 新しい日付が上に来るよう降順
+  entries.reverse();
+  entriesEl.innerHTML = entries.map(renderSyncLogEntry).join('');
+  // 各エントリのフォームをバインド
+  entriesEl.querySelectorAll('[data-synclog-entry]').forEach(form => {
+    bindSyncLogEntryForm(form);
+  });
+}
+
+function renderSyncLogEntry(entry) {
+  const [y, m, d] = entry.date.split('-');
+  const dt = new Date(Number(y), Number(m) - 1, Number(d));
+  const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'][dt.getDay()];
+  const focusLabel = FOCUS_LABELS[entry.focus] || entry.focus || '総合';
+  const recorded = entry.actual && entry.rating;
+
+  let bottom;
+  if (recorded) {
+    const stars = '★'.repeat(entry.rating) + '☆'.repeat(5 - entry.rating);
+    bottom = `
+      <div class="synclog-entry__actual">${escapeHtml(entry.actual)}</div>
+      <div class="synclog-entry__rating">一致度: ${stars} (${entry.rating}/5)</div>
+    `;
+  } else {
+    bottom = `
+      <form class="synclog-entry__form" data-synclog-entry="${entry.date}">
+        <textarea class="synclog-entry__textarea" name="actual" placeholder="この日の出来事を1行で..." maxlength="120" required></textarea>
+        <div class="synclog-entry__rating-input">
+          <span class="synclog-entry__rating-label">一致度:</span>
+          ${[1,2,3,4,5].map(n => `<button type="button" class="synclog-entry__star" data-rating="${n}">☆</button>`).join('')}
+          <button type="submit" class="synclog-entry__submit">記録する</button>
+        </div>
+      </form>
+    `;
+  }
+
+  return `
+    <article class="synclog-entry${recorded ? ' synclog-entry--recorded' : ''}">
+      <div class="synclog-entry__date">
+        ${Number(m)}/${Number(d)}
+        <small>${dayOfWeek}曜日</small>
+      </div>
+      <div class="synclog-entry__body">
+        <div class="synclog-entry__pred">
+          <span class="synclog-entry__chip">${escapeHtml(entry.theme || '—')}</span>
+          <span class="synclog-entry__chip">${focusLabel}</span>
+          <span class="synclog-entry__score">スコア ${entry.score}</span>
+          ${entry.shukuyo ? `<span class="synclog-entry__chip">宿: ${escapeHtml(entry.shukuyo)}</span>` : ''}
+        </div>
+        ${bottom}
+      </div>
+    </article>
+  `;
+}
+
+function bindSyncLogEntryForm(form) {
+  let selectedRating = 0;
+  const stars = form.querySelectorAll('[data-rating]');
+  stars.forEach(star => {
+    star.addEventListener('click', () => {
+      selectedRating = parseInt(star.dataset.rating, 10);
+      stars.forEach(s => {
+        const n = parseInt(s.dataset.rating, 10);
+        s.classList.toggle('is-active', n <= selectedRating);
+        s.textContent = n <= selectedRating ? '★' : '☆';
+      });
+    });
+  });
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const date = form.dataset.synclogEntry;
+    const text = form.querySelector('[name="actual"]').value.trim();
+    if (!text) return;
+    if (!selectedRating) {
+      alert('一致度を選択してください');
+      return;
+    }
+    recordActual(date, text, selectedRating);
+    renderSyncLog();
+  });
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ========================================
+// AI Coach (PREMIUM)
+// ========================================
+function refreshCoachButton() {
+  const btn = document.getElementById('ai-coach-btn');
+  if (!btn) return;
+  btn.hidden = !canAccess('ai_dialogue');
+}
+
+function currentCoachMonthKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+
+function initCoachModal() {
+  document.getElementById('ai-coach-btn')?.addEventListener('click', openCoachModal);
+
+  const modal = document.getElementById('coach-modal');
+  if (!modal) return;
+
+  modal.querySelector('#coach-modal-close')?.addEventListener('click', closeCoachModal);
+  modal.querySelectorAll('[data-coach-close]').forEach(el => {
+    el.addEventListener('click', closeCoachModal);
+  });
+  document.getElementById('coach-dialogue-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    handleCoachSubmit();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeCoachModal();
+  });
+}
+
+function openCoachModal() {
+  if (!canAccess('ai_dialogue')) return;
+  // 念のため: 当月プランがなければ生成
+  if (currentResult) {
+    ensureMonthPlan(currentCoachMonthKey(), {
+      pillarsData: currentResult.pillarsData,
+      hackData: currentResult.hackData,
+      flowData: currentResult.flowData
+    });
+  }
+  const modal = document.getElementById('coach-modal');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  renderCoach();
+}
+
+function closeCoachModal() {
+  const modal = document.getElementById('coach-modal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function renderCoach() {
+  const monthKey = currentCoachMonthKey();
+  const plan = getMonthPlan(monthKey);
+  const themeEl = document.getElementById('coach-theme');
+  const actionsEl = document.getElementById('coach-actions-list');
+  const historyEl = document.getElementById('coach-dialogue-history');
+  if (!themeEl || !actionsEl || !historyEl) return;
+
+  if (!plan) {
+    themeEl.innerHTML = '<p class="coach-empty">解析を実行すると、今月のテーマが生成されます。</p>';
+    actionsEl.innerHTML = '';
+    historyEl.innerHTML = '';
+    return;
+  }
+
+  const [y, m] = monthKey.split('-').map(Number);
+  themeEl.innerHTML = `
+    <p class="coach-theme__month">${y}年 ${m}月のテーマ</p>
+    <h3 class="coach-theme__title">${escapeHtml(plan.theme)}</h3>
+    <p class="coach-theme__summary">${escapeHtml(plan.summary)}</p>
+  `;
+
+  actionsEl.innerHTML = plan.actions.map(a => `
+    <div class="coach-action${a.status === 'done' ? ' coach-action--done' : ''}" data-action-id="${a.id}">
+      <div class="coach-action__check"></div>
+      <div class="coach-action__text">${escapeHtml(a.text)}</div>
+    </div>
+  `).join('');
+
+  actionsEl.querySelectorAll('[data-action-id]').forEach(el => {
+    el.addEventListener('click', () => {
+      toggleAction(monthKey, el.dataset.actionId);
+      renderCoach();
+    });
+  });
+
+  if (!plan.dialogues.length) {
+    historyEl.innerHTML = '<div class="coach-empty">まだ対話履歴はありません。今月の行動を一行入力してみてください。</div>';
+  } else {
+    // 新しい順で表示
+    historyEl.innerHTML = [...plan.dialogues].reverse().map(d => {
+      const dt = new Date(d.at);
+      const stamp = `${dt.getMonth() + 1}/${dt.getDate()} ${String(dt.getHours()).padStart(2, '0')}:${String(dt.getMinutes()).padStart(2, '0')}`;
+      return `
+        <div class="coach-dialogue__pair">
+          <div class="coach-bubble coach-bubble--user">${escapeHtml(d.user)}<span class="coach-bubble__time">${stamp}</span></div>
+          <div class="coach-bubble coach-bubble--ai">${escapeHtml(d.ai)}</div>
+        </div>
+      `;
+    }).join('');
+  }
+}
+
+function handleCoachSubmit() {
+  const input = document.getElementById('coach-dialogue-input');
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text) return;
+  const monthKey = currentCoachMonthKey();
+  submitReflection(monthKey, text, currentResult ? {
+    hackData: currentResult.hackData,
+    flowData: currentResult.flowData
+  } : {});
+  input.value = '';
+  renderCoach();
 }
 
 // --- Utility ---

@@ -179,29 +179,44 @@
 
     /* Preview Themes */
     .preview-ai {
-      background: linear-gradient(135deg, #0e0e2a 0%, #1a1a3e 50%, #2a1a3e 100%);
+      background: linear-gradient(135deg, #fef0d0, #fde0c0, #fce8d8);
       display: flex; align-items: center; justify-content: center;
       flex-direction: column; gap: 8px;
       position: relative;
       overflow: hidden;
     }
     .preview-ai::before {
-      content: '☆';
-      font-size: 2rem;
-      color: rgba(201,169,110,0.6);
-      animation: pulse-ai 2s ease-in-out infinite;
+      content: '🌻';
+      font-size: 2.5rem;
+      animation: pulse-ai 3s ease-in-out infinite;
     }
     .preview-ai::after {
       content: 'AI FORTUNE ENGINE';
       font-family: 'Inter', sans-serif;
-      color: rgba(201,169,110,0.8);
+      color: rgba(106, 68, 40, 0.7);
       font-size: 0.7rem;
       letter-spacing: 0.5em;
       font-weight: 600;
     }
+    .preview-ai .splash-1,
+    .preview-ai .splash-2,
+    .preview-ai .splash-3 {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(30px);
+      pointer-events: none;
+    }
     @keyframes pulse-ai {
-      0%, 100% { opacity: 0.6; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.1); }
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(5deg); }
+    }
+    .preview-ai {
+      box-shadow:
+        inset -60px -40px 80px rgba(240, 128, 80, 0.25),
+        inset 60px -30px 70px rgba(224, 96, 160, 0.15),
+        inset -40px 50px 60px rgba(248, 208, 48, 0.2),
+        inset 50px 40px 50px rgba(64, 176, 160, 0.12),
+        inset 0 0 40px rgba(80, 160, 64, 0.08);
     }
 
     .preview-mystical {

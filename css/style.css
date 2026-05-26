@@ -1,6 +1,6 @@
 /* ========================================
-   Celestia - Felissimo-inspired Design
-   Deep navy + warm gold, elegant serif
+   Celestia - Sunflower Watercolor Design
+   Vivid warm tones, artistic splash feel
    ======================================== */
 
 /* Reset & Base */
@@ -11,20 +11,29 @@
 }
 
 :root {
-  --navy: #1a1a3e;
-  --navy-deep: #0e0e2a;
-  --navy-light: #2a2a5e;
-  --cream: #faf8f5;
-  --cream-dark: #f0ece5;
-  --gold: #c9a96e;
-  --gold-light: #dcc28e;
-  --gold-dark: #a8884a;
-  --text-dark: #2c2c2c;
-  --text-light: #e8e4dc;
-  --text-muted-dark: #7a7a7a;
-  --text-muted-light: #b0a89a;
-  --border-light: #ddd5c8;
-  --border-dark: rgba(201, 169, 110, 0.25);
+  --navy: #6a4428;
+  --navy-deep: #5a3620;
+  --navy-light: #8a6040;
+  --cream: #fffcf5;
+  --cream-dark: #faf3e5;
+  --gold: #e8a820;
+  --gold-light: #f0c840;
+  --gold-dark: #c8920a;
+  --text-dark: #3a2a18;
+  --text-light: #fff8ee;
+  --text-muted-dark: #8a7050;
+  --text-muted-light: #d4b898;
+  --border-light: #f0dcc0;
+  --border-dark: rgba(232, 168, 32, 0.3);
+
+  /* Watercolor accent colors */
+  --accent-orange: #f08050;
+  --accent-red: #e04830;
+  --accent-pink: #e060a0;
+  --accent-teal: #40b0a0;
+  --accent-green: #50a040;
+  --accent-yellow: #f8d030;
+  --accent-blue: #4090d0;
 }
 
 html {
@@ -69,8 +78,8 @@ a:hover {
   display: flex;
   justify-content: center;
   gap: 0;
-  background: var(--navy-deep);
-  border-bottom: 1px solid var(--border-dark);
+  background: linear-gradient(135deg, #f8d030, #f08050, #e060a0);
+  border-bottom: none;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -83,7 +92,7 @@ a:hover {
   padding: 14px 20px;
   font-size: 0.75rem;
   font-family: "游明朝", "Yu Mincho", serif;
-  color: var(--text-muted-light);
+  color: rgba(58, 42, 24, 0.7);
   letter-spacing: 0.15em;
   transition: all 0.3s;
   border-bottom: 2px solid transparent;
@@ -91,8 +100,8 @@ a:hover {
 
 .nav__link:hover,
 .nav__link--active {
-  color: var(--gold-light);
-  border-bottom-color: var(--gold);
+  color: #fff;
+  border-bottom-color: #fff;
   opacity: 1;
 }
 
@@ -102,7 +111,7 @@ a:hover {
 
 /* ===== Hero / Key Visual ===== */
 .hero-visual {
-  background: var(--navy);
+  background: linear-gradient(135deg, #fef0d0, #fde0c0, #fce8d8);
   position: relative;
   overflow: hidden;
 }
@@ -116,7 +125,7 @@ a:hover {
   z-index: 1;
 }
 
-/* Decorative stars */
+/* Decorative watercolor splashes */
 .hero-visual::before {
   content: '';
   position: absolute;
@@ -125,32 +134,31 @@ a:hover {
   width: 100%;
   height: 100%;
   background-image:
-    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1.5px 1.5px at 20% 80%, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 80% 90%, rgba(255,255,255,0.2), transparent);
-  animation: twinkle 6s ease-in-out infinite alternate;
+    radial-gradient(200px 200px at 0% 0%, rgba(240, 128, 80, 0.35), transparent),
+    radial-gradient(180px 180px at 100% 10%, rgba(224, 96, 160, 0.25), transparent),
+    radial-gradient(220px 220px at 50% 100%, rgba(248, 208, 48, 0.3), transparent),
+    radial-gradient(150px 150px at 80% 70%, rgba(64, 176, 160, 0.2), transparent),
+    radial-gradient(160px 160px at 10% 80%, rgba(80, 160, 64, 0.15), transparent),
+    radial-gradient(100px 100px at 30% 50%, rgba(64, 144, 208, 0.12), transparent);
+  animation: watercolor-shift 8s ease-in-out infinite alternate;
   pointer-events: none;
 }
 
-@keyframes twinkle {
-  0% { opacity: 0.6; }
-  100% { opacity: 1; }
+@keyframes watercolor-shift {
+  0% { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.03); }
 }
 
 .hero-visual__catchcopy {
   font-size: 0.75rem;
-  color: var(--gold-light);
+  color: var(--accent-orange);
   letter-spacing: 0.3em;
   margin-bottom: 20px;
 }
 
 .hero-visual__title {
   font-size: 1.6rem;
-  color: #fff;
+  color: var(--text-dark);
   letter-spacing: 0.15em;
   margin-bottom: 8px;
   font-weight: 400;
@@ -165,7 +173,7 @@ a:hover {
 
 .hero-visual__subtitle {
   font-size: 2.2rem;
-  color: var(--gold-light);
+  color: var(--gold-dark);
   letter-spacing: 0.4em;
   font-weight: 400;
   margin-bottom: 24px;
@@ -179,10 +187,10 @@ a:hover {
   margin: 0 auto;
 }
 
-/* ===== Section - Dark (navy) ===== */
+/* ===== Section - Dark (warm watercolor) ===== */
 .section-dark {
-  background: var(--navy);
-  color: var(--text-light);
+  background: linear-gradient(180deg, #fef0d0, #fce8d0, #fef0d0);
+  color: var(--text-dark);
   padding: 50px 0;
   position: relative;
 }
@@ -195,10 +203,12 @@ a:hover {
   right: 0;
   bottom: 0;
   background-image:
-    radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.2), transparent),
-    radial-gradient(1px 1px at 45% 75%, rgba(255,255,255,0.15), transparent),
-    radial-gradient(1px 1px at 75% 35%, rgba(255,255,255,0.2), transparent),
-    radial-gradient(1px 1px at 85% 85%, rgba(255,255,255,0.15), transparent);
+    radial-gradient(250px 250px at 0% 0%, rgba(240, 128, 80, 0.18), transparent),
+    radial-gradient(200px 200px at 100% 20%, rgba(224, 96, 160, 0.12), transparent),
+    radial-gradient(180px 180px at 50% 90%, rgba(248, 208, 48, 0.15), transparent),
+    radial-gradient(150px 150px at 10% 60%, rgba(64, 176, 160, 0.1), transparent),
+    radial-gradient(120px 120px at 85% 70%, rgba(80, 160, 64, 0.08), transparent),
+    radial-gradient(100px 100px at 40% 30%, rgba(64, 144, 208, 0.06), transparent);
   pointer-events: none;
 }
 
@@ -224,7 +234,7 @@ a:hover {
 }
 
 .section-title--light {
-  color: #fff;
+  color: var(--text-dark);
 }
 
 .section-title--dark {
@@ -340,12 +350,12 @@ a:hover {
 
 .btn--outline-light {
   background: transparent;
-  color: var(--gold-light);
-  border: 1px solid var(--gold-light);
+  color: var(--navy);
+  border: 1px solid var(--navy);
 }
 
 .btn--outline-light:hover {
-  background: rgba(201, 169, 110, 0.15);
+  background: rgba(106, 68, 40, 0.08);
 }
 
 .btn--block {
@@ -437,7 +447,7 @@ a:hover {
 }
 
 .tarot-card__back {
-  background: linear-gradient(180deg, #2a3a7e, #1a1a4e);
+  background: linear-gradient(180deg, #5a3a1e, #3a2210);
   border: 1.5px solid var(--gold);
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
@@ -504,7 +514,7 @@ a:hover {
   position: absolute;
   width: 70px;
   height: 105px;
-  background: linear-gradient(180deg, #2a3a7e, #1a1a4e);
+  background: linear-gradient(180deg, #5a3a1e, #3a2210);
   border: 1.5px solid var(--gold);
   border-radius: 4px;
   top: 50%;
@@ -546,7 +556,7 @@ a:hover {
 
 .result__card-name {
   font-size: 1.4rem;
-  color: #fff;
+  color: var(--text-dark);
   margin-bottom: 4px;
   letter-spacing: 0.1em;
   font-weight: 400;
@@ -585,7 +595,7 @@ a:hover {
 
 .result__box-text {
   font-size: 0.85rem;
-  color: var(--text-light);
+  color: var(--text-dark);
   line-height: 2.2;
 }
 
@@ -707,7 +717,7 @@ a:hover {
 
 .astro-result__title {
   font-size: 1.3rem;
-  color: #fff;
+  color: var(--text-dark);
   margin-bottom: 4px;
   letter-spacing: 0.1em;
   font-weight: 400;
@@ -755,7 +765,7 @@ a:hover {
 
 .share-section__label {
   font-size: 0.7rem;
-  color: var(--text-muted-light);
+  color: var(--text-muted-dark);
   letter-spacing: 0.2em;
   margin-bottom: 12px;
 }
@@ -776,14 +786,14 @@ a:hover {
   font-size: 1rem;
   border: 1px solid var(--border-dark);
   background: transparent;
-  color: var(--text-light);
+  color: var(--text-dark);
   cursor: pointer;
   transition: all 0.3s;
 }
 
 .share__btn:hover {
-  border-color: var(--gold);
-  color: var(--gold);
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
 }
 
 /* ===== Footer ===== */
@@ -882,7 +892,7 @@ a:hover {
 
 .page-hero__title {
   font-size: 1.4rem;
-  color: #fff;
+  color: var(--text-dark);
   letter-spacing: 0.15em;
   font-weight: 400;
   margin-bottom: 8px;
@@ -890,7 +900,7 @@ a:hover {
 
 .page-hero__desc {
   font-size: 0.78rem;
-  color: var(--text-muted-light);
+  color: var(--text-muted-dark);
   line-height: 2.2;
 }
 
