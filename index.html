@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fortune Telling Portfolio - 占いサイトコレクション</title>
-  <meta name="description" content="7つの異なるデザインテイストで作られた占いサイトのポートフォリオ。50以上の占いサイトを調査・分析し、主要デザインパターンを網羅。">
+  <meta name="description" content="8つの異なるデザインテイストで作られた占いサイトのポートフォリオ。50以上の占いサイトを調査・分析し、主要デザインパターンを網羅。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -333,6 +333,41 @@
       margin-top: 4px;
     }
 
+    .preview-cosmic {
+      background:
+        radial-gradient(circle at 25% 30%, rgba(255,46,154,0.5), transparent 50%),
+        radial-gradient(circle at 75% 70%, rgba(0,240,255,0.5), transparent 50%),
+        linear-gradient(135deg, #05010f 0%, #150a35 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .preview-cosmic::before {
+      content: 'N E B U L A';
+      font-family: 'Inter', sans-serif;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(0,240,255,0.9);
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(0,240,255,0.8);
+    }
+    .preview-cosmic::after {
+      content: 'COSMIC';
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 2rem;
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, #00f0ff, #ff2e9a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 12px rgba(255,46,154,0.5));
+    }
+
     /* Research section */
     .research {
       background: #fff;
@@ -422,7 +457,7 @@
     <h1 class="header__title">占いサイト<br>ポートフォリオ</h1>
     <p class="header__subtitle">
       50以上の占いサイトを調査・分析。<br>
-      7つの主要デザインパターンを、それぞれ異なるテイストの占いサイトとして制作しました。
+      8つの主要デザインパターンを、それぞれ異なるテイストの占いサイトとして制作しました。
     </p>
   </header>
 
@@ -433,11 +468,11 @@
       <div class="stat__label">Sites Analyzed</div>
     </div>
     <div class="stat">
-      <div class="stat__number">7</div>
+      <div class="stat__number">8</div>
       <div class="stat__label">Design Patterns</div>
     </div>
     <div class="stat">
-      <div class="stat__number">7</div>
+      <div class="stat__number">8</div>
       <div class="stat__label">Sites Built</div>
     </div>
   </div>
@@ -569,6 +604,21 @@
         </div>
       </a>
 
+      <!-- 8. Cosmic-Neon -->
+      <a href="site-cosmic/index.html" class="card">
+        <div class="card__preview preview-cosmic"></div>
+        <div class="card__body">
+          <div class="card__number">08</div>
+          <h3 class="card__title">NEBULA — 宇宙が示すあなたの今日</h3>
+          <p class="card__desc">ディープパープル×ネオンピンク×シアン。グラスモーフィズム、グロー演出、星の流れるアニメーション。近未来SF感の宇宙占い。</p>
+          <div class="card__tags">
+            <span class="tag">Cosmic-Neon</span>
+            <span class="tag">デイリー宇宙鑑定</span>
+            <span class="tag">Sanctuary / Nebula風</span>
+          </div>
+        </div>
+      </a>
+
     </div>
   </section>
 
@@ -595,9 +645,9 @@
           <div class="research-item__desc">Co-Star、Sanctuary、Cafe Astrology、Chani Nicholas、Labyrinthos、Nebula ほか</div>
         </div>
         <div class="research-item">
-          <div class="research-item__count">7</div>
+          <div class="research-item__count">8</div>
           <div class="research-item__category">Design Patterns</div>
-          <div class="research-item__desc">Mystical-Dark、Pop-Kawaii、Luxury-Elegant、Minimalist-Modern、Traditional-Japanese、Pastel-Soft、Bold-Editorial</div>
+          <div class="research-item__desc">Mystical-Dark、Pop-Kawaii、Luxury-Elegant、Minimalist-Modern、Traditional-Japanese、Pastel-Soft、Bold-Editorial、Cosmic-Neon</div>
         </div>
       </div>
     </div>
@@ -605,7 +655,7 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <p class="footer__text">Fortune Telling Portfolio &mdash; 50+ sites analyzed, 7 design patterns, 7 sites built.</p>
+    <p class="footer__text">Fortune Telling Portfolio &mdash; 50+ sites analyzed, 8 design patterns, 8 sites built.</p>
   </footer>
 
 </body>

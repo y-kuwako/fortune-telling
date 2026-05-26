@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEBULA — 宇宙が示すあなたの今日</title>
+  <meta name="description" content="ネオン×グラスモーフィズムの近未来占い。12星座のデイリー宇宙鑑定。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Cosmic Background Layers -->
+  <div class="cosmos">
+    <div class="stars stars--1"></div>
+    <div class="stars stars--2"></div>
+    <div class="stars stars--3"></div>
+    <div class="nebula nebula--pink"></div>
+    <div class="nebula nebula--cyan"></div>
+    <div class="nebula nebula--purple"></div>
+    <div class="grid-floor"></div>
+  </div>
+
+  <div class="container">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header__top">
+        <span class="brand">N E B U L A</span>
+        <span class="status">
+          <span class="status__dot"></span>
+          <span id="statusText">SYSTEM ONLINE</span>
+        </span>
+      </div>
+      <h1 class="title">
+        <span class="title__line title__line--cyan">COSMIC</span>
+        <span class="title__line title__line--pink">HOROSCOPE</span>
+      </h1>
+      <p class="subtitle">宇宙が示す、あなたの今日。</p>
+      <div class="meta">
+        <span class="meta__item">DATE <span id="currentDate">—</span></span>
+        <span class="meta__divider">/</span>
+        <span class="meta__item">LUNAR <span id="lunarPhase">—</span></span>
+        <span class="meta__divider">/</span>
+        <span class="meta__item">VIBE <span id="cosmicVibe">—</span></span>
+      </div>
+    </header>
+
+    <!-- Zodiac Selection -->
+    <main id="selectionView" class="view">
+      <div class="section-label">
+        <span class="section-label__line"></span>
+        <span class="section-label__text">SELECT YOUR SIGN</span>
+        <span class="section-label__line"></span>
+      </div>
+
+      <div class="grid">
+        <button class="sign" data-index="0">
+          <div class="sign__glyph">♈</div>
+          <div class="sign__ja">牡羊座</div>
+          <div class="sign__en">ARIES</div>
+          <div class="sign__period">03.21 — 04.19</div>
+        </button>
+        <button class="sign" data-index="1">
+          <div class="sign__glyph">♉</div>
+          <div class="sign__ja">牡牛座</div>
+          <div class="sign__en">TAURUS</div>
+          <div class="sign__period">04.20 — 05.20</div>
+        </button>
+        <button class="sign" data-index="2">
+          <div class="sign__glyph">♊</div>
+          <div class="sign__ja">双子座</div>
+          <div class="sign__en">GEMINI</div>
+          <div class="sign__period">05.21 — 06.21</div>
+        </button>
+        <button class="sign" data-index="3">
+          <div class="sign__glyph">♋</div>
+          <div class="sign__ja">蟹座</div>
+          <div class="sign__en">CANCER</div>
+          <div class="sign__period">06.22 — 07.22</div>
+        </button>
+        <button class="sign" data-index="4">
+          <div class="sign__glyph">♌</div>
+          <div class="sign__ja">獅子座</div>
+          <div class="sign__en">LEO</div>
+          <div class="sign__period">07.23 — 08.22</div>
+        </button>
+        <button class="sign" data-index="5">
+          <div class="sign__glyph">♍</div>
+          <div class="sign__ja">乙女座</div>
+          <div class="sign__en">VIRGO</div>
+          <div class="sign__period">08.23 — 09.22</div>
+        </button>
+        <button class="sign" data-index="6">
+          <div class="sign__glyph">♎</div>
+          <div class="sign__ja">天秤座</div>
+          <div class="sign__en">LIBRA</div>
+          <div class="sign__period">09.23 — 10.23</div>
+        </button>
+        <button class="sign" data-index="7">
+          <div class="sign__glyph">♏</div>
+          <div class="sign__ja">蠍座</div>
+          <div class="sign__en">SCORPIO</div>
+          <div class="sign__period">10.24 — 11.22</div>
+        </button>
+        <button class="sign" data-index="8">
+          <div class="sign__glyph">♐</div>
+          <div class="sign__ja">射手座</div>
+          <div class="sign__en">SAGITTARIUS</div>
+          <div class="sign__period">11.23 — 12.21</div>
+        </button>
+        <button class="sign" data-index="9">
+          <div class="sign__glyph">♑</div>
+          <div class="sign__ja">山羊座</div>
+          <div class="sign__en">CAPRICORN</div>
+          <div class="sign__period">12.22 — 01.19</div>
+        </button>
+        <button class="sign" data-index="10">
+          <div class="sign__glyph">♒</div>
+          <div class="sign__ja">水瓶座</div>
+          <div class="sign__en">AQUARIUS</div>
+          <div class="sign__period">01.20 — 02.18</div>
+        </button>
+        <button class="sign" data-index="11">
+          <div class="sign__glyph">♓</div>
+          <div class="sign__ja">魚座</div>
+          <div class="sign__en">PISCES</div>
+          <div class="sign__period">02.19 — 03.20</div>
+        </button>
+      </div>
+    </main>
+
+    <!-- Result Display -->
+    <section id="resultView" class="view hidden">
+      <div class="result">
+
+        <div class="result__head">
+          <div class="result__glyph" id="resultGlyph"></div>
+          <div class="result__titles">
+            <div class="result__en" id="resultEn"></div>
+            <div class="result__ja" id="resultName"></div>
+            <div class="result__period" id="resultPeriod"></div>
+          </div>
+        </div>
+
+        <!-- Cosmic Energy Gauge -->
+        <div class="panel">
+          <div class="panel__label">
+            <span>// COSMIC ENERGY</span>
+            <span class="panel__id">[ CE-01 ]</span>
+          </div>
+          <div class="energy">
+            <div class="energy__numbers">
+              <span class="energy__value" id="energyNumber">—</span>
+              <span class="energy__max">/ 100</span>
+            </div>
+            <div class="energy__bar">
+              <div class="energy__fill" id="energyBar"></div>
+            </div>
+            <div class="energy__readout" id="energyReadout">— — — — — — — — — —</div>
+          </div>
+        </div>
+
+        <!-- Categories Grid -->
+        <div class="panel">
+          <div class="panel__label">
+            <span>// LIFE METRICS</span>
+            <span class="panel__id">[ LM-03 ]</span>
+          </div>
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric__top">
+                <span class="metric__label">LOVE</span>
+                <span class="metric__stars" id="starsLove"></span>
+              </div>
+              <div class="metric__bar"><div class="metric__fill" data-key="love"></div></div>
+            </div>
+            <div class="metric">
+              <div class="metric__top">
+                <span class="metric__label">WORK</span>
+                <span class="metric__stars" id="starsWork"></span>
+              </div>
+              <div class="metric__bar"><div class="metric__fill" data-key="work"></div></div>
+            </div>
+            <div class="metric">
+              <div class="metric__top">
+                <span class="metric__label">MONEY</span>
+                <span class="metric__stars" id="starsMoney"></span>
+              </div>
+              <div class="metric__bar"><div class="metric__fill" data-key="money"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lucky Data -->
+        <div class="lucky-grid">
+          <div class="lucky">
+            <div class="lucky__label">LUCKY COLOR</div>
+            <div class="lucky__value" id="luckyColor">—</div>
+            <div class="lucky__swatch" id="luckySwatch"></div>
+          </div>
+          <div class="lucky">
+            <div class="lucky__label">LUCKY NUMBER</div>
+            <div class="lucky__value lucky__value--big" id="luckyNumber">—</div>
+          </div>
+          <div class="lucky">
+            <div class="lucky__label">LUCKY ITEM</div>
+            <div class="lucky__value" id="luckyItem">—</div>
+          </div>
+        </div>
+
+        <!-- Keywords -->
+        <div class="panel">
+          <div class="panel__label">
+            <span>// FREQUENCY KEYWORDS</span>
+            <span class="panel__id">[ FK-07 ]</span>
+          </div>
+          <div class="keywords" id="keywords"></div>
+        </div>
+
+        <!-- Message -->
+        <div class="panel panel--message">
+          <div class="panel__label">
+            <span>// TRANSMISSION</span>
+            <span class="panel__id">[ TX-12 ]</span>
+          </div>
+          <p class="message" id="fortuneMessage"></p>
+        </div>
+
+        <button class="back-btn" id="backLink">
+          <span class="back-btn__arrow">‹</span>
+          <span>BACK TO STELLAR MAP</span>
+        </button>
+
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>© NEBULA / COSMIC HOROSCOPE SYSTEM</span>
+      <span class="footer__sep">·</span>
+      <span>v 2.6 — STELLAR CORE</span>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
