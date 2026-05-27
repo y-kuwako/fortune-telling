@@ -742,7 +742,7 @@ function renderShareCard(result, pillarsData) {
   ctx.fillStyle = 'rgba(212, 160, 32, 0.6)';
   ctx.font = '10px sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('C E L E S T I A   A I   A N A L Y S I S', w / 2, 50);
+  ctx.fillText('天 推  A I   A N A L Y S I S', w / 2, 50);
 
   // Score
   const score = calcOverallScore(pillarsData);
@@ -809,7 +809,7 @@ function resetAnalysis() {
 function shareTwitter() {
   if (!currentResult) return;
   const text = encodeURIComponent(
-    `🌟 Celestia AI命術解析：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...\n`
+    `🌟 天推 AI AI命術解析：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...\n`
   );
   const url = encodeURIComponent(window.location.href);
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
@@ -818,7 +818,7 @@ function shareTwitter() {
 function shareLine() {
   if (!currentResult) return;
   const text = encodeURIComponent(
-    `🌟 Celestia AI命術解析：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...`
+    `🌟 天推 AI AI命術解析：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...`
   );
   window.open(`https://social-plugins.line.me/lineit/share?text=${text}`, '_blank');
 }

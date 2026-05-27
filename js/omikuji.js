@@ -1,5 +1,5 @@
 // ========================================
-// Omikuji (御神籤) - Celestia
+// Omikuji (御神籤) - 天推 AI
 // ========================================
 
 const FORTUNE_LEVELS = [
@@ -203,13 +203,13 @@ function resetOmikuji() {
 // Share
 function shareTwitter() {
   if (!currentResult) return;
-  const text = encodeURIComponent(`Celestiaのおみくじで「${currentResult.level.label}」が出ました！\n今日の運勢をチェック\n`);
+  const text = encodeURIComponent(`天推 AIのおみくじで「${currentResult.level.label}」が出ました！\n今日の運勢をチェック\n`);
   const url = encodeURIComponent(window.location.href);
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
 }
 
 function shareLine() {
   if (!currentResult) return;
-  const text = encodeURIComponent(`Celestiaのおみくじで「${currentResult.level.label}」が出ました！今日の運勢をチェック`);
+  const text = encodeURIComponent(`天推 AIのおみくじで「${currentResult.level.label}」が出ました！今日の運勢をチェック`);
   window.open(`https://social-plugins.line.me/lineit/share?text=${text}`, '_blank');
 }

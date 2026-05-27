@@ -1,5 +1,5 @@
 // ========================================
-// Compatibility Diagnosis (相性診断) - Celestia
+// Compatibility Diagnosis (相性診断) - 天推 AI
 // ========================================
 
 let currentDiagnosis = null;
@@ -283,7 +283,7 @@ function resetDiagnosis() {
 function shareTwitter() {
   if (!currentDiagnosis) return;
   const { name1, name2, scores, level } = currentDiagnosis;
-  const text = encodeURIComponent(`Celestiaの相性診断で${name1}と${name2}の相性は${scores.overall}%（${level}）でした！\n`);
+  const text = encodeURIComponent(`天推 AIの相性診断で${name1}と${name2}の相性は${scores.overall}%（${level}）でした！\n`);
   const url = encodeURIComponent(window.location.href);
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
 }
@@ -291,6 +291,6 @@ function shareTwitter() {
 function shareLine() {
   if (!currentDiagnosis) return;
   const { name1, name2, scores, level } = currentDiagnosis;
-  const text = encodeURIComponent(`Celestiaの相性診断で${name1}と${name2}の相性は${scores.overall}%（${level}）でした！`);
+  const text = encodeURIComponent(`天推 AIの相性診断で${name1}と${name2}の相性は${scores.overall}%（${level}）でした！`);
   window.open(`https://social-plugins.line.me/lineit/share?text=${text}`, '_blank');
 }

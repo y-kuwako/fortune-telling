@@ -1,5 +1,5 @@
 // ========================================
-// Seimei Handan (姓名判断) - Celestia
+// Seimei Handan (姓名判断) - 天推 AI
 // ========================================
 
 // --- Simplified stroke count map for common kanji ---
@@ -342,7 +342,7 @@ function shareTwitter() {
   if (!currentResult) return;
   const { sei, mei, fiveKaku } = currentResult;
   const fortune = getFortuneLevel(fiveKaku.soukaku.strokes);
-  const text = encodeURIComponent(`Celestia姓名判断の結果：「${sei}${mei}」さんの総格は${fiveKaku.soukaku.strokes}画で${fortune.level}！\n`);
+  const text = encodeURIComponent(`天推 AI姓名判断の結果：「${sei}${mei}」さんの総格は${fiveKaku.soukaku.strokes}画で${fortune.level}！\n`);
   const url = encodeURIComponent(window.location.href);
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
 }
@@ -351,6 +351,6 @@ function shareLine() {
   if (!currentResult) return;
   const { sei, mei, fiveKaku } = currentResult;
   const fortune = getFortuneLevel(fiveKaku.soukaku.strokes);
-  const text = encodeURIComponent(`Celestia姓名判断の結果：「${sei}${mei}」さんの総格は${fiveKaku.soukaku.strokes}画で${fortune.level}！`);
+  const text = encodeURIComponent(`天推 AI姓名判断の結果：「${sei}${mei}」さんの総格は${fiveKaku.soukaku.strokes}画で${fortune.level}！`);
   window.open(`https://social-plugins.line.me/lineit/share?text=${text}`, '_blank');
 }

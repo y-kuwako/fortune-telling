@@ -1,5 +1,5 @@
 // ========================================
-// Tarot Card Reading - Celestia
+// Tarot Card Reading - 天推 AI
 // ========================================
 
 const TAROT_CARDS = [
@@ -281,13 +281,13 @@ function resetTarot() {
 // Share
 function shareTwitter() {
   if (!selectedCard) return;
-  const text = encodeURIComponent(`Celestiaのタロット占いで「${selectedCard.name}」が出ました。\n${selectedCard.message.slice(0, 60)}...\n`);
+  const text = encodeURIComponent(`天推 AIのタロット占いで「${selectedCard.name}」が出ました。\n${selectedCard.message.slice(0, 60)}...\n`);
   const url = encodeURIComponent(window.location.href);
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
 }
 
 function shareLine() {
   if (!selectedCard) return;
-  const text = encodeURIComponent(`Celestiaのタロット占いで「${selectedCard.name}」が出ました。\n${selectedCard.message.slice(0, 60)}...`);
+  const text = encodeURIComponent(`天推 AIのタロット占いで「${selectedCard.name}」が出ました。\n${selectedCard.message.slice(0, 60)}...`);
   window.open(`https://social-plugins.line.me/lineit/share?text=${text}`, '_blank');
 }
