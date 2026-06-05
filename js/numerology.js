@@ -1,5 +1,5 @@
 // ========================================
-// Numerology (数秘術) - 天推 AI
+// Numerology (数秘術) - x-TEN
 // ========================================
 
 // --- Life Path Number Calculation ---
@@ -255,13 +255,13 @@ function resetNumerology() {
 // Share
 function shareTwitter() {
   if (!currentResult) return;
-  const text = encodeURIComponent(`天推 AI数秘術の結果：私の運命数は「${currentResult.lifePathNumber}」！\n${currentResult.reading.title}\n`);
+  const text = encodeURIComponent(`x-TEN数秘術の結果：私の運命数は「${currentResult.lifePathNumber}」！\n${currentResult.reading.title}\n`);
   const url = encodeURIComponent(window.location.href);
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
 }
 
 function shareLine() {
   if (!currentResult) return;
-  const text = encodeURIComponent(`天推 AI数秘術の結果：私の運命数は「${currentResult.lifePathNumber}」！\n${currentResult.reading.title}`);
+  const text = encodeURIComponent(`x-TEN数秘術の結果：私の運命数は「${currentResult.lifePathNumber}」！\n${currentResult.reading.title}`);
   window.open(`https://social-plugins.line.me/lineit/share?text=${text}`, '_blank');
 }

@@ -1,0 +1,721 @@
+/* ==========================================================================
+   x-TEN — Cyber-Sacred Minimalism Theme
+   astrology-v2.html 専用の上書きスタイル
+   ----------------------------------------------------------------------------
+   設計思想:
+   - 占いの神秘性 × データサイエンスの冷徹な知性
+   - パステル禁止 / 星イラスト禁止 / 手書き風フォント禁止
+   - 漆黒 (#020202) を Base に、Metallic Gold と Cyber Cyan で「特異点」と
+     「データリンク」を表現する
+   - 数値はモノスペース (JetBrains Mono) で「リアルタイム計算」感を出す
+   ========================================================================== */
+
+/* --- Palette overrides: 既存変数を x-TEN 用に再定義 ------------------------ */
+:root {
+  /* x-TEN Core */
+  --xt-base:        #020202;
+  --xt-surface:     #0a0a0b;
+  --xt-surface-2:   #111114;
+  --xt-line:        rgba(212, 175, 55, 0.18);
+  --xt-line-strong: rgba(212, 175, 55, 0.45);
+  --xt-line-cyber:  rgba(0, 240, 255, 0.32);
+
+  --xt-gold:        #d4af37;
+  --xt-gold-soft:   #e8c95a;
+  --xt-gold-dim:    rgba(212, 175, 55, 0.55);
+
+  --xt-cyan:        #00f0ff;
+  --xt-cyan-dim:    rgba(0, 240, 255, 0.5);
+
+  --xt-purple:      #a855f7;  /* Focus */
+  --xt-red:         #ef4444;  /* Aggressive */
+  --xt-emerald:     #10b981;  /* Resilience */
+
+  --xt-text:        #f4f4f5;
+  --xt-text-mute:   #8b8b94;
+  --xt-text-faint:  #5a5a64;
+
+  /* 既存変数を x-TEN へ寄せる（広範囲に効く） */
+  --navy:           var(--xt-surface);
+  --navy-deep:      var(--xt-base);
+  --navy-light:     #1a1a1f;
+  --cream:          var(--xt-base);
+  --cream-dark:     var(--xt-surface);
+  --gold:           var(--xt-gold);
+  --gold-light:     var(--xt-gold-soft);
+  --gold-dark:      #a8861f;
+  --text-dark:      var(--xt-text);
+  --text-light:     var(--xt-text);
+  --text-muted-dark: var(--xt-text-mute);
+  --text-muted-light: var(--xt-text-mute);
+  --border-light:   var(--xt-line);
+  --border-dark:    var(--xt-line-strong);
+
+  --accent-orange:  var(--xt-gold);
+  --accent-red:     var(--xt-red);
+  --accent-pink:    var(--xt-purple);
+  --accent-teal:    var(--xt-cyan);
+  --accent-green:   var(--xt-emerald);
+  --accent-yellow:  var(--xt-gold);
+  --accent-blue:    var(--xt-cyan);
+}
+
+/* --- Typography: 計測値・データはモノスペースに ---------------------------- */
+html,
+body {
+  background: var(--xt-base);
+  color: var(--xt-text);
+  font-family: "Inter", "Noto Sans JP", "Helvetica Neue", system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11", "tnum";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+h1, h2, h3, .page-hero__title, .astro-result__title, .plan-modal__title,
+.coach-modal__title, .synclog-modal__title, .auth-modal__title {
+  font-family: "Playfair Display", "Inter", serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.layer-tabs__tab, .nav__link, .plan-badge, .sync-log-btn,
+.footer__logo, .deco-divider, .section-divider,
+.share-section__label, .layer-tabs__label-sub,
+.result__box-title, .element-chart__title, .daily-advice__label,
+.layer-tabs__icon, .free-score, .plan-card__name {
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  letter-spacing: 0.18em;
+}
+
+/* 数値・スコア・パラメータはモノスペース */
+.plan-card__price, .free-score__value, .free-score__score,
+.element-bar__value, .pillars-chart__value, .pillars-chart__count,
+.layer-tabs__icon, .xt-num, .vedic-info__value,
+input[type="text"], input[type="email"], textarea, select,
+.synclog-month-nav__current {
+  font-family: "JetBrains Mono", "Roboto Mono", ui-monospace, "SF Mono", monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Global surface: 漆黒の宇宙 + scanline ------------------------------- */
+body {
+  background:
+    radial-gradient(ellipse at 20% -10%, rgba(212,175,55,0.07), transparent 60%),
+    radial-gradient(ellipse at 90% 110%, rgba(0,240,255,0.06), transparent 55%),
+    var(--xt-base);
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* 薄いスキャンライン（運用時にちらつかせず、静的に重ねる） */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.012) 0px,
+    rgba(255, 255, 255, 0.012) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: overlay;
+}
+
+/* セクション背景は base / surface に統一 */
+.section-dark { background: var(--xt-base) !important; color: var(--xt-text) !important; }
+.section-light { background: var(--xt-surface) !important; color: var(--xt-text) !important; }
+.container { position: relative; z-index: 2; }
+
+/* --- Navigation: タクティカルバー ----------------------------------------- */
+.nav {
+  background: rgba(10, 10, 11, 0.78) !important;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--xt-line);
+  box-shadow: 0 1px 0 rgba(0, 240, 255, 0.06);
+}
+
+.nav__link {
+  color: var(--xt-text-mute) !important;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.72rem !important;
+  position: relative;
+  transition: color 180ms ease;
+}
+.nav__link:hover { color: var(--xt-gold-soft) !important; }
+.nav__link--active {
+  color: var(--xt-gold) !important;
+}
+.nav__link--active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 28px;
+  height: 1px;
+  background: var(--xt-gold);
+  box-shadow: 0 0 8px var(--xt-gold);
+  transform: translateX(-50%);
+}
+
+.sync-log-btn,
+.plan-badge {
+  background: var(--xt-surface) !important;
+  border: 1px solid var(--xt-line) !important;
+  color: var(--xt-text-mute) !important;
+  border-radius: 2px !important;
+  letter-spacing: 0.18em;
+  font-family: "JetBrains Mono", monospace !important;
+}
+.plan-badge__value { color: var(--xt-gold) !important; }
+.sync-log-btn:hover,
+.plan-badge:hover {
+  border-color: var(--xt-line-strong) !important;
+  color: var(--xt-text) !important;
+}
+
+/* --- Hero: x-TEN ブランドヘッダ ------------------------------------------ */
+.page-hero {
+  padding: 80px 0 56px;
+  text-align: center;
+  position: relative;
+}
+.page-hero__title {
+  color: var(--xt-text) !important;
+  font-size: clamp(2rem, 4.8vw, 3.4rem) !important;
+  letter-spacing: 0.04em;
+}
+.page-hero__title::before {
+  content: "x — TEN  /  TACTICAL ANALYSIS ENGINE";
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.5em;
+  color: var(--xt-gold);
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+.page-hero__desc {
+  color: var(--xt-text-mute) !important;
+  letter-spacing: 0.06em;
+  line-height: 1.9;
+}
+
+.deco-divider,
+.section-divider {
+  color: var(--xt-line-strong) !important;
+  letter-spacing: 0.6em;
+  font-size: 0.6rem;
+  opacity: 0.75;
+}
+
+/* --- Form: ガラス + ゴールド輪郭 ------------------------------------------ */
+.form-section {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005)) !important;
+  border: 1px solid var(--xt-line) !important;
+  border-radius: 4px !important;
+  padding: 36px !important;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+.form-section::before {
+  content: "// INPUT VECTOR";
+  position: absolute;
+  top: -10px;
+  left: 24px;
+  background: var(--xt-base);
+  padding: 0 10px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--xt-gold-dim);
+}
+
+.form-group__label {
+  color: var(--xt-text) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.form-group__select,
+.auth-form__input,
+.coach-dialogue__input {
+  background: var(--xt-surface-2) !important;
+  color: var(--xt-text) !important;
+  border: 1px solid var(--xt-line) !important;
+  border-radius: 2px !important;
+  font-family: "JetBrains Mono", monospace !important;
+  transition: border-color 160ms ease, box-shadow 160ms ease !important;
+}
+.form-group__select:focus,
+.auth-form__input:focus,
+.coach-dialogue__input:focus {
+  outline: none !important;
+  border-color: var(--xt-cyan-dim) !important;
+  box-shadow: 0 0 0 1px var(--xt-cyan-dim), 0 0 16px rgba(0,240,255,0.15) !important;
+}
+
+.gender-btn {
+  background: var(--xt-surface-2) !important;
+  border: 1px solid var(--xt-line) !important;
+  color: var(--xt-text-mute) !important;
+  border-radius: 2px !important;
+  letter-spacing: 0.2em !important;
+  font-family: "JetBrains Mono", monospace !important;
+}
+.gender-btn:hover,
+.gender-btn--active {
+  border-color: var(--xt-gold) !important;
+  color: var(--xt-gold) !important;
+  background: rgba(212,175,55,0.05) !important;
+}
+
+/* --- Buttons --------------------------------------------------------------- */
+.btn,
+.btn--dark,
+.btn--outline-light {
+  background: linear-gradient(180deg, var(--xt-gold) 0%, var(--xt-gold-soft) 100%) !important;
+  color: var(--xt-base) !important;
+  border: none !important;
+  border-radius: 2px !important;
+  font-family: "Inter", sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase;
+  padding: 16px 36px !important;
+  position: relative;
+  box-shadow: 0 0 0 1px var(--xt-gold), 0 4px 24px rgba(212,175,55,0.18);
+  transition: transform 140ms ease, box-shadow 160ms ease !important;
+}
+.btn--outline-light {
+  background: transparent !important;
+  color: var(--xt-gold) !important;
+  box-shadow: 0 0 0 1px var(--xt-gold);
+}
+.btn:hover, .btn--dark:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px var(--xt-gold), 0 6px 32px rgba(212,175,55,0.32);
+}
+
+/* --- Loading: データ走査風 ------------------------------------------------- */
+.loading-v2 {
+  color: var(--xt-text) !important;
+}
+.loading-v2__ring {
+  border: 1px solid var(--xt-line) !important;
+  border-top-color: var(--xt-cyan) !important;
+  border-right-color: var(--xt-gold) !important;
+  box-shadow: 0 0 24px rgba(0,240,255,0.18);
+}
+.loading-v2__step-dot {
+  background: var(--xt-line-strong) !important;
+}
+.loading-v2__step--active .loading-v2__step-dot,
+.loading-v2__step--done .loading-v2__step-dot {
+  background: var(--xt-cyan) !important;
+  box-shadow: 0 0 8px var(--xt-cyan-dim);
+}
+.loading-v2__step-text {
+  color: var(--xt-text-mute) !important;
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 0.14em;
+}
+.loading-v2__step--active .loading-v2__step-text {
+  color: var(--xt-gold) !important;
+}
+
+/* --- Result panels --------------------------------------------------------- */
+.astro-result__title {
+  color: var(--xt-text) !important;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem) !important;
+}
+.astro-result__subtitle {
+  color: var(--xt-text-mute) !important;
+  letter-spacing: 0.18em;
+}
+.astro-result__symbol {
+  color: var(--xt-gold) !important;
+  filter: drop-shadow(0 0 12px rgba(212,175,55,0.4));
+}
+
+.result__box,
+.vedic-info,
+.element-chart,
+.daily-advice,
+.hit-experience,
+.contradiction,
+.ai-character,
+.hourly-chart,
+.todo-list,
+.free-score,
+.pillars-chart {
+  background: var(--xt-surface) !important;
+  border: 1px solid var(--xt-line) !important;
+  border-radius: 4px !important;
+  color: var(--xt-text) !important;
+  position: relative;
+}
+.result__box--highlight {
+  border-color: var(--xt-line-strong) !important;
+  box-shadow: 0 0 0 1px rgba(212,175,55,0.18), 0 0 32px rgba(212,175,55,0.06);
+}
+.result__box-title,
+.element-chart__title,
+.daily-advice__label {
+  color: var(--xt-gold) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.3em !important;
+  text-transform: uppercase;
+}
+.result__box-text,
+.daily-advice__text {
+  color: var(--xt-text) !important;
+  line-height: 1.85;
+  letter-spacing: 0.04em;
+}
+
+/* --- Layer Tabs ------------------------------------------------------------ */
+.layer-tabs {
+  border: 1px solid var(--xt-line) !important;
+  background: var(--xt-surface) !important;
+  border-radius: 2px !important;
+  padding: 4px !important;
+  gap: 4px !important;
+}
+.layer-tabs__tab {
+  background: transparent !important;
+  color: var(--xt-text-mute) !important;
+  border: 1px solid transparent !important;
+  border-radius: 2px !important;
+  letter-spacing: 0.3em !important;
+  font-family: "Inter", sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.layer-tabs__tab--active {
+  background: rgba(212,175,55,0.08) !important;
+  color: var(--xt-gold) !important;
+  border-color: var(--xt-line-strong) !important;
+  box-shadow: inset 0 0 0 1px rgba(212,175,55,0.25);
+}
+.layer-tabs__label-sub {
+  color: var(--xt-text-faint) !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.18em !important;
+}
+
+/* --- Share / Footer -------------------------------------------------------- */
+.share-section__label,
+.footer__logo {
+  color: var(--xt-gold) !important;
+  letter-spacing: 0.6em;
+}
+.share__btn {
+  background: var(--xt-surface) !important;
+  color: var(--xt-gold) !important;
+  border: 1px solid var(--xt-line-strong) !important;
+}
+.share__btn:hover {
+  background: var(--xt-gold) !important;
+  color: var(--xt-base) !important;
+  box-shadow: 0 0 18px rgba(212,175,55,0.4);
+}
+
+.footer {
+  background: var(--xt-base) !important;
+  border-top: 1px solid var(--xt-line);
+  color: var(--xt-text-mute) !important;
+  padding: 56px 24px !important;
+}
+.footer__text { color: var(--xt-text-faint) !important; font-family: "JetBrains Mono", monospace; letter-spacing: 0.18em; font-size: 0.7rem; }
+.footer__links a { color: var(--xt-text-mute) !important; letter-spacing: 0.18em; }
+.footer__links a:hover { color: var(--xt-gold) !important; }
+
+/* --- Modals: ガラス + ゴールド輪郭 ----------------------------------------- */
+.plan-modal__panel,
+.coach-modal__panel,
+.synclog-modal__panel,
+.auth-modal__panel {
+  background: linear-gradient(180deg, rgba(10,10,11,0.96), rgba(2,2,2,0.96)) !important;
+  border: 1px solid var(--xt-line-strong) !important;
+  border-radius: 4px !important;
+  color: var(--xt-text) !important;
+  box-shadow: 0 0 0 1px rgba(212,175,55,0.12), 0 30px 80px rgba(0,0,0,0.7);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+.plan-modal__backdrop,
+.coach-modal__backdrop,
+.synclog-modal__backdrop,
+.auth-modal__backdrop {
+  background: rgba(0,0,0,0.78) !important;
+}
+
+.plan-card {
+  background: var(--xt-surface) !important;
+  border: 1px solid var(--xt-line) !important;
+  border-radius: 2px !important;
+  color: var(--xt-text) !important;
+}
+.plan-card--accent {
+  border-color: var(--xt-gold) !important;
+  box-shadow: 0 0 0 1px var(--xt-gold), 0 0 36px rgba(212,175,55,0.15);
+}
+.plan-card--premium {
+  border-color: var(--xt-cyan-dim) !important;
+  box-shadow: 0 0 0 1px var(--xt-cyan-dim), 0 0 36px rgba(0,240,255,0.12);
+}
+.plan-card__name {
+  color: var(--xt-gold) !important;
+  letter-spacing: 0.35em;
+}
+.plan-card__price {
+  color: var(--xt-text) !important;
+}
+.plan-card__btn {
+  background: transparent !important;
+  border: 1px solid var(--xt-gold) !important;
+  color: var(--xt-gold) !important;
+  border-radius: 2px !important;
+  letter-spacing: 0.22em !important;
+  font-family: "Inter", sans-serif !important;
+  text-transform: uppercase;
+}
+.plan-card__btn--accent {
+  background: linear-gradient(180deg, var(--xt-gold), var(--xt-gold-soft)) !important;
+  color: var(--xt-base) !important;
+}
+.plan-card__btn--premium {
+  background: transparent !important;
+  border-color: var(--xt-cyan) !important;
+  color: var(--xt-cyan) !important;
+}
+
+/* --- Plan card 拡張: メタ / タグライン / サブネーム ---------------------- */
+.plan-card__meta {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  color: var(--xt-text-faint);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.plan-card__name-sub {
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.32em;
+  color: var(--xt-text-mute);
+  margin-top: 4px;
+  font-weight: 400;
+}
+.plan-card__tagline {
+  font-family: "Playfair Display", serif;
+  font-size: 0.95rem;
+  color: var(--xt-text);
+  margin: 6px 0 14px;
+  padding: 8px 10px;
+  border-top: 1px dashed var(--xt-line);
+  border-bottom: 1px dashed var(--xt-line);
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+.plan-card--accent  .plan-card__tagline { color: var(--xt-gold);  border-color: var(--xt-line-strong); }
+.plan-card--premium .plan-card__tagline { color: var(--xt-cyan);  border-color: var(--xt-cyan-dim); }
+
+/* --- ============================================================ ---
+       HACK ANALYTICS — 円環レーダーチャート (天体軌道風)
+   --- ============================================================ --- */
+.xt-hack-radar {
+  background: var(--xt-surface) !important;
+  border: 1px solid var(--xt-line-strong) !important;
+  border-radius: 4px !important;
+  padding: 28px 24px 32px !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.xt-hack-radar::before {
+  content: "// HACK ANALYTICS";
+  position: absolute;
+  top: -10px;
+  left: 24px;
+  background: var(--xt-base);
+  padding: 0 10px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--xt-gold);
+}
+
+.xt-hack-radar__head {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px dashed var(--xt-line);
+  padding-bottom: 10px;
+}
+.xt-hack-radar__title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.25rem;
+  color: var(--xt-text);
+  letter-spacing: 0.04em;
+}
+.xt-hack-radar__date {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--xt-text-mute);
+}
+
+.xt-hack-radar__stage {
+  position: relative;
+  width: min(100%, 380px);
+  aspect-ratio: 1 / 1;
+}
+.xt-hack-radar__stage svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+/* SVG ストローク色（class 制御で再利用） */
+.xt-orbit-ring     { fill: none; stroke: var(--xt-line); stroke-width: 1; }
+.xt-orbit-axis     { stroke: var(--xt-line); stroke-width: 1; stroke-dasharray: 2 4; }
+.xt-orbit-tick     { stroke: var(--xt-line-strong); stroke-width: 1; }
+.xt-orbit-label    { fill: var(--xt-text-mute); font-family: "JetBrains Mono", monospace; font-size: 9px; letter-spacing: 0.22em; }
+.xt-orbit-cardinal { fill: var(--xt-gold); font-family: "JetBrains Mono", monospace; font-size: 9px; letter-spacing: 0.3em; }
+
+.xt-orbit-data {
+  fill: rgba(0, 240, 255, 0.08);
+  stroke: var(--xt-cyan);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px rgba(0,240,255,0.45));
+}
+.xt-orbit-node {
+  stroke: var(--xt-base);
+  stroke-width: 1.5;
+  fill: var(--xt-cyan);
+  filter: drop-shadow(0 0 8px rgba(0,240,255,0.6));
+}
+.xt-orbit-node--focus      { fill: var(--xt-purple);  filter: drop-shadow(0 0 8px rgba(168,85,247,0.6)); }
+.xt-orbit-node--aggressive { fill: var(--xt-red);     filter: drop-shadow(0 0 8px rgba(239,68,68,0.6)); }
+.xt-orbit-node--resilience { fill: var(--xt-emerald); filter: drop-shadow(0 0 8px rgba(16,185,129,0.6)); }
+
+.xt-orbit-planet {
+  fill: var(--xt-gold);
+  filter: drop-shadow(0 0 6px rgba(212,175,55,0.6));
+}
+
+.xt-orbit-center-title {
+  fill: var(--xt-text-mute);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+.xt-orbit-center-value {
+  fill: var(--xt-gold);
+  font-family: "Playfair Display", serif;
+  font-size: 28px;
+  letter-spacing: 0.02em;
+}
+
+.xt-hack-radar__legend {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+.xt-hack-radar__metric {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--xt-line);
+  border-radius: 2px;
+  padding: 12px;
+  text-align: center;
+}
+.xt-hack-radar__metric-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  color: var(--xt-text-mute);
+  text-transform: uppercase;
+}
+.xt-hack-radar__metric-value {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.4rem;
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.xt-hack-radar__metric[data-metric="focus"]      .xt-hack-radar__metric-value { color: var(--xt-purple); }
+.xt-hack-radar__metric[data-metric="aggressive"] .xt-hack-radar__metric-value { color: var(--xt-red); }
+.xt-hack-radar__metric[data-metric="resilience"] .xt-hack-radar__metric-value { color: var(--xt-emerald); }
+.xt-hack-radar__metric-bar {
+  height: 2px;
+  background: var(--xt-line);
+  margin-top: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.xt-hack-radar__metric-bar > i {
+  position: absolute;
+  inset: 0 100% 0 0;
+  background: currentColor;
+  transition: right 600ms cubic-bezier(.22,.61,.36,1);
+}
+.xt-hack-radar__metric[data-metric="focus"]      .xt-hack-radar__metric-bar > i { color: var(--xt-purple); }
+.xt-hack-radar__metric[data-metric="aggressive"] .xt-hack-radar__metric-bar > i { color: var(--xt-red); }
+.xt-hack-radar__metric[data-metric="resilience"] .xt-hack-radar__metric-bar > i { color: var(--xt-emerald); }
+
+.xt-hack-radar__caption {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  color: var(--xt-text-faint);
+  text-align: center;
+  padding-top: 4px;
+  border-top: 1px dashed var(--xt-line);
+  width: 100%;
+}
+.xt-hack-radar__caption strong {
+  color: var(--xt-gold);
+  letter-spacing: 0.22em;
+  font-weight: 500;
+}
+
+/* --- Brand mark (footer) -------------------------------------------------- */
+.xt-brand {
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+.xt-brand sup {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.55em;
+  color: var(--xt-cyan);
+  margin-left: 4px;
+  letter-spacing: 0.2em;
+  vertical-align: super;
+}
+
+/* --- Responsive ------------------------------------------------------------ */
+@media (max-width: 640px) {
+  .form-section { padding: 24px 18px !important; }
+  .xt-hack-radar__legend { grid-template-columns: 1fr; }
+  .page-hero { padding: 56px 0 36px; }
+}

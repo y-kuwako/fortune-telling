@@ -742,7 +742,7 @@ function renderShareCard(result, pillarsData) {
   ctx.fillStyle = 'rgba(212, 160, 32, 0.6)';
   ctx.font = '10px sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('天 推  A I   A N A L Y S I S', w / 2, 50);
+  ctx.fillText('x — T E N   A I   A N A L Y S I S', w / 2, 50);
 
   // Score
   const score = calcOverallScore(pillarsData);
@@ -809,7 +809,7 @@ function resetAnalysis() {
 function shareTwitter() {
   if (!currentResult) return;
   const text = encodeURIComponent(
-    `🌟 天推 AI AI命術解析：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...\n`
+    `🌟 x-TEN AI命術解析：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...\n`
   );
   const url = encodeURIComponent(window.location.href);
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
@@ -818,7 +818,7 @@ function shareTwitter() {
 function shareLine() {
   if (!currentResult) return;
   const text = encodeURIComponent(
-    `🌟 天推 AI AI命術解析：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...`
+    `🌟 x-TEN AI命術解析：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...`
   );
   window.open(`https://social-plugins.line.me/lineit/share?text=${text}`, '_blank');
 }
@@ -1103,7 +1103,7 @@ function openAuthModal({ targetPlan } = {}) {
   const lead = document.getElementById('auth-modal-lead');
   if (lead && targetPlan) {
     const def = PLAN_DEFS[targetPlan];
-    lead.innerHTML = `<strong>${def.label}（${def.priceLabel}）</strong>のご利用には<br>簡単なアカウント登録が必要です。`;
+    lead.innerHTML = `<strong>${def.label}（${def.priceLabel}${def.priceUnit || ''}）</strong>のご利用には<br>簡単なアカウント登録が必要です。`;
   } else if (lead) {
     lead.innerHTML = 'BASIC・PREMIUM プランをご利用には<br>簡単なアカウント登録が必要です。';
   }

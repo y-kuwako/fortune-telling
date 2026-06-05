@@ -1,5 +1,5 @@
 // ========================================
-// Four Pillars × Indian Astrology - 天推 AI
+// Four Pillars × Indian Astrology - x-TEN
 // ========================================
 
 // --- 四柱推命: 天干・地支 ---
@@ -299,13 +299,13 @@ function resetAstrology() {
 // Share
 function shareTwitter() {
   if (!currentResult) return;
-  const text = encodeURIComponent(`🌟 天推 AIの命術占い結果：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...\n`);
+  const text = encodeURIComponent(`🌟 x-TENの命術占い結果：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...\n`);
   const url = encodeURIComponent(window.location.href);
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
 }
 
 function shareLine() {
   if (!currentResult) return;
-  const text = encodeURIComponent(`🌟 天推 AIの命術占い結果：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...`);
+  const text = encodeURIComponent(`🌟 x-TENの命術占い結果：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...`);
   window.open(`https://social-plugins.line.me/lineit/share?text=${text}`, '_blank');
 }

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fortune Telling Portfolio - 占いサイトコレクション</title>
-  <meta name="description" content="7つの異なるデザインテイストで作られた占いサイトのポートフォリオ。50以上の占いサイトを調査・分析し、主要デザインパターンを網羅。">
+  <title>x-TEN（エクステン） — 運命を10倍速で攻略する戦略エンジン</title>
+  <meta name="description" content="x-TEN（エクステン）は、AIが四柱推命×インド占星術を統合解析する次世代戦略エンジン。あなただけの最強「TODOリスト」で運命を10倍速で攻略する。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -46,19 +46,135 @@
 
     .header__title {
       font-family: 'Playfair Display', serif;
-      font-size: 2.4rem;
+      font-size: 3.2rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+      line-height: 1.05;
+    }
+
+    .header__title-ruby {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.5em;
+      color: var(--muted);
+      margin-top: 12px;
+      text-transform: uppercase;
     }
 
     .header__subtitle {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--muted);
       font-weight: 300;
-      max-width: 400px;
+      max-width: 520px;
       margin: 0 auto;
-      line-height: 1.8;
+      line-height: 1.95;
+      letter-spacing: 0.04em;
+    }
+
+    /* --- Header plan navigation ---------------------------------------- */
+    .header__plans {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Today: 主アクション。タクティカル・ゴールドの大型リンク */
+    .header__plan-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 44px;
+      background: #020202;
+      color: #d4af37;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      border: 1px solid #d4af37;
+      border-radius: 2px;
+      box-shadow:
+        0 0 0 1px rgba(212,175,55,0.4),
+        0 8px 32px rgba(212,175,55,0.18);
+      transition: transform 160ms ease, box-shadow 200ms ease, color 160ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .header__plan-primary::before {
+      content: '> ';
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: rgba(212,175,55,0.7);
+    }
+    .header__plan-primary::after {
+      content: 'NOW';
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.4em;
+      color: rgba(255,255,255,0.5);
+      padding: 4px 8px;
+      border: 1px solid rgba(212,175,55,0.4);
+      border-radius: 2px;
+      margin-left: 6px;
+    }
+    .header__plan-primary:hover {
+      transform: translateY(-2px);
+      color: #fff;
+      box-shadow:
+        0 0 0 1px #d4af37,
+        0 12px 40px rgba(212,175,55,0.32);
+    }
+
+    /* 並列3つの secondary 内部リンク */
+    .header__plan-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .header__plan-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+    }
+    .header__plan-link::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: currentColor;
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+    .header__plan-link:hover {
+      color: #111;
+      border-color: #111;
+      background: #fff;
+    }
+    /* リンク別アクセント色（ホバーで現れる） */
+    .header__plan-link--1week:hover  { color: #b88a1a; border-color: #b88a1a; }
+    .header__plan-link--monthly:hover { color: #008999; border-color: #008999; }
+    .header__plan-link--yearly:hover  { color: #7a3eb8; border-color: #7a3eb8; }
+
+    @media (min-width: 640px) {
+      .header__plans { margin-top: 44px; gap: 20px; }
+      .header__plan-primary { font-size: 1.6rem; padding: 20px 56px; }
     }
 
     /* Stats bar */
@@ -224,7 +340,7 @@
       display: flex; align-items: center; justify-content: center;
     }
     .preview-mystical::after {
-      content: '天 推  A I';
+      content: 'x — T E N';
       font-family: 'Playfair Display', serif;
       color: rgba(201,169,110,0.7);
       font-size: 1.2rem;
@@ -424,8 +540,227 @@
 
     @media (min-width: 900px) {
       .header__title {
-        font-size: 3rem;
+        font-size: 4.2rem;
       }
+    }
+
+    /* ============================================================
+       占術ロジック配分マップ (Tactical Logic Map)
+       ライト基調ページの中に挿入するダーク・タクティカル島
+       ============================================================ */
+    .logic-map-section {
+      background:
+        radial-gradient(ellipse at 80% 0%, rgba(212,175,55,0.08), transparent 55%),
+        radial-gradient(ellipse at 20% 100%, rgba(0,240,255,0.06), transparent 50%),
+        #020202;
+      color: #f4f4f5;
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .logic-map-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        to bottom, rgba(255,255,255,0.012) 0 1px, transparent 1px 3px
+      );
+      pointer-events: none;
+    }
+    .logic-map-section__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .logic-map-section__label {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+    .logic-map-section__title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .logic-map-section__lead {
+      color: #8b8b94;
+      font-size: 0.9rem;
+      max-width: 640px;
+      line-height: 1.95;
+      letter-spacing: 0.04em;
+      margin-bottom: 36px;
+    }
+
+    /* Matrix grid: モバイルはカード積み、デスクトップは表形式 */
+    .logic-map {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .logic-map__row {
+      display: grid;
+      grid-template-columns: 1fr;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(212,175,55,0.18);
+      border-radius: 3px;
+      padding: 18px 18px 14px;
+      position: relative;
+      transition: border-color 220ms ease, transform 220ms ease;
+    }
+    .logic-map__row:hover {
+      border-color: rgba(212,175,55,0.45);
+      transform: translateY(-2px);
+    }
+    .logic-map__row::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: currentColor;
+      opacity: 0.85;
+    }
+    .logic-map__row--free      { color: #8b8b94; }
+    .logic-map__row--today     { color: #d4af37; }   /* Metallic Gold = 勝負時 */
+    .logic-map__row--1week     { color: #e8c95a; }   /* Gold Soft */
+    .logic-map__row--shot      { color: #d4af37; }
+    .logic-map__row--basic     { color: #00f0ff; }   /* Cyber Cyan */
+    .logic-map__row--premium   { color: #a855f7; }   /* Purple = Focus */
+
+    /* Scroll-margin: ヘッダーの固定位置を考慮（無くても動くが余白を確保） */
+    .logic-map__row { scroll-margin-top: 80px; }
+
+    /* セルラベル: モバイル用の見出し */
+    .logic-map__cell {
+      padding: 8px 0;
+      border-top: 1px dashed rgba(212,175,55,0.12);
+    }
+    .logic-map__cell:first-of-type { border-top: none; }
+
+    .logic-map__cell-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.32em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .logic-map__cell-value {
+      font-size: 0.88rem;
+      color: #f4f4f5;
+      line-height: 1.65;
+      letter-spacing: 0.02em;
+    }
+
+    /* Plan セルだけ強調 */
+    .logic-map__plan {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .logic-map__plan-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: currentColor;
+      letter-spacing: 0.04em;
+    }
+    .logic-map__plan-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+    }
+    .logic-map__plan-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: currentColor;
+      margin-left: auto;
+      letter-spacing: 0.06em;
+    }
+    .logic-map__plan-axis {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .logic-map__cta {
+      margin-top: 36px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .logic-map__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      background: linear-gradient(180deg, #d4af37, #e8c95a);
+      color: #020202;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      box-shadow: 0 0 0 1px #d4af37, 0 6px 24px rgba(212,175,55,0.25);
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+    .logic-map__btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 1px #d4af37, 0 8px 36px rgba(212,175,55,0.4);
+    }
+    .logic-map__btn--ghost {
+      background: transparent;
+      color: #d4af37;
+      box-shadow: 0 0 0 1px rgba(212,175,55,0.5);
+    }
+    .logic-map__btn--ghost:hover {
+      box-shadow: 0 0 0 1px #d4af37;
+      background: rgba(212,175,55,0.06);
+    }
+
+    /* デスクトップ: 表形式に変身 */
+    @media (min-width: 900px) {
+      .logic-map__row {
+        grid-template-columns:
+          minmax(220px, 1.4fr)
+          minmax(110px, 0.9fr)
+          minmax(180px, 1.4fr)
+          minmax(160px, 1.2fr)
+          minmax(160px, 1.2fr);
+        align-items: stretch;
+        gap: 20px;
+        padding: 22px 22px 22px 28px;
+      }
+      .logic-map__cell {
+        border-top: none;
+        border-left: 1px dashed rgba(212,175,55,0.12);
+        padding: 0 0 0 18px;
+      }
+      .logic-map__cell:first-of-type { border-left: none; padding-left: 0; }
+      .logic-map__plan-price {
+        margin-left: 0;
+        margin-top: 6px;
+        display: block;
+      }
+      .logic-map__plan {
+        flex-direction: column;
+        gap: 4px;
+      }
+      /* デスクトップでも cell-label を見せる（テーブルヘッダの代わり） */
     }
   </style>
 </head>
@@ -433,12 +768,22 @@
 
   <!-- Header -->
   <header class="header">
-    <p class="header__label">Fortune Telling Site Collection</p>
-    <h1 class="header__title">占いサイト<br>ポートフォリオ</h1>
+    <p class="header__label">Tactical Analysis Engine</p>
+    <h1 class="header__title">x-TEN<br><span class="header__title-ruby">エクステン</span></h1>
     <p class="header__subtitle">
-      50以上の占いサイトを調査・分析。<br>
-      7つの主要デザインパターンを、それぞれ異なるテイストの占いサイトとして制作しました。
+      運命を10倍速で攻略する。<br>
+      ―― AIが四柱推命×インド占星術を統合解析する、次世代戦略エンジン。<br>
+      あなただけの最強「TODOリスト」。
     </p>
+
+    <nav class="header__plans" aria-label="プラン選択">
+      <a href="#plan-today" class="header__plan-primary">Today</a>
+      <div class="header__plan-row">
+        <a href="#plan-1week" class="header__plan-link header__plan-link--1week">〜 1 Week</a>
+        <a href="#plan-monthly" class="header__plan-link header__plan-link--monthly">〜 Monthly</a>
+        <a href="#plan-yearly" class="header__plan-link header__plan-link--yearly">Yearly</a>
+      </div>
+    </nav>
   </header>
 
   <!-- Stats -->
@@ -457,6 +802,200 @@
     </div>
   </div>
 
+  <!-- ============================================================
+       Tactical Logic Map (占術ロジック配分マップ)
+       ============================================================ -->
+  <section class="logic-map-section">
+    <div class="logic-map-section__inner">
+      <p class="logic-map-section__label">// TACTICAL LOGIC MAP</p>
+      <h2 class="logic-map-section__title">占術ロジック配分マップ</h2>
+      <p class="logic-map-section__lead">
+        x-TEN の 4 ティアは <strong style="color:#d4af37;">時間軸</strong> と <strong style="color:#d4af37;">占術レイヤー</strong> に対応します。<br>
+        過去の的中検証から始め、今日の戦術、月年の戦略、そして一生の最適化へ。<br>
+        必要な深さだけを解放してください。
+      </p>
+
+      <div class="logic-map">
+
+        <!-- FREE -->
+        <div class="logic-map__row logic-map__row--free" id="plan-free">
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">PLAN</span>
+            <div class="logic-map__plan">
+              <span class="logic-map__plan-name">FREE</span>
+              <span class="logic-map__plan-sub">CORE / BACKTEST</span>
+              <span class="logic-map__plan-price">¥0</span>
+            </div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">TIME AXIS</span>
+            <div class="logic-map__cell-value">過去・現在</div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">SYSTEM</span>
+            <div class="logic-map__cell-value">CORE（核）：四柱推命 / インド占星術（一部）</div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">LOGIC</span>
+            <div class="logic-map__cell-value">
+              <strong>バックテスト（的中検証）</strong><br>
+              過去の運命の転換点を AI が特定し、「なぜ当たったのか」を1行で添えて信頼を担保。
+            </div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">UX</span>
+            <div class="logic-map__cell-value">
+              <strong>衝撃とエビデンス</strong><br>
+              過去の的中指摘で信頼獲得。今日のハックスコアと SNS シェア用画像を生成。
+            </div>
+          </div>
+        </div>
+
+        <!-- Today (SHOT @ ¥100/1日) -->
+        <div class="logic-map__row logic-map__row--today" id="plan-today">
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">PLAN</span>
+            <div class="logic-map__plan">
+              <span class="logic-map__plan-name">Today</span>
+              <span class="logic-map__plan-sub">SHOT / DAILY</span>
+              <span class="logic-map__plan-price">¥100 / 1日</span>
+            </div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">TIME AXIS</span>
+            <div class="logic-map__cell-value">今日</div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">SYSTEM</span>
+            <div class="logic-map__cell-value">HACK（術）：宿曜占星術 / 紫微斗数</div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">LOGIC</span>
+            <div class="logic-map__cell-value">
+              <strong>ミクロ・アクション</strong><br>
+              1日を「交渉・集中・休息」の時間帯に分解。AIが「今日の一手」へ翻訳。
+            </div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">UX</span>
+            <div class="logic-map__cell-value">
+              <strong>朝の戦略ブリーフィング</strong><br>
+              AI 軍師からの行動指示。夜の Sync Log で行動記録。
+            </div>
+          </div>
+        </div>
+
+        <!-- 〜1Week (SHOT @ ¥300/1週) -->
+        <div class="logic-map__row logic-map__row--1week" id="plan-1week">
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">PLAN</span>
+            <div class="logic-map__plan">
+              <span class="logic-map__plan-name">〜 1 Week</span>
+              <span class="logic-map__plan-sub">SHOT / WEEKLY</span>
+              <span class="logic-map__plan-price">¥300 / 1週</span>
+            </div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">TIME AXIS</span>
+            <div class="logic-map__cell-value">1週間</div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">SYSTEM</span>
+            <div class="logic-map__cell-value">HACK（術）：宿曜占星術 / 紫微斗数</div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">LOGIC</span>
+            <div class="logic-map__cell-value">
+              <strong>ミクロ・アクション ×7日</strong><br>
+              7日間の運気フローと「勝負日・休息日」を一覧化。週次の戦術プランをAIが提示。
+            </div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">UX</span>
+            <div class="logic-map__cell-value">
+              <strong>ウィークリー・タクティクス</strong><br>
+              毎朝のブリーフィング＋週初の作戦会議。Sync Log を一週間で振り返り。
+            </div>
+          </div>
+        </div>
+
+        <!-- 〜Monthly (BASIC) -->
+        <div class="logic-map__row logic-map__row--basic" id="plan-monthly">
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">PLAN</span>
+            <div class="logic-map__plan">
+              <span class="logic-map__plan-name">〜 Monthly</span>
+              <span class="logic-map__plan-sub">BASIC / MONTHLY</span>
+              <span class="logic-map__plan-price">¥500 / 月</span>
+            </div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">TIME AXIS</span>
+            <div class="logic-map__cell-value">未来（月・年）</div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">SYSTEM</span>
+            <div class="logic-map__cell-value">FLOW（波）：インド占星術ダシャー / 算命学</div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">LOGIC</span>
+            <div class="logic-map__cell-value">
+              <strong>マクロ・ストラテジー</strong><br>
+              長期の惑星周期を算出。天中殺・空亡を「リスク管理期間」として定義し、勝負月を特定。
+            </div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">UX</span>
+            <div class="logic-map__cell-value">
+              <strong>戦略カレンダー</strong><br>
+              3〜12 ヶ月先の運気マップ。Google カレンダー連携で「勝負日・要注意日」を自動リマインド。
+            </div>
+          </div>
+        </div>
+
+        <!-- Yearly (PREMIUM) -->
+        <div class="logic-map__row logic-map__row--premium" id="plan-yearly">
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">PLAN</span>
+            <div class="logic-map__plan">
+              <span class="logic-map__plan-name">Yearly</span>
+              <span class="logic-map__plan-sub">PREMIUM / PRO</span>
+              <span class="logic-map__plan-price">¥19,800 / 年</span>
+            </div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">TIME AXIS</span>
+            <div class="logic-map__cell-value">一生・全期間</div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">SYSTEM</span>
+            <div class="logic-map__cell-value">CORE × FLOW × HACK の完全統合</div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">LOGIC</span>
+            <div class="logic-map__cell-value">
+              <strong>パーソナル・最適化</strong><br>
+              蓄積された Sync Log を AI が学習。占術上の一般論を、ユーザー個人の行動特性で補正し、超高精度な予測を行う。
+            </div>
+          </div>
+          <div class="logic-map__cell">
+            <span class="logic-map__cell-label">UX</span>
+            <div class="logic-map__cell-value">
+              <strong>自分専用の人生 OS</strong><br>
+              一生モノのディープ解析レポート。自分の人生のバイオリズムと成果が完全に同期したダッシュボード。
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="logic-map__cta">
+        <a href="astrology-v2.html" class="logic-map__btn">&gt; RUN ANALYSIS</a>
+        <a href="astrology-v2.html#plan" class="logic-map__btn logic-map__btn--ghost">プランを比較</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Portfolio -->
   <section class="section">
     <p class="section__label">Portfolio</p>
@@ -469,8 +1008,8 @@
         <div class="card__preview preview-ai"></div>
         <div class="card__body">
           <div class="card__number">NEW</div>
-          <h3 class="card__title">AI命術解析エンジン - 四柱推命 × インド占星術</h3>
-          <p class="card__desc">四柱推命とインド占星術をAIが統合解析する3層構造エンジン。CORE（自己リソース）・FLOW（勝負タイミング）・HACK（日常最適化）の3レイヤーで人生戦略を導く次世代鑑定。</p>
+          <h3 class="card__title">x-TEN — Tactical Analysis Engine</h3>
+          <p class="card__desc">四柱推命とインド占星術をAIが統合解析する3層構造エンジン。CORE（過去・現在のバックテスト）／ FLOW（月年のマクロ戦略）／ HACK（今日のミクロ行動）で、運命を10倍速で攻略する次世代鑑定。</p>
           <div class="card__tags">
             <span class="tag">AI × 命術</span>
             <span class="tag">3層解析</span>
@@ -479,12 +1018,12 @@
         </div>
       </a>
 
-      <!-- 1. Mystical-Dark (天推 AI) -->
+      <!-- 1. Mystical-Dark (x-TEN) -->
       <a href="celestia/tarot.html" class="card card--featured">
         <div class="card__preview preview-mystical"></div>
         <div class="card__body">
           <div class="card__number">01</div>
-          <h3 class="card__title">天推 AI（テンスイ・アイ） - 星が導く運命の占い</h3>
+          <h3 class="card__title">x-TEN - 戦略のためのAI命術解析</h3>
           <p class="card__desc">深いネイビーとゴールドの配色。明朝体、扇形カード配置。タロット・四柱推命・星座占い・姓名判断・数秘術・おみくじ・相性診断の7種を収録したポータル型。</p>
           <div class="card__tags">
             <span class="tag">Mystical-Dark</span>

@@ -2,9 +2,14 @@
 // Plan Manager - localStorage-backed plan state
 // ES Module - plan-manager.js
 //
-// プラン: free / shot / basic / premium
-// SHOT は当日のみ有効（日付キーで失効判定）
+// プラン: free / shot / basic / premium  (内部IDは互換維持)
+// 表示ラベルとマトリクスメタは「占術ロジック配分マップ」に準拠:
+//   FREE     ─ 過去/現在 / CORE        / バックテスト / 衝撃とエビデンス
+//   SHOT     ─ 今日〜1週 / HACK        / ミクロ・アクション / 朝の戦略ブリーフィング
+//   BASIC    ─ 月〜年    / FLOW        / マクロ・ストラテジー / 戦略カレンダー
+//   PREMIUM  ─ 一生・全期 / 全レイヤー統合 / パーソナル最適化 / 人生 OS
 //
+// SHOT は当日のみ有効（日付キーで失効判定）
 // ログイン中: アカウントの plan を真とする（account.js）
 // 未ログイン: localStorage `celestia.plan` を使う
 // ========================================
@@ -14,10 +19,42 @@ import { getAccount, updateAccount } from './account.js';
 const STORAGE_KEY = 'celestia.plan';
 
 export const PLAN_DEFS = {
-  free:    { id: 'free',    label: 'FREE',    price: 0,   priceLabel: '無料',     rank: 0 },
-  shot:    { id: 'shot',    label: 'SHOT',    price: 100, priceLabel: '¥100',    rank: 1 },
-  basic:   { id: 'basic',   label: 'BASIC',   price: 300, priceLabel: '¥300/月', rank: 2 },
-  premium: { id: 'premium', label: 'PREMIUM', price: 500, priceLabel: '¥500/月', rank: 3 }
+  free: {
+    id: 'free', rank: 0,
+    label: 'FREE', codename: 'CORE / BACKTEST',
+    price: 0, priceLabel: '無料', priceUnit: '',
+    timeHorizon: '過去・現在',
+    system: '四柱推命 / インド占星術（一部）',
+    logic: 'バックテスト（的中検証）',
+    ux: '衝撃とエビデンス'
+  },
+  shot: {
+    id: 'shot', rank: 1,
+    label: 'SHOT', codename: 'DAILY / WEEKLY',
+    price: 100, priceLabel: '¥100〜300', priceUnit: '/ 1日〜1週',
+    timeHorizon: '今日・1週間',
+    system: '宿曜占星術 / 紫微斗数',
+    logic: 'ミクロ・アクション',
+    ux: '朝の戦略ブリーフィング'
+  },
+  basic: {
+    id: 'basic', rank: 2,
+    label: 'BASIC', codename: 'MONTHLY',
+    price: 500, priceLabel: '¥500', priceUnit: '/ 月',
+    timeHorizon: '未来（月・年）',
+    system: 'インド占星術（ダシャー）/ 算命学',
+    logic: 'マクロ・ストラテジー',
+    ux: '戦略カレンダー'
+  },
+  premium: {
+    id: 'premium', rank: 3,
+    label: 'PREMIUM', codename: 'PRO / YEARLY',
+    price: 19800, priceLabel: '¥19,800', priceUnit: '/ 年',
+    timeHorizon: '一生・全期間',
+    system: 'CORE × FLOW × HACK の完全統合',
+    logic: 'パーソナル・最適化',
+    ux: '自分専用の人生 OS'
+  }
 };
 
 // 機能 → 必要プラン rank
