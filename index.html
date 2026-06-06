@@ -74,90 +74,143 @@
       letter-spacing: 0.04em;
     }
 
-    /* --- Header advice date (本日のアドバイス見出し / clickable) -------- */
+    /* --- Header advice date: クリッカブルなカード型 CTA ------------------ */
     .header__advice-date {
-      margin: 36px auto 0;
+      margin: 40px auto 0;
       display: inline-flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 2px;
+      flex-wrap: nowrap;
+      gap: 4px;
       font-family: 'Playfair Display', serif;
       color: #111;
       letter-spacing: 0.02em;
-      padding: 14px 28px;
-      position: relative;
+      padding: 16px 18px 16px 28px;
+      background: #fff;
+      border: 1.5px solid #d4af37;
+      border-radius: 8px;
       text-decoration: none;
       cursor: pointer;
-      transition: transform 200ms ease;
+      position: relative;
+      box-shadow:
+        0 0 0 4px rgba(212, 175, 55, 0.08),
+        0 12px 36px rgba(212, 175, 55, 0.22),
+        0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: transform 220ms ease, box-shadow 240ms ease, background 200ms ease;
+      animation: xt-cta-pulse 2.6s ease-in-out infinite;
     }
-    .header__advice-date::before,
-    .header__advice-date::after {
-      content: "";
-      display: inline-block;
-      width: 28px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #d4af37, transparent);
-      margin: 0 14px;
-      align-self: center;
-      transition: width 220ms ease, background 220ms ease;
+    .header__advice-date::before {
+      /* 左上の「CLICK」インジケータ */
+      content: 'CLICK';
+      position: absolute;
+      top: -10px;
+      left: 14px;
+      background: #d4af37;
+      color: #fff;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      padding: 3px 8px 3px 10px;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
     }
     .header__advice-date:hover {
-      transform: translateY(-1px);
+      transform: translateY(-3px);
+      background: #fffdf5;
+      animation-play-state: paused;
+      box-shadow:
+        0 0 0 6px rgba(212, 175, 55, 0.20),
+        0 18px 52px rgba(212, 175, 55, 0.42),
+        0 2px 8px rgba(0, 0, 0, 0.08);
     }
-    .header__advice-date:hover::before,
-    .header__advice-date:hover::after {
-      width: 48px;
-      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+    .header__advice-date:active {
+      transform: translateY(-1px);
     }
     .header__advice-date:focus-visible {
       outline: 2px solid #d4af37;
-      outline-offset: 6px;
-      border-radius: 2px;
+      outline-offset: 8px;
+    }
+
+    /* アテンション・パルス（ホバーで停止） */
+    @keyframes xt-cta-pulse {
+      0%, 100% {
+        box-shadow:
+          0 0 0 4px rgba(212, 175, 55, 0.08),
+          0 12px 36px rgba(212, 175, 55, 0.22),
+          0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+      50% {
+        box-shadow:
+          0 0 0 10px rgba(212, 175, 55, 0.04),
+          0 14px 44px rgba(212, 175, 55, 0.36),
+          0 2px 8px rgba(0, 0, 0, 0.06);
+      }
     }
 
     .header__advice-date__num {
       font-family: 'Playfair Display', serif;
       color: #d4af37;
-      font-size: 1.9rem;
+      font-size: 2rem;
       font-weight: 600;
       letter-spacing: 0;
       line-height: 1;
     }
     .header__advice-date__sep {
       font-family: 'Playfair Display', serif;
-      color: rgba(212, 175, 55, 0.85);
-      font-size: 1.6rem;
+      color: rgba(212, 175, 55, 0.75);
+      font-size: 1.7rem;
       margin: 0 6px;
-      align-self: center;
       font-weight: 500;
     }
     .header__advice-date__suffix {
       font-family: 'Inter', 'Noto Sans JP', sans-serif;
-      font-size: 0.82rem;
+      font-size: 0.92rem;
       font-weight: 500;
-      letter-spacing: 0.18em;
-      color: #444;
-      margin-left: 12px;
-      align-self: center;
+      letter-spacing: 0.1em;
+      color: #222;
+      margin-left: 10px;
     }
+    /* 矢印を「明らかにクリックできるボタン」に */
     .header__advice-date__arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      margin-left: 14px;
+      background: linear-gradient(135deg, #d4af37 0%, #b88a1a 100%);
+      color: #fff;
+      border-radius: 50%;
       font-family: 'Inter', sans-serif;
-      color: #d4af37;
-      font-size: 0.9rem;
-      margin-left: 8px;
-      display: inline-block;
-      transition: transform 220ms ease;
+      font-weight: 700;
+      font-size: 1.1rem;
+      line-height: 1;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.45);
+      transition: transform 220ms ease, box-shadow 220ms ease;
+      flex-shrink: 0;
     }
     .header__advice-date:hover .header__advice-date__arrow {
-      transform: translateX(6px);
+      transform: translateX(4px) scale(1.06);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+    }
+
+    @media (max-width: 480px) {
+      .header__advice-date {
+        flex-wrap: wrap;
+        padding: 14px 16px 14px 22px;
+      }
+      .header__advice-date__num { font-size: 1.8rem; }
+      .header__advice-date__suffix { font-size: 0.85rem; margin-left: 6px; }
+      .header__advice-date__arrow { width: 34px; height: 34px; margin-left: 8px; }
     }
 
     @media (min-width: 640px) {
-      .header__advice-date { margin-top: 44px; }
-      .header__advice-date__num { font-size: 2.2rem; }
-      .header__advice-date__sep { font-size: 1.9rem; }
-      .header__advice-date__suffix { font-size: 0.9rem; }
+      .header__advice-date { margin-top: 48px; padding: 18px 20px 18px 32px; }
+      .header__advice-date__num { font-size: 2.3rem; }
+      .header__advice-date__sep { font-size: 2rem; }
+      .header__advice-date__suffix { font-size: 1rem; }
+      .header__advice-date__arrow { width: 42px; height: 42px; font-size: 1.2rem; }
     }
 
     /* Stats bar */
@@ -746,226 +799,6 @@
       /* デスクトップでも cell-label を見せる（テーブルヘッダの代わり） */
     }
 
-    /* ============================================================
-       Advice Intake Form (プロフィール入力)
-       タクティカル・ダーク島。ヘッダーの日付リンクからジャンプ
-       ============================================================ */
-    .advice-intake-section {
-      background:
-        radial-gradient(ellipse at 0% 0%, rgba(212,175,55,0.10), transparent 55%),
-        radial-gradient(ellipse at 100% 100%, rgba(0,240,255,0.06), transparent 50%),
-        #020202;
-      color: #f4f4f5;
-      padding: 80px 24px;
-      position: relative;
-      overflow: hidden;
-      scroll-margin-top: 24px;
-    }
-    .advice-intake-section::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: repeating-linear-gradient(
-        to bottom, rgba(255,255,255,0.012) 0 1px, transparent 1px 3px
-      );
-      pointer-events: none;
-    }
-    .advice-intake-section__inner {
-      max-width: 620px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .advice-intake-section__label {
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.4em;
-      color: #d4af37;
-      margin-bottom: 12px;
-    }
-    .advice-intake-section__title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.4rem, 3.2vw, 2rem);
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      margin-bottom: 12px;
-    }
-    .advice-intake-section__lead {
-      color: #8b8b94;
-      font-size: 0.88rem;
-      line-height: 1.95;
-      letter-spacing: 0.04em;
-      margin-bottom: 36px;
-    }
-
-    .advice-form {
-      display: flex;
-      flex-direction: column;
-      gap: 26px;
-    }
-
-    .advice-form__field {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .advice-form__label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.66rem;
-      letter-spacing: 0.3em;
-      color: #f4f4f5;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .advice-form__hint {
-      font-family: 'Inter', 'Noto Sans JP', sans-serif;
-      font-size: 0.7rem;
-      color: #8b8b94;
-      letter-spacing: 0.1em;
-      text-transform: none;
-    }
-    .advice-form__required {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.28em;
-      color: #d4af37;
-      border: 1px solid rgba(212,175,55,0.45);
-      padding: 2px 6px;
-      border-radius: 2px;
-      text-transform: uppercase;
-    }
-
-    .advice-form__input,
-    .advice-form__select {
-      background: rgba(255,255,255,0.025);
-      color: #f4f4f5;
-      border: 1px solid rgba(212,175,55,0.18);
-      border-radius: 2px;
-      padding: 14px 16px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.92rem;
-      letter-spacing: 0.04em;
-      transition: border-color 160ms ease, box-shadow 200ms ease, background 160ms ease;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .advice-form__input::placeholder {
-      color: #5a5a64;
-    }
-    .advice-form__input:focus,
-    .advice-form__select:focus {
-      outline: none;
-      border-color: rgba(0,240,255,0.55);
-      background: rgba(0,240,255,0.04);
-      box-shadow: 0 0 0 1px rgba(0,240,255,0.4), 0 0 18px rgba(0,240,255,0.18);
-    }
-    .advice-form__input--date {
-      color-scheme: dark;
-    }
-    .advice-form__select {
-      appearance: none;
-      -webkit-appearance: none;
-      background-image:
-        linear-gradient(45deg, transparent 50%, #d4af37 50%),
-        linear-gradient(135deg, #d4af37 50%, transparent 50%);
-      background-position:
-        calc(100% - 20px) 50%,
-        calc(100% - 14px) 50%;
-      background-size: 6px 6px;
-      background-repeat: no-repeat;
-      padding-right: 38px;
-    }
-    .advice-form__select option {
-      background: #0a0a0b;
-      color: #f4f4f5;
-    }
-
-    .advice-form__pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .advice-form__pill {
-      flex: 1 1 auto;
-      min-width: 80px;
-      background: rgba(255,255,255,0.02);
-      color: #8b8b94;
-      border: 1px solid rgba(212,175,55,0.18);
-      border-radius: 2px;
-      padding: 12px 16px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
-      letter-spacing: 0.14em;
-      cursor: pointer;
-      text-align: center;
-      transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
-    }
-    .advice-form__pill:hover {
-      border-color: rgba(212,175,55,0.45);
-      color: #f4f4f5;
-    }
-    .advice-form__pill[aria-pressed="true"] {
-      background: rgba(212,175,55,0.12);
-      border-color: #d4af37;
-      color: #d4af37;
-      box-shadow: inset 0 0 0 1px rgba(212,175,55,0.25);
-    }
-
-    .advice-form__error {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-      color: #ef4444;
-      background: rgba(239,68,68,0.06);
-      border: 1px solid rgba(239,68,68,0.35);
-      border-radius: 2px;
-      padding: 10px 14px;
-      margin: 0;
-    }
-    .advice-form__success {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      color: #10b981;
-      background: rgba(16,185,129,0.08);
-      border: 1px solid rgba(16,185,129,0.45);
-      border-radius: 2px;
-      padding: 14px 16px;
-      margin: 0;
-      line-height: 1.8;
-    }
-    .advice-form__success a {
-      color: #d4af37;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    .advice-form__submit {
-      background: linear-gradient(180deg, #d4af37 0%, #e8c95a 100%);
-      color: #020202;
-      border: none;
-      border-radius: 2px;
-      padding: 18px 36px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.92rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 0 0 0 1px #d4af37, 0 4px 24px rgba(212,175,55,0.2);
-      transition: transform 160ms ease, box-shadow 200ms ease;
-      margin-top: 8px;
-    }
-    .advice-form__submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 0 1px #d4af37, 0 8px 36px rgba(212,175,55,0.36);
-    }
-
-    @media (min-width: 720px) {
-      .advice-intake-section { padding: 100px 24px; }
-    }
   </style>
 </head>
 <body>
@@ -980,7 +813,7 @@
       あなただけの最強「TODOリスト」。
     </p>
 
-    <a href="#advice-intake" class="header__advice-date" id="header-advice-date" aria-live="polite"></a>
+    <a href="astrology-v2.html" class="header__advice-date" id="header-advice-date" aria-live="polite"></a>
   </header>
 
   <!-- Stats -->
@@ -1193,104 +1026,6 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       Advice Intake Form (プロフィール入力)
-       ============================================================ -->
-  <section class="advice-intake-section" id="advice-intake">
-    <div class="advice-intake-section__inner">
-      <p class="advice-intake-section__label">// PROFILE INTAKE</p>
-      <h2 class="advice-intake-section__title">あなたへのアドバイスを生成します</h2>
-      <p class="advice-intake-section__lead">
-        以下の情報から、AI が四柱推命×インド占星術を統合解析し、<br>
-        本日のあなただけの「TODOリスト」を出力します。<br>
-        <strong style="color:#d4af37;">必須項目</strong>を入力して送信してください。
-      </p>
-
-      <form class="advice-form" id="advice-intake-form" novalidate>
-
-        <!-- 名前 -->
-        <div class="advice-form__field">
-          <label class="advice-form__label" for="advice-name">
-            名前
-            <span class="advice-form__hint">あだ名でも OK</span>
-          </label>
-          <input
-            type="text"
-            id="advice-name"
-            name="name"
-            class="advice-form__input"
-            maxlength="40"
-            placeholder="例: ほしよみ"
-            autocomplete="nickname">
-        </div>
-
-        <!-- 性別 -->
-        <div class="advice-form__field">
-          <label class="advice-form__label">性別</label>
-          <div class="advice-form__pills" role="radiogroup" aria-label="性別">
-            <button type="button" class="advice-form__pill" data-field="gender" data-value="male"   aria-pressed="false">男性</button>
-            <button type="button" class="advice-form__pill" data-field="gender" data-value="female" aria-pressed="false">女性</button>
-          </div>
-        </div>
-
-        <!-- 生年月日 (必須) -->
-        <div class="advice-form__field">
-          <label class="advice-form__label" for="advice-birthdate">
-            生年月日
-            <span class="advice-form__required">必須</span>
-          </label>
-          <input
-            type="date"
-            id="advice-birthdate"
-            name="birthdate"
-            class="advice-form__input advice-form__input--date"
-            required>
-        </div>
-
-        <!-- 血液型 (必須) -->
-        <div class="advice-form__field">
-          <label class="advice-form__label">
-            血液型
-            <span class="advice-form__required">必須</span>
-          </label>
-          <div class="advice-form__pills" role="radiogroup" aria-label="血液型">
-            <button type="button" class="advice-form__pill" data-field="blood" data-value="A"  aria-pressed="false">A 型</button>
-            <button type="button" class="advice-form__pill" data-field="blood" data-value="B"  aria-pressed="false">B 型</button>
-            <button type="button" class="advice-form__pill" data-field="blood" data-value="AB" aria-pressed="false">AB 型</button>
-            <button type="button" class="advice-form__pill" data-field="blood" data-value="O"  aria-pressed="false">O 型</button>
-          </div>
-        </div>
-
-        <!-- 職業 (必須) -->
-        <div class="advice-form__field">
-          <label class="advice-form__label" for="advice-job">
-            職業
-            <span class="advice-form__required">必須</span>
-          </label>
-          <select
-            id="advice-job"
-            name="job"
-            class="advice-form__select"
-            required>
-            <option value="">選択してください</option>
-            <option value="executive">会社経営 / 会社役員</option>
-            <option value="employee">会社員</option>
-            <option value="public">公務員</option>
-            <option value="parttime">アルバイト / パート</option>
-            <option value="university">大学生</option>
-            <option value="highschool">高校生</option>
-          </select>
-        </div>
-
-        <p class="advice-form__error" id="advice-intake-error" role="alert" hidden></p>
-
-        <button type="submit" class="advice-form__submit">&gt; アドバイスを受け取る</button>
-
-        <p class="advice-form__success" id="advice-intake-success" role="status" hidden></p>
-      </form>
-    </div>
-  </section>
-
   <!-- Research Summary -->
   <section class="research">
     <div class="section">
@@ -1355,94 +1090,6 @@
     })();
   </script>
 
-  <!-- Advice Intake Form: pill toggle / validation / submit -->
-  <script>
-    (function () {
-      var form = document.getElementById('advice-intake-form');
-      if (!form) return;
-
-      // --- ピル選択（性別 / 血液型）------------------------------------
-      var pills = form.querySelectorAll('.advice-form__pill');
-      pills.forEach(function (pill) {
-        pill.addEventListener('click', function () {
-          var field = pill.getAttribute('data-field');
-          // 同じグループの他ピルを解除
-          form.querySelectorAll('.advice-form__pill[data-field="' + field + '"]').forEach(function (p) {
-            p.setAttribute('aria-pressed', p === pill ? 'true' : 'false');
-          });
-        });
-      });
-
-      function readPill(field) {
-        var picked = form.querySelector('.advice-form__pill[data-field="' + field + '"][aria-pressed="true"]');
-        return picked ? picked.getAttribute('data-value') : '';
-      }
-
-      // --- 送信処理 ----------------------------------------------------
-      var errorEl   = document.getElementById('advice-intake-error');
-      var successEl = document.getElementById('advice-intake-success');
-
-      function showError(msg) {
-        if (!errorEl) return;
-        errorEl.textContent = '⚠ ' + msg;
-        errorEl.hidden = false;
-        successEl.hidden = true;
-      }
-      function clearError() {
-        if (!errorEl) return;
-        errorEl.hidden = true;
-        errorEl.textContent = '';
-      }
-
-      var JOB_LABELS = {
-        executive:  '会社経営 / 会社役員',
-        employee:   '会社員',
-        public:     '公務員',
-        parttime:   'アルバイト / パート',
-        university: '大学生',
-        highschool: '高校生'
-      };
-
-      form.addEventListener('submit', function (ev) {
-        ev.preventDefault();
-        clearError();
-
-        var profile = {
-          name:      form.querySelector('#advice-name').value.trim(),
-          gender:    readPill('gender'),
-          birthdate: form.querySelector('#advice-birthdate').value,
-          blood:     readPill('blood'),
-          job:       form.querySelector('#advice-job').value
-        };
-
-        // 必須チェック
-        if (!profile.birthdate) { showError('生年月日は必須です。'); return; }
-        if (!profile.blood)     { showError('血液型を選択してください。'); return; }
-        if (!profile.job)       { showError('職業を選択してください。'); return; }
-
-        // 保存（次回訪問時のプリフィルや解析エンジンとの連携用）
-        try {
-          localStorage.setItem('xten.profile', JSON.stringify(Object.assign({}, profile, {
-            savedAt: new Date().toISOString()
-          })));
-        } catch (e) { /* localStorage 利用不可は黙殺 */ }
-
-        // 成功表示
-        var displayName = profile.name || 'あなた';
-        successEl.innerHTML =
-          '✓ プロファイルを受領しました。<br>' +
-          '<strong style="color:#d4af37;">' + displayName + '</strong> さん（' +
-            (profile.blood ? profile.blood + '型 / ' : '') +
-            JOB_LABELS[profile.job] +
-          '）の解析を生成します。<br>' +
-          '<a href="astrology-v2.html">&gt; 解析エンジンへ進む</a>';
-        successEl.hidden = false;
-
-        // スムーズに成功メッセージへ
-        successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-    })();
-  </script>
 
 </body>
 </html>

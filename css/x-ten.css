@@ -200,6 +200,93 @@ body::before {
   margin-bottom: 18px;
   text-transform: uppercase;
 }
+/* "あなたへのアドバイス" タイトルでは旧プリタイトルを非表示 */
+.page-hero__title--advice::before {
+  display: none !important;
+}
+.page-hero__title--advice {
+  font-family: "Playfair Display", "Noto Serif JP", "Hiragino Mincho ProN", serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(1.7rem, 4vw, 2.6rem) !important;
+  line-height: 1.35;
+  letter-spacing: 0.02em !important;
+  /* スマホで折り返したとき、span 単位で改行（語中で割らない） */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  white-space: normal;
+  padding: 0 12px;
+}
+.page-hero__title-date,
+.page-hero__title-rest {
+  display: inline-block;
+  white-space: nowrap;       /* 各 span 内では絶対に折り返さない */
+  vertical-align: baseline;
+}
+.page-hero__title-date {
+  color: var(--xt-gold);
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  margin-right: 0.5em;
+  letter-spacing: 0;
+}
+.page-hero__title-rest {
+  color: var(--xt-text);
+}
+
+/* 480px 未満ではタイトルを少し小さく、サブタイトルも詰める */
+@media (max-width: 480px) {
+  .page-hero__title--advice {
+    font-size: 1.55rem !important;
+    line-height: 1.4;
+  }
+}
+.page-hero__desc--advice {
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem) !important;
+  letter-spacing: 0.1em !important;
+  color: var(--xt-text-mute) !important;
+  margin-top: 14px;
+  line-height: 1.9;
+}
+
+/* --- Hero → Form 間の注釈ノート ---------------------------------------- */
+.hero-note {
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-size: 0.85rem;
+  line-height: 2;
+  letter-spacing: 0.05em;
+  color: var(--xt-text-mute);
+  text-align: left;
+  max-width: 620px;
+  margin: 0 auto 36px;
+  padding: 16px 22px;
+  border-top: 1px dashed var(--xt-line);
+  border-bottom: 1px dashed var(--xt-line);
+  background: rgba(212, 175, 55, 0.025);
+}
+.hero-note__marker {
+  color: var(--xt-gold);
+  font-weight: 600;
+  margin-right: 6px;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+}
+.hero-note__indent {
+  display: inline-block;
+  padding-left: 1.5em;
+}
+.hero-note strong,
+.hero-note em {
+  color: var(--xt-gold);
+  font-style: normal;
+}
+
+@media (max-width: 480px) {
+  .hero-note {
+    font-size: 0.78rem;
+    padding: 14px 18px;
+  }
+}
 .page-hero__desc {
   color: var(--xt-text-mute) !important;
   letter-spacing: 0.06em;
@@ -246,6 +333,7 @@ body::before {
 }
 
 .form-group__select,
+.form-group__input,
 .auth-form__input,
 .coach-dialogue__input {
   background: var(--xt-surface-2) !important;
@@ -256,6 +344,7 @@ body::before {
   transition: border-color 160ms ease, box-shadow 160ms ease !important;
 }
 .form-group__select:focus,
+.form-group__input:focus,
 .auth-form__input:focus,
 .coach-dialogue__input:focus {
   outline: none !important;
@@ -263,19 +352,62 @@ body::before {
   box-shadow: 0 0 0 1px var(--xt-cyan-dim), 0 0 16px rgba(0,240,255,0.15) !important;
 }
 
-.gender-btn {
+/* テキスト入力（ニックネーム）の基礎指定 — 既存style.css の form-group__select と同等のパディングに合わせる */
+.form-group__input {
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  width: 100%;
+  box-sizing: border-box;
+}
+.form-group__input::placeholder {
+  color: var(--xt-text-faint);
+}
+
+.gender-btn,
+.blood-btn {
   background: var(--xt-surface-2) !important;
   border: 1px solid var(--xt-line) !important;
   color: var(--xt-text-mute) !important;
   border-radius: 2px !important;
   letter-spacing: 0.2em !important;
   font-family: "JetBrains Mono", monospace !important;
+  cursor: pointer !important;
+  user-select: none;
 }
 .gender-btn:hover,
-.gender-btn--active {
+.gender-btn--active,
+.gender-btn.btn--primary,    /* 旧JS互換: btn--primary でもアクティブ見た目を出す */
+.blood-btn:hover,
+.blood-btn--active {
   border-color: var(--xt-gold) !important;
   color: var(--xt-gold) !important;
-  background: rgba(212,175,55,0.05) !important;
+  background: rgba(212,175,55,0.10) !important;
+  box-shadow: inset 0 0 0 1px rgba(212,175,55,0.35) !important;
+}
+
+/* select も明確にクリック可能と分かるよう pointer 化 */
+.form-group__select,
+.form-group__input {
+  cursor: pointer !important;
+}
+.form-group__input { cursor: text !important; }
+
+/* "わからない" チェックボックス周りも操作対象であることを明示 */
+.form-group__toggle label,
+.form-group__toggle input[type="checkbox"] {
+  cursor: pointer !important;
+}
+
+/* blood-btn は gender-btn と同じレイアウトトークンを共有する */
+.blood-btn {
+  flex: 1 1 0;
+  min-width: 60px;
+  padding: 14px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  text-align: center;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
 }
 
 /* --- Buttons --------------------------------------------------------------- */

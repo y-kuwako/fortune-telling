@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=8">
   <link rel="stylesheet" href="css/fortune-v2.css?v=8">
-  <link rel="stylesheet" href="css/x-ten.css?v=1">
+  <link rel="stylesheet" href="css/x-ten.css?v=3">
 </head>
 <body>
 
@@ -45,12 +45,12 @@
     <section class="section-dark">
       <div class="container">
         <div class="page-hero">
-          <div class="deco-divider">— — —</div>
-          <h1 class="page-hero__title">Tactical Analysis Engine</h1>
-          <p class="page-hero__desc">
-            四柱推命 &times; インド占星術の膨大なデータセットを、AIが統合解析。<br>
-            あなたの今日の <span class="xt-num" style="color:var(--xt-cyan);">Focus</span> / <span class="xt-num" style="color:var(--xt-red);">Aggressive</span> / <span class="xt-num" style="color:var(--xt-emerald);">Resilience</span> を算出し、<br>
-            最適な「勝負時」を提示します。
+          <h1 class="page-hero__title page-hero__title--advice">
+            <span class="page-hero__title-date" id="astro-hero-date" aria-live="polite"></span>
+            <span class="page-hero__title-rest">あなたへのアドバイス</span>
+          </h1>
+          <p class="page-hero__desc page-hero__desc--advice">
+            ―― 今日の自分を超スピードで攻略する。
           </p>
         </div>
       </div>
@@ -58,9 +58,54 @@
 
     <section class="section-light">
       <div class="container">
+
+        <p class="hero-note">
+          <span class="hero-note__marker">※</span>あなたを攻略するための入力項目です。<br>
+          <span class="hero-note__indent">回答が多いほど適切な結果が表れ、ブーストがかかります。</span>
+        </p>
+
         <div class="form-section">
 
-          <!-- 生年月日（必須） -->
+          <!-- 1. ニックネーム（任意） -->
+          <div class="form-group">
+            <label class="form-group__label" for="nickname">ニックネーム（任意）</label>
+            <div class="form-group__row">
+              <input
+                type="text"
+                id="nickname"
+                class="form-group__input"
+                maxlength="20"
+                placeholder="例: ほしよみ"
+                autocomplete="nickname"
+                style="flex: 1;">
+            </div>
+          </div>
+
+          <!-- 2. 性別（任意） -->
+          <div class="form-group">
+            <label class="form-group__label">性別（任意）</label>
+            <div class="form-group__row">
+              <button id="gender-male" class="gender-btn" data-gender="male">男性</button>
+              <button id="gender-female" class="gender-btn" data-gender="female">女性</button>
+              <button id="gender-other" class="gender-btn" data-gender="other">その他</button>
+            </div>
+          </div>
+
+          <!-- 3. 出生地（任意） -->
+          <div class="form-group" id="place-group">
+            <label class="form-group__label">出生地（任意）</label>
+            <div class="form-group__row">
+              <select id="birth-place" class="form-group__select" style="flex: 1;">
+                <option value="">都道府県を選択</option>
+              </select>
+            </div>
+            <div class="form-group__toggle">
+              <input type="checkbox" id="place-unknown">
+              <label for="place-unknown">出生地がわからない</label>
+            </div>
+          </div>
+
+          <!-- 4. 生年月日（必須） -->
           <div class="form-group">
             <label class="form-group__label">生年月日</label>
             <div class="form-group__row">
@@ -76,7 +121,7 @@
             </div>
           </div>
 
-          <!-- 出生時刻（任意） -->
+          <!-- 5. 出生時刻（任意） -->
           <div class="form-group" id="time-group">
             <label class="form-group__label">出生時刻（任意）</label>
             <div class="form-group__row">
@@ -93,27 +138,65 @@
             </div>
           </div>
 
-          <!-- 出生地（任意） -->
-          <div class="form-group" id="place-group">
-            <label class="form-group__label">出生地（任意）</label>
+          <!-- 6. 血液型 -->
+          <div class="form-group">
+            <label class="form-group__label">血液型</label>
             <div class="form-group__row">
-              <select id="birth-place" class="form-group__select" style="flex: 1;">
-                <option value="">都道府県を選択</option>
-              </select>
-            </div>
-            <div class="form-group__toggle">
-              <input type="checkbox" id="place-unknown">
-              <label for="place-unknown">出生地がわからない</label>
+              <button type="button" id="blood-A"  class="blood-btn" data-blood="A">A 型</button>
+              <button type="button" id="blood-B"  class="blood-btn" data-blood="B">B 型</button>
+              <button type="button" id="blood-AB" class="blood-btn" data-blood="AB">AB 型</button>
+              <button type="button" id="blood-O"  class="blood-btn" data-blood="O">O 型</button>
             </div>
           </div>
 
-          <!-- 性別（任意） -->
+          <!-- 7. 職業 -->
           <div class="form-group">
-            <label class="form-group__label">性別（任意）</label>
+            <label class="form-group__label" for="job">職業</label>
             <div class="form-group__row">
-              <button id="gender-male" class="gender-btn" data-gender="male">男性</button>
-              <button id="gender-female" class="gender-btn" data-gender="female">女性</button>
-              <button id="gender-other" class="gender-btn" data-gender="other">その他</button>
+              <select id="job" class="form-group__select" style="flex: 1;">
+                <option value="">選択してください</option>
+                <option value="executive">会社経営 / 会社役員</option>
+                <option value="employee">会社員</option>
+                <option value="public">公務員</option>
+                <option value="parttime">アルバイト / パート</option>
+                <option value="university">大学生</option>
+                <option value="highschool">高校生</option>
+                <option value="other">その他</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 8. MBTI性格診断（任意） -->
+          <div class="form-group">
+            <label class="form-group__label" for="mbti">MBTI性格診断（任意）</label>
+            <div class="form-group__row">
+              <select id="mbti" class="form-group__select" style="flex: 1;">
+                <option value="">選択してください（未診断でも OK）</option>
+                <optgroup label="分析家 (Analysts)">
+                  <option value="INTJ">INTJ — 建築家</option>
+                  <option value="INTP">INTP — 論理学者</option>
+                  <option value="ENTJ">ENTJ — 指揮官</option>
+                  <option value="ENTP">ENTP — 討論者</option>
+                </optgroup>
+                <optgroup label="外交官 (Diplomats)">
+                  <option value="INFJ">INFJ — 提唱者</option>
+                  <option value="INFP">INFP — 仲介者</option>
+                  <option value="ENFJ">ENFJ — 主人公</option>
+                  <option value="ENFP">ENFP — 運動家</option>
+                </optgroup>
+                <optgroup label="番人 (Sentinels)">
+                  <option value="ISTJ">ISTJ — 管理者</option>
+                  <option value="ISFJ">ISFJ — 擁護者</option>
+                  <option value="ESTJ">ESTJ — 幹部</option>
+                  <option value="ESFJ">ESFJ — 領事</option>
+                </optgroup>
+                <optgroup label="探検家 (Explorers)">
+                  <option value="ISTP">ISTP — 巨匠</option>
+                  <option value="ISFP">ISFP — 冒険家</option>
+                  <option value="ESTP">ESTP — 起業家</option>
+                  <option value="ESFP">ESFP — エンターテイナー</option>
+                </optgroup>
+              </select>
             </div>
           </div>
 
@@ -535,6 +618,42 @@
   </footer>
 
   <script src="js/x-ten-radar.js?v=1"></script>
-  <script type="module" src="js/ui-controller.js"></script>
+  <script type="module" src="js/ui-controller.js?v=3"></script>
+
+  <!-- ヒーロー日付（JST / Asia/Tokyo の M/D） -->
+  <script>
+    (function () {
+      var el = document.getElementById('astro-hero-date');
+      if (!el) return;
+      var fmt = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Tokyo',
+        month: 'numeric',
+        day: 'numeric'
+      });
+      var parts = fmt.formatToParts(new Date());
+      var pick = function (type) {
+        var p = parts.find(function (x) { return x.type === type; });
+        return p ? p.value : '';
+      };
+      var month = pick('month');
+      var day   = pick('day');
+      el.textContent = month + '/' + day;
+      el.setAttribute('aria-label', month + '月' + day + '日');
+    })();
+  </script>
+
+  <!-- 血液型ピルの排他選択トグル（既存 gender-btn ロジックと独立） -->
+  <script>
+    (function () {
+      var bloodBtns = document.querySelectorAll('.blood-btn');
+      if (!bloodBtns.length) return;
+      bloodBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          bloodBtns.forEach(function (b) { b.classList.remove('blood-btn--active'); });
+          btn.classList.add('blood-btn--active');
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

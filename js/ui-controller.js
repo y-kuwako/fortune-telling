@@ -3,6 +3,8 @@
 // ES Module - ui-controller.js
 // ========================================
 
+console.log('[x-TEN] ui-controller.js loaded (v3)');
+
 import { calcFourPillars, FIVE_ELEMENTS } from './pillars.js';
 import { calcVedicAstrology } from './vedic.js';
 import { runFortuneEngine } from './fortune-engine.js';
@@ -49,26 +51,41 @@ const PREFECTURES = [
 ];
 
 // --- Initialize ---
-document.addEventListener('DOMContentLoaded', () => {
-  initDateSelectors();
-  initTimeSelectors();
-  initPlaceSelector();
-  initToggleHandlers();
-  initGenderButtons();
-  initAnalyzeButton();
-  initResetButton();
-  initLayerTabs();
-  initShareButtons();
-  initDownloadButton();
-  initPlanBadge();
-  initPlanModal();
-  initAuthModal();
-  initSyncLogModal();
-  initCoachModal();
-  refreshPlanBadge();
-  refreshSyncLogButton();
-  refreshCoachButton();
-});
+// 個々の init を try/catch で囲み、後段の失敗が前段（フォーム生成系）を巻き込まないようにする
+function runAllInitializers() {
+  console.log('[x-TEN] runAllInitializers start, readyState =', document.readyState);
+  const steps = [
+    initDateSelectors, initTimeSelectors, initPlaceSelector, initToggleHandlers,
+    initGenderButtons, initAnalyzeButton, initResetButton, initLayerTabs,
+    initShareButtons, initDownloadButton,
+    initPlanBadge, initPlanModal, initAuthModal, initSyncLogModal, initCoachModal,
+    refreshPlanBadge, refreshSyncLogButton, refreshCoachButton
+  ];
+  let okCount = 0, failCount = 0;
+  for (const fn of steps) {
+    try {
+      fn();
+      okCount++;
+    } catch (err) {
+      failCount++;
+      console.error('[x-TEN] init failed:', fn.name, err);
+    }
+  }
+  console.log('[x-TEN] init complete:', okCount, 'ok /', failCount, 'failed');
+  // 動作確認用に DOM 状態を吐く
+  const ySel = document.getElementById('birth-year');
+  const gBtns = document.querySelectorAll('.gender-btn');
+  console.log('[x-TEN] birth-year option count =', ySel ? ySel.options.length : 'NOT FOUND');
+  console.log('[x-TEN] gender-btn count =', gBtns.length);
+}
+
+// type="module" は defer 相当なので通常は DOMContentLoaded より前に評価されるが、
+// 念のため readyState を見てフォールバックする
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', runAllInitializers);
+} else {
+  runAllInitializers();
+}
 
 function initDateSelectors() {
   const yearSelect = document.getElementById('birth-year');
@@ -140,14 +157,15 @@ function initToggleHandlers() {
 
 function initGenderButtons() {
   document.querySelectorAll('.gender-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (ev) => {
+      ev.preventDefault();
       selectedGender = btn.dataset.gender;
       document.querySelectorAll('.gender-btn').forEach(b => {
-        b.classList.remove('btn--primary');
+        b.classList.remove('gender-btn--active', 'btn--primary');
         b.classList.add('btn--outline');
       });
       btn.classList.remove('btn--outline');
-      btn.classList.add('btn--primary');
+      btn.classList.add('gender-btn--active');
     });
   });
 }
