@@ -74,107 +74,90 @@
       letter-spacing: 0.04em;
     }
 
-    /* --- Header plan navigation ---------------------------------------- */
-    .header__plans {
-      margin-top: 36px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-
-    /* Today: 主アクション。タクティカル・ゴールドの大型リンク */
-    .header__plan-primary {
+    /* --- Header advice date (本日のアドバイス見出し / clickable) -------- */
+    .header__advice-date {
+      margin: 36px auto 0;
       display: inline-flex;
-      align-items: center;
-      gap: 14px;
-      padding: 18px 44px;
-      background: #020202;
-      color: #d4af37;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-decoration: none;
-      border: 1px solid #d4af37;
-      border-radius: 2px;
-      box-shadow:
-        0 0 0 1px rgba(212,175,55,0.4),
-        0 8px 32px rgba(212,175,55,0.18);
-      transition: transform 160ms ease, box-shadow 200ms ease, color 160ms ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .header__plan-primary::before {
-      content: '> ';
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      color: rgba(212,175,55,0.7);
-    }
-    .header__plan-primary::after {
-      content: 'NOW';
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.4em;
-      color: rgba(255,255,255,0.5);
-      padding: 4px 8px;
-      border: 1px solid rgba(212,175,55,0.4);
-      border-radius: 2px;
-      margin-left: 6px;
-    }
-    .header__plan-primary:hover {
-      transform: translateY(-2px);
-      color: #fff;
-      box-shadow:
-        0 0 0 1px #d4af37,
-        0 12px 40px rgba(212,175,55,0.32);
-    }
-
-    /* 並列3つの secondary 内部リンク */
-    .header__plan-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      align-items: baseline;
       justify-content: center;
-    }
-    .header__plan-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 18px;
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
-      color: var(--muted);
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
-    }
-    .header__plan-link::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: currentColor;
-      border-radius: 50%;
-      opacity: 0.6;
-    }
-    .header__plan-link:hover {
+      flex-wrap: wrap;
+      gap: 2px;
+      font-family: 'Playfair Display', serif;
       color: #111;
-      border-color: #111;
-      background: #fff;
+      letter-spacing: 0.02em;
+      padding: 14px 28px;
+      position: relative;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 200ms ease;
     }
-    /* リンク別アクセント色（ホバーで現れる） */
-    .header__plan-link--1week:hover  { color: #b88a1a; border-color: #b88a1a; }
-    .header__plan-link--monthly:hover { color: #008999; border-color: #008999; }
-    .header__plan-link--yearly:hover  { color: #7a3eb8; border-color: #7a3eb8; }
+    .header__advice-date::before,
+    .header__advice-date::after {
+      content: "";
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      margin: 0 14px;
+      align-self: center;
+      transition: width 220ms ease, background 220ms ease;
+    }
+    .header__advice-date:hover {
+      transform: translateY(-1px);
+    }
+    .header__advice-date:hover::before,
+    .header__advice-date:hover::after {
+      width: 48px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+    }
+    .header__advice-date:focus-visible {
+      outline: 2px solid #d4af37;
+      outline-offset: 6px;
+      border-radius: 2px;
+    }
+
+    .header__advice-date__num {
+      font-family: 'Playfair Display', serif;
+      color: #d4af37;
+      font-size: 1.9rem;
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+    .header__advice-date__sep {
+      font-family: 'Playfair Display', serif;
+      color: rgba(212, 175, 55, 0.85);
+      font-size: 1.6rem;
+      margin: 0 6px;
+      align-self: center;
+      font-weight: 500;
+    }
+    .header__advice-date__suffix {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: #444;
+      margin-left: 12px;
+      align-self: center;
+    }
+    .header__advice-date__arrow {
+      font-family: 'Inter', sans-serif;
+      color: #d4af37;
+      font-size: 0.9rem;
+      margin-left: 8px;
+      display: inline-block;
+      transition: transform 220ms ease;
+    }
+    .header__advice-date:hover .header__advice-date__arrow {
+      transform: translateX(6px);
+    }
 
     @media (min-width: 640px) {
-      .header__plans { margin-top: 44px; gap: 20px; }
-      .header__plan-primary { font-size: 1.6rem; padding: 20px 56px; }
+      .header__advice-date { margin-top: 44px; }
+      .header__advice-date__num { font-size: 2.2rem; }
+      .header__advice-date__sep { font-size: 1.9rem; }
+      .header__advice-date__suffix { font-size: 0.9rem; }
     }
 
     /* Stats bar */
@@ -762,6 +745,227 @@
       }
       /* デスクトップでも cell-label を見せる（テーブルヘッダの代わり） */
     }
+
+    /* ============================================================
+       Advice Intake Form (プロフィール入力)
+       タクティカル・ダーク島。ヘッダーの日付リンクからジャンプ
+       ============================================================ */
+    .advice-intake-section {
+      background:
+        radial-gradient(ellipse at 0% 0%, rgba(212,175,55,0.10), transparent 55%),
+        radial-gradient(ellipse at 100% 100%, rgba(0,240,255,0.06), transparent 50%),
+        #020202;
+      color: #f4f4f5;
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+      scroll-margin-top: 24px;
+    }
+    .advice-intake-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        to bottom, rgba(255,255,255,0.012) 0 1px, transparent 1px 3px
+      );
+      pointer-events: none;
+    }
+    .advice-intake-section__inner {
+      max-width: 620px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .advice-intake-section__label {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: #d4af37;
+      margin-bottom: 12px;
+    }
+    .advice-intake-section__title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3.2vw, 2rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .advice-intake-section__lead {
+      color: #8b8b94;
+      font-size: 0.88rem;
+      line-height: 1.95;
+      letter-spacing: 0.04em;
+      margin-bottom: 36px;
+    }
+
+    .advice-form {
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    .advice-form__field {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .advice-form__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem;
+      letter-spacing: 0.3em;
+      color: #f4f4f5;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .advice-form__hint {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      font-size: 0.7rem;
+      color: #8b8b94;
+      letter-spacing: 0.1em;
+      text-transform: none;
+    }
+    .advice-form__required {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.28em;
+      color: #d4af37;
+      border: 1px solid rgba(212,175,55,0.45);
+      padding: 2px 6px;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    .advice-form__input,
+    .advice-form__select {
+      background: rgba(255,255,255,0.025);
+      color: #f4f4f5;
+      border: 1px solid rgba(212,175,55,0.18);
+      border-radius: 2px;
+      padding: 14px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
+      transition: border-color 160ms ease, box-shadow 200ms ease, background 160ms ease;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .advice-form__input::placeholder {
+      color: #5a5a64;
+    }
+    .advice-form__input:focus,
+    .advice-form__select:focus {
+      outline: none;
+      border-color: rgba(0,240,255,0.55);
+      background: rgba(0,240,255,0.04);
+      box-shadow: 0 0 0 1px rgba(0,240,255,0.4), 0 0 18px rgba(0,240,255,0.18);
+    }
+    .advice-form__input--date {
+      color-scheme: dark;
+    }
+    .advice-form__select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #d4af37 50%),
+        linear-gradient(135deg, #d4af37 50%, transparent 50%);
+      background-position:
+        calc(100% - 20px) 50%,
+        calc(100% - 14px) 50%;
+      background-size: 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 38px;
+    }
+    .advice-form__select option {
+      background: #0a0a0b;
+      color: #f4f4f5;
+    }
+
+    .advice-form__pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .advice-form__pill {
+      flex: 1 1 auto;
+      min-width: 80px;
+      background: rgba(255,255,255,0.02);
+      color: #8b8b94;
+      border: 1px solid rgba(212,175,55,0.18);
+      border-radius: 2px;
+      padding: 12px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+    }
+    .advice-form__pill:hover {
+      border-color: rgba(212,175,55,0.45);
+      color: #f4f4f5;
+    }
+    .advice-form__pill[aria-pressed="true"] {
+      background: rgba(212,175,55,0.12);
+      border-color: #d4af37;
+      color: #d4af37;
+      box-shadow: inset 0 0 0 1px rgba(212,175,55,0.25);
+    }
+
+    .advice-form__error {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      color: #ef4444;
+      background: rgba(239,68,68,0.06);
+      border: 1px solid rgba(239,68,68,0.35);
+      border-radius: 2px;
+      padding: 10px 14px;
+      margin: 0;
+    }
+    .advice-form__success {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      color: #10b981;
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.45);
+      border-radius: 2px;
+      padding: 14px 16px;
+      margin: 0;
+      line-height: 1.8;
+    }
+    .advice-form__success a {
+      color: #d4af37;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .advice-form__submit {
+      background: linear-gradient(180deg, #d4af37 0%, #e8c95a 100%);
+      color: #020202;
+      border: none;
+      border-radius: 2px;
+      padding: 18px 36px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.92rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 0 0 1px #d4af37, 0 4px 24px rgba(212,175,55,0.2);
+      transition: transform 160ms ease, box-shadow 200ms ease;
+      margin-top: 8px;
+    }
+    .advice-form__submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 0 1px #d4af37, 0 8px 36px rgba(212,175,55,0.36);
+    }
+
+    @media (min-width: 720px) {
+      .advice-intake-section { padding: 100px 24px; }
+    }
   </style>
 </head>
 <body>
@@ -776,14 +980,7 @@
       あなただけの最強「TODOリスト」。
     </p>
 
-    <nav class="header__plans" aria-label="プラン選択">
-      <a href="#plan-today" class="header__plan-primary">Today</a>
-      <div class="header__plan-row">
-        <a href="#plan-1week" class="header__plan-link header__plan-link--1week">〜 1 Week</a>
-        <a href="#plan-monthly" class="header__plan-link header__plan-link--monthly">〜 Monthly</a>
-        <a href="#plan-yearly" class="header__plan-link header__plan-link--yearly">Yearly</a>
-      </div>
-    </nav>
+    <a href="#advice-intake" class="header__advice-date" id="header-advice-date" aria-live="polite"></a>
   </header>
 
   <!-- Stats -->
@@ -996,133 +1193,101 @@
     </div>
   </section>
 
-  <!-- Portfolio -->
-  <section class="section">
-    <p class="section__label">Portfolio</p>
-    <h2 class="section__title">制作サイト一覧</h2>
+  <!-- ============================================================
+       Advice Intake Form (プロフィール入力)
+       ============================================================ -->
+  <section class="advice-intake-section" id="advice-intake">
+    <div class="advice-intake-section__inner">
+      <p class="advice-intake-section__label">// PROFILE INTAKE</p>
+      <h2 class="advice-intake-section__title">あなたへのアドバイスを生成します</h2>
+      <p class="advice-intake-section__lead">
+        以下の情報から、AI が四柱推命×インド占星術を統合解析し、<br>
+        本日のあなただけの「TODOリスト」を出力します。<br>
+        <strong style="color:#d4af37;">必須項目</strong>を入力して送信してください。
+      </p>
 
-    <div class="portfolio">
+      <form class="advice-form" id="advice-intake-form" novalidate>
 
-      <!-- 0. AI Fortune Engine (NEW) -->
-      <a href="astrology-v2.html" class="card card--featured">
-        <div class="card__preview preview-ai"></div>
-        <div class="card__body">
-          <div class="card__number">NEW</div>
-          <h3 class="card__title">x-TEN — Tactical Analysis Engine</h3>
-          <p class="card__desc">四柱推命とインド占星術をAIが統合解析する3層構造エンジン。CORE（過去・現在のバックテスト）／ FLOW（月年のマクロ戦略）／ HACK（今日のミクロ行動）で、運命を10倍速で攻略する次世代鑑定。</p>
-          <div class="card__tags">
-            <span class="tag">AI × 命術</span>
-            <span class="tag">3層解析</span>
-            <span class="tag">四柱推命 × ヴェーダ占星術</span>
+        <!-- 名前 -->
+        <div class="advice-form__field">
+          <label class="advice-form__label" for="advice-name">
+            名前
+            <span class="advice-form__hint">あだ名でも OK</span>
+          </label>
+          <input
+            type="text"
+            id="advice-name"
+            name="name"
+            class="advice-form__input"
+            maxlength="40"
+            placeholder="例: ほしよみ"
+            autocomplete="nickname">
+        </div>
+
+        <!-- 性別 -->
+        <div class="advice-form__field">
+          <label class="advice-form__label">性別</label>
+          <div class="advice-form__pills" role="radiogroup" aria-label="性別">
+            <button type="button" class="advice-form__pill" data-field="gender" data-value="male"   aria-pressed="false">男性</button>
+            <button type="button" class="advice-form__pill" data-field="gender" data-value="female" aria-pressed="false">女性</button>
           </div>
         </div>
-      </a>
 
-      <!-- 1. Mystical-Dark (x-TEN) -->
-      <a href="celestia/tarot.html" class="card card--featured">
-        <div class="card__preview preview-mystical"></div>
-        <div class="card__body">
-          <div class="card__number">01</div>
-          <h3 class="card__title">x-TEN - 戦略のためのAI命術解析</h3>
-          <p class="card__desc">深いネイビーとゴールドの配色。明朝体、扇形カード配置。タロット・四柱推命・星座占い・姓名判断・数秘術・おみくじ・相性診断の7種を収録したポータル型。</p>
-          <div class="card__tags">
-            <span class="tag">Mystical-Dark</span>
-            <span class="tag">7種の占い</span>
-            <span class="tag">星ひとみ / 鏡リュウジ風</span>
+        <!-- 生年月日 (必須) -->
+        <div class="advice-form__field">
+          <label class="advice-form__label" for="advice-birthdate">
+            生年月日
+            <span class="advice-form__required">必須</span>
+          </label>
+          <input
+            type="date"
+            id="advice-birthdate"
+            name="birthdate"
+            class="advice-form__input advice-form__input--date"
+            required>
+        </div>
+
+        <!-- 血液型 (必須) -->
+        <div class="advice-form__field">
+          <label class="advice-form__label">
+            血液型
+            <span class="advice-form__required">必須</span>
+          </label>
+          <div class="advice-form__pills" role="radiogroup" aria-label="血液型">
+            <button type="button" class="advice-form__pill" data-field="blood" data-value="A"  aria-pressed="false">A 型</button>
+            <button type="button" class="advice-form__pill" data-field="blood" data-value="B"  aria-pressed="false">B 型</button>
+            <button type="button" class="advice-form__pill" data-field="blood" data-value="AB" aria-pressed="false">AB 型</button>
+            <button type="button" class="advice-form__pill" data-field="blood" data-value="O"  aria-pressed="false">O 型</button>
           </div>
         </div>
-      </a>
 
-      <!-- 2. Pop-Kawaii -->
-      <a href="site-pop/index.html" class="card">
-        <div class="card__preview preview-pop"></div>
-        <div class="card__body">
-          <div class="card__number">02</div>
-          <h3 class="card__title">きょうの星占い</h3>
-          <p class="card__desc">コーラル×ティール×イエロー。丸ゴシック体、丸みのあるカード。ポップで親しみやすいデザイン。</p>
-          <div class="card__tags">
-            <span class="tag">Pop-Kawaii</span>
-            <span class="tag">12星座占い</span>
-            <span class="tag">しいたけ占い風</span>
-          </div>
+        <!-- 職業 (必須) -->
+        <div class="advice-form__field">
+          <label class="advice-form__label" for="advice-job">
+            職業
+            <span class="advice-form__required">必須</span>
+          </label>
+          <select
+            id="advice-job"
+            name="job"
+            class="advice-form__select"
+            required>
+            <option value="">選択してください</option>
+            <option value="executive">会社経営 / 会社役員</option>
+            <option value="employee">会社員</option>
+            <option value="public">公務員</option>
+            <option value="parttime">アルバイト / パート</option>
+            <option value="university">大学生</option>
+            <option value="highschool">高校生</option>
+          </select>
         </div>
-      </a>
 
-      <!-- 3. Luxury-Elegant -->
-      <a href="site-luxury/index.html" class="card">
-        <div class="card__preview preview-luxury"></div>
-        <div class="card__body">
-          <div class="card__number">03</div>
-          <h3 class="card__title">運命星占い</h3>
-          <p class="card__desc">漆黒×ゴールド×深紅。権威的で重厚感のあるプレミアムデザイン。六星占術風の運命星鑑定。</p>
-          <div class="card__tags">
-            <span class="tag">Luxury-Elegant</span>
-            <span class="tag">運命星鑑定</span>
-            <span class="tag">細木数子 / 木下レオン風</span>
-          </div>
-        </div>
-      </a>
+        <p class="advice-form__error" id="advice-intake-error" role="alert" hidden></p>
 
-      <!-- 4. Minimalist-Modern -->
-      <a href="site-minimal/index.html" class="card">
-        <div class="card__preview preview-minimal"></div>
-        <div class="card__body">
-          <div class="card__number">04</div>
-          <h3 class="card__title">horoscope</h3>
-          <p class="card__desc">モノクロ、装飾ゼロ、余白で語るミニマルデザイン。タイポグラフィのみで構成されたアプリ的UI。</p>
-          <div class="card__tags">
-            <span class="tag">Minimalist-Modern</span>
-            <span class="tag">デイリー星座</span>
-            <span class="tag">Co-Star / LINE占い風</span>
-          </div>
-        </div>
-      </a>
+        <button type="submit" class="advice-form__submit">&gt; アドバイスを受け取る</button>
 
-      <!-- 5. Traditional-Japanese -->
-      <a href="site-japanese/index.html" class="card">
-        <div class="card__preview preview-japanese"></div>
-        <div class="card__body">
-          <div class="card__number">05</div>
-          <h3 class="card__title">御神籤 ・ 九星気学</h3>
-          <p class="card__desc">和紙テクスチャ、朱色、筆文字風。デジタルの中に神社の厳かさを再現した和風デザイン。</p>
-          <div class="card__tags">
-            <span class="tag">Traditional-Japanese</span>
-            <span class="tag">おみくじ + 九星</span>
-            <span class="tag">銀座の母風</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- 6. Pastel-Soft -->
-      <a href="site-pastel/index.html" class="card">
-        <div class="card__preview preview-pastel"></div>
-        <div class="card__body">
-          <div class="card__number">06</div>
-          <h3 class="card__title">Love Tarot</h3>
-          <p class="card__desc">ブラッシュピンク×ラベンダー。ドット罫線、柔らかな影。手紙のような温もりの恋愛タロット。</p>
-          <div class="card__tags">
-            <span class="tag">Pastel-Soft</span>
-            <span class="tag">恋愛タロット</span>
-            <span class="tag">さちこい / Chani Nicholas風</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- 7. Bold-Editorial -->
-      <a href="site-editorial/index.html" class="card">
-        <div class="card__preview preview-editorial"></div>
-        <div class="card__body">
-          <div class="card__number">07</div>
-          <h3 class="card__title">WEEKLY HOROSCOPE</h3>
-          <p class="card__desc">白黒×赤のハイコントラスト。超太字タイポグラフィ、雑誌風レイアウト。ランキング形式の星座占い。</p>
-          <div class="card__tags">
-            <span class="tag">Bold-Editorial</span>
-            <span class="tag">星座ランキング</span>
-            <span class="tag">VOGUE / ELLE風</span>
-          </div>
-        </div>
-      </a>
-
+        <p class="advice-form__success" id="advice-intake-success" role="status" hidden></p>
+      </form>
     </div>
   </section>
 
@@ -1161,6 +1326,123 @@
   <footer class="footer">
     <p class="footer__text">Fortune Telling Portfolio &mdash; 50+ sites analyzed, 7 design patterns, 7 sites built.</p>
   </footer>
+
+  <!-- Header advice date: JST (Asia/Tokyo) で今日の M/D を表示 -->
+  <script>
+    (function () {
+      var el = document.getElementById('header-advice-date');
+      if (!el) return;
+      // Intl で JST の月日を取得（サーバーやブラウザ側のタイムゾーンに依存しない）
+      var fmt = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Tokyo',
+        month: 'numeric',
+        day: 'numeric'
+      });
+      var parts = fmt.formatToParts(new Date());
+      var pick = function (type) {
+        var p = parts.find(function (x) { return x.type === type; });
+        return p ? p.value : '';
+      };
+      var month = pick('month');
+      var day   = pick('day');
+      el.innerHTML =
+        '<span class="header__advice-date__num">' + month + '</span>' +
+        '<span class="header__advice-date__sep">/</span>' +
+        '<span class="header__advice-date__num">' + day + '</span>' +
+        '<span class="header__advice-date__suffix">のあなたへアドバイス</span>' +
+        '<span class="header__advice-date__arrow" aria-hidden="true">→</span>';
+      el.setAttribute('aria-label', month + '月' + day + '日のあなたへのアドバイスを受け取る');
+    })();
+  </script>
+
+  <!-- Advice Intake Form: pill toggle / validation / submit -->
+  <script>
+    (function () {
+      var form = document.getElementById('advice-intake-form');
+      if (!form) return;
+
+      // --- ピル選択（性別 / 血液型）------------------------------------
+      var pills = form.querySelectorAll('.advice-form__pill');
+      pills.forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          var field = pill.getAttribute('data-field');
+          // 同じグループの他ピルを解除
+          form.querySelectorAll('.advice-form__pill[data-field="' + field + '"]').forEach(function (p) {
+            p.setAttribute('aria-pressed', p === pill ? 'true' : 'false');
+          });
+        });
+      });
+
+      function readPill(field) {
+        var picked = form.querySelector('.advice-form__pill[data-field="' + field + '"][aria-pressed="true"]');
+        return picked ? picked.getAttribute('data-value') : '';
+      }
+
+      // --- 送信処理 ----------------------------------------------------
+      var errorEl   = document.getElementById('advice-intake-error');
+      var successEl = document.getElementById('advice-intake-success');
+
+      function showError(msg) {
+        if (!errorEl) return;
+        errorEl.textContent = '⚠ ' + msg;
+        errorEl.hidden = false;
+        successEl.hidden = true;
+      }
+      function clearError() {
+        if (!errorEl) return;
+        errorEl.hidden = true;
+        errorEl.textContent = '';
+      }
+
+      var JOB_LABELS = {
+        executive:  '会社経営 / 会社役員',
+        employee:   '会社員',
+        public:     '公務員',
+        parttime:   'アルバイト / パート',
+        university: '大学生',
+        highschool: '高校生'
+      };
+
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        clearError();
+
+        var profile = {
+          name:      form.querySelector('#advice-name').value.trim(),
+          gender:    readPill('gender'),
+          birthdate: form.querySelector('#advice-birthdate').value,
+          blood:     readPill('blood'),
+          job:       form.querySelector('#advice-job').value
+        };
+
+        // 必須チェック
+        if (!profile.birthdate) { showError('生年月日は必須です。'); return; }
+        if (!profile.blood)     { showError('血液型を選択してください。'); return; }
+        if (!profile.job)       { showError('職業を選択してください。'); return; }
+
+        // 保存（次回訪問時のプリフィルや解析エンジンとの連携用）
+        try {
+          localStorage.setItem('xten.profile', JSON.stringify(Object.assign({}, profile, {
+            savedAt: new Date().toISOString()
+          })));
+        } catch (e) { /* localStorage 利用不可は黙殺 */ }
+
+        // 成功表示
+        var displayName = profile.name || 'あなた';
+        successEl.innerHTML =
+          '✓ プロファイルを受領しました。<br>' +
+          '<strong style="color:#d4af37;">' + displayName + '</strong> さん（' +
+            (profile.blood ? profile.blood + '型 / ' : '') +
+            JOB_LABELS[profile.job] +
+          '）の解析を生成します。<br>' +
+          '<a href="astrology-v2.html">&gt; 解析エンジンへ進む</a>';
+        successEl.hidden = false;
+
+        // スムーズに成功メッセージへ
+        successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    })();
+  </script>
 
 </body>
 </html>
