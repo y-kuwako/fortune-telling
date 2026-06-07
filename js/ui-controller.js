@@ -3,7 +3,7 @@
 // ES Module - ui-controller.js
 // ========================================
 
-console.log('[x-TEN] ui-controller.js loaded (v3)');
+console.log('[x-TEN] ui-controller.js loaded (v5)');
 
 import { calcFourPillars, FIVE_ELEMENTS } from './pillars.js';
 import { calcVedicAstrology } from './vedic.js';
@@ -72,11 +72,36 @@ function runAllInitializers() {
     }
   }
   console.log('[x-TEN] init complete:', okCount, 'ok /', failCount, 'failed');
-  // 動作確認用に DOM 状態を吐く
+  // 詳細診断（不具合解析用）
   const ySel = document.getElementById('birth-year');
+  const hSel = document.getElementById('birth-hour');
+  const pSel = document.getElementById('birth-place');
   const gBtns = document.querySelectorAll('.gender-btn');
-  console.log('[x-TEN] birth-year option count =', ySel ? ySel.options.length : 'NOT FOUND');
-  console.log('[x-TEN] gender-btn count =', gBtns.length);
+  const bBtns = document.querySelectorAll('.blood-btn');
+  const checkPointerEvents = (el, label) => {
+    if (!el) { console.log('[x-TEN]', label, 'NOT FOUND'); return; }
+    const cs = getComputedStyle(el);
+    console.log('[x-TEN]', label,
+      '| options=', el.tagName === 'SELECT' ? el.options.length : 'n/a',
+      '| pointer-events=', cs.pointerEvents,
+      '| cursor=', cs.cursor,
+      '| disabled=', el.disabled,
+      '| visibility=', cs.visibility);
+  };
+  checkPointerEvents(ySel,  'birth-year');
+  checkPointerEvents(hSel,  'birth-hour');
+  checkPointerEvents(pSel,  'birth-place');
+  if (gBtns[0]) checkPointerEvents(gBtns[0], 'gender-btn[0]');
+  if (bBtns[0]) checkPointerEvents(bBtns[0], 'blood-btn[0]');
+  console.log('[x-TEN] gender-btn count =', gBtns.length, '| blood-btn count =', bBtns.length);
+
+  // form-group 全体がオーバーレイで覆われていないか
+  const formSec = document.querySelector('.form-section');
+  if (formSec) {
+    const rect = formSec.getBoundingClientRect();
+    const elAtCenter = document.elementFromPoint(rect.left + rect.width/2, rect.top + 100);
+    console.log('[x-TEN] element at form center:', elAtCenter && elAtCenter.tagName, elAtCenter && elAtCenter.className);
+  }
 }
 
 // type="module" は defer 相当なので通常は DOMContentLoaded より前に評価されるが、
@@ -855,36 +880,37 @@ function applyPaywall() {
     }
   });
 
-  // 2. CTA スロットを更新
+  // 2. CTA スロットを更新 (新仕様: FREE → BASIC → PREMIUM)
   renderCtaSlot('core', {
     feature: 'core.detail',
-    plan: 'shot',
-    hook: '四柱推命 × インド占星術 × 紫微斗数。<br>あなたの仕事・対人・財運・健康まで、本日の行動レベルで解析します。',
-    btn: '本日のフル鑑定をアンロック ¥100',
-    note: '当日24時まで全鑑定が解放されます。'
+    plan: 'basic',
+    hook: '四柱推命 × インド占星術であなたの<strong>「自分」というハードウェア</strong>を解析。<br>過去のターニングポイント（転職・激変）もズバリ言い当て。',
+    btn: 'あなたの基本スペックをアンロック ¥500/月',
+    note: 'BASIC: 基本スペック + 月間スケジュールが両方使えます。'
   });
 
   renderCtaSlot('flow', {
     feature: 'flow.monthly',
     plan: 'basic',
-    hook: '算命学 × 宿曜占星術による<strong>月間運勢</strong>。<br>天中殺・大運・宿曜の関係性を読み解きます。',
-    btn: '月間運勢を見る ¥300/月',
-    note: 'いつでも解約可能。'
+    hook: '宿曜の月間バイオリズム × インド占星術トランジット。<br>1ヶ月の「攻め時・守り時」をAIがハック案として補正出力。',
+    btn: 'This month\'s スケジュールをアンロック ¥500/月',
+    note: 'BASIC: 基本スペック + 月間スケジュールが両方使えます。'
   }, {
     // monthly が解除済みで yearly がロックなら年間用CTAに差し替え
     altFeature: 'flow.yearly',
     altPlan: 'premium',
-    altHook: '<strong>年間カレンダー</strong>で1〜3年の運気の波を俯瞰。<br>AI対話タスク管理 / 運気ログ（Sync Log）も解放されます。',
-    altBtn: '年間まで開く ¥500/月',
-    altNote: 'PREMIUM: 月間+年間+AI対話+運気ログ。'
+    altHook: 'インド占星術ダシャー × 四柱推命 大運・歳運の最重厚解析。<br>向こう数年分のロードマップをAIが戦略レポート化します。',
+    altBtn: 'This year\'s スケジュールまで開く ¥19,800/年',
+    altNote: 'PREMIUM: 数年単位の「お守り」ロードマップ。'
   });
 
+  // HACK (Today's アドバイス) は新仕様で FREE。CTA は使わない（slot は空のまま）。
   renderCtaSlot('hack', {
     feature: 'hack.full',
-    plan: 'shot',
-    hook: '時間帯別の<strong>集中力・対人運・創造力</strong>と、<br>本日のアクションプランをAI軍師がご提案。',
-    btn: '本日のフル鑑定をアンロック ¥100',
-    note: '当日24時まで全鑑定が解放されます。'
+    plan: 'free',
+    hook: 'Today\'s アドバイスは完全無料です。',
+    btn: '今日のTODOを受け取る',
+    note: '宿曜 × 四柱推命の補正で AI が今日の最適行動を提示。'
   });
 }
 

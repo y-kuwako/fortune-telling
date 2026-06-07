@@ -29,6 +29,99 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* =====================================================
+       Global Nav（整理版・astrology-v2.html と同じ仕様）
+       index.html のライト調ボディに乗せる、自己完結ダーク帯
+       ===================================================== */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 2px;
+      padding: 4px 16px;
+      background: rgba(10, 10, 11, 0.92);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+      box-shadow: 0 1px 0 rgba(0, 240, 255, 0.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav::-webkit-scrollbar { display: none; }
+
+    .nav__link {
+      color: #8b8b94;
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      font-size: 0.74rem;
+      text-decoration: none;
+      padding: 12px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      white-space: nowrap;
+      transition: color 180ms ease;
+      flex-shrink: 0;
+    }
+    .nav__link:hover { color: #e8c95a; }
+    .nav__link--active { color: #d4af37; }
+    .nav__link--active::after {
+      content: "";
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 6px;
+      height: 1px;
+      background: #d4af37;
+      box-shadow: 0 0 8px #d4af37;
+    }
+    .nav__icon { color: inherit; opacity: 0.7; font-size: 0.85rem; }
+    .nav__link--active .nav__icon { opacity: 1; }
+
+    /* グループ区切り（薄い縦線）— astro グループの直前と tarot の直前に */
+    .nav__link[href*="#hack"]::before,
+    .nav__link[href*="celestia/tarot"]::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: 25%;
+      bottom: 25%;
+      width: 1px;
+      background: rgba(212, 175, 55, 0.18);
+    }
+
+    .plan-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      margin-left: auto;            /* 右端に押し出す */
+      background: #0a0a0b;
+      border: 1px solid rgba(212, 175, 55, 0.18);
+      border-radius: 2px;
+      font-family: 'JetBrains Mono', 'Roboto Mono', monospace;
+      color: #8b8b94;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-decoration: none;
+      transition: border-color 160ms ease;
+      flex-shrink: 0;
+    }
+    .plan-badge:hover { border-color: rgba(212, 175, 55, 0.45); }
+    .plan-badge__value { color: #d4af37; font-weight: 600; }
+
+    @media (max-width: 720px) {
+      .nav { padding: 4px 12px; }
+      .nav__link { padding: 10px 10px; font-size: 0.7rem; }
+      .plan-badge { margin-left: 6px; }
+    }
+
     /* Header */
     .header {
       padding: 48px 24px 40px;
@@ -580,228 +673,202 @@
       }
     }
 
-    /* ============================================================
-       占術ロジック配分マップ (Tactical Logic Map)
-       ライト基調ページの中に挿入するダーク・タクティカル島
-       ============================================================ */
-    .logic-map-section {
+    /* =====================================================
+       Advice Cards Grid（占いサイト風 4 枚カード）
+       ===================================================== */
+    .advice-cards {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px 24px 56px;
+    }
+    .advice-cards__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .advice-card {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+    .advice-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+      border-color: rgba(212, 175, 55, 0.45);
+    }
+
+    .advice-card__top {
+      display: flex;
+      gap: 14px;
+      padding: 16px 16px 12px;
+      align-items: stretch;
+    }
+    .advice-card__thumb {
+      width: 96px;
+      height: 96px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       background:
-        radial-gradient(ellipse at 80% 0%, rgba(212,175,55,0.08), transparent 55%),
-        radial-gradient(ellipse at 20% 100%, rgba(0,240,255,0.06), transparent 50%),
-        #020202;
-      color: #f4f4f5;
-      padding: 80px 24px;
+        radial-gradient(circle at 30% 20%, rgba(212,175,55,0.18), transparent 65%),
+        linear-gradient(135deg, #0a0a0b 0%, #1a1a2a 100%);
+      border-radius: 6px;
+      color: #d4af37;
+      text-align: center;
       position: relative;
       overflow: hidden;
     }
-    .logic-map-section::before {
+    .advice-card__thumb::after {
       content: "";
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background-image: repeating-linear-gradient(
-        to bottom, rgba(255,255,255,0.012) 0 1px, transparent 1px 3px
+        to bottom, rgba(255,255,255,0.02) 0 1px, transparent 1px 4px
       );
       pointer-events: none;
     }
-    .logic-map-section__inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .logic-map-section__label {
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.4em;
-      color: #d4af37;
-      margin-bottom: 12px;
-    }
-    .logic-map-section__title {
+    .advice-card__thumb-icon {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+      font-size: 1.9rem;
       font-weight: 600;
-      letter-spacing: 0.02em;
-      margin-bottom: 12px;
+      line-height: 1;
     }
-    .logic-map-section__lead {
-      color: #8b8b94;
-      font-size: 0.9rem;
-      max-width: 640px;
-      line-height: 1.95;
-      letter-spacing: 0.04em;
-      margin-bottom: 36px;
-    }
-
-    /* Matrix grid: モバイルはカード積み、デスクトップは表形式 */
-    .logic-map {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .logic-map__row {
-      display: grid;
-      grid-template-columns: 1fr;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(212,175,55,0.18);
-      border-radius: 3px;
-      padding: 18px 18px 14px;
-      position: relative;
-      transition: border-color 220ms ease, transform 220ms ease;
-    }
-    .logic-map__row:hover {
-      border-color: rgba(212,175,55,0.45);
-      transform: translateY(-2px);
-    }
-    .logic-map__row::before {
-      content: "";
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
-      background: currentColor;
-      opacity: 0.85;
-    }
-    .logic-map__row--free      { color: #8b8b94; }
-    .logic-map__row--today     { color: #d4af37; }   /* Metallic Gold = 勝負時 */
-    .logic-map__row--1week     { color: #e8c95a; }   /* Gold Soft */
-    .logic-map__row--shot      { color: #d4af37; }
-    .logic-map__row--basic     { color: #00f0ff; }   /* Cyber Cyan */
-    .logic-map__row--premium   { color: #a855f7; }   /* Purple = Focus */
-
-    /* Scroll-margin: ヘッダーの固定位置を考慮（無くても動くが余白を確保） */
-    .logic-map__row { scroll-margin-top: 80px; }
-
-    /* セルラベル: モバイル用の見出し */
-    .logic-map__cell {
-      padding: 8px 0;
-      border-top: 1px dashed rgba(212,175,55,0.12);
-    }
-    .logic-map__cell:first-of-type { border-top: none; }
-
-    .logic-map__cell-label {
+    .advice-card__thumb-sub {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.32em;
-      color: rgba(255,255,255,0.4);
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.55);
+      margin-top: 6px;
       text-transform: uppercase;
-      margin-bottom: 4px;
-      display: block;
     }
-    .logic-map__cell-value {
-      font-size: 0.88rem;
-      color: #f4f4f5;
-      line-height: 1.65;
-      letter-spacing: 0.02em;
-    }
+    .advice-card--basic .advice-card__thumb     { color: #00f0ff; }
+    .advice-card--monthly .advice-card__thumb   { color: #66e0ff; }
+    .advice-card--yearly .advice-card__thumb    { color: #c084fc; }
 
-    /* Plan セルだけ強調 */
-    .logic-map__plan {
+    .advice-card__head {
+      flex: 1;
       display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 4px;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
     }
-    .logic-map__plan-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
+    .advice-card__title {
+      font-family: 'Playfair Display', 'Noto Serif JP', serif;
+      font-size: 1rem;
       font-weight: 600;
-      color: currentColor;
-      letter-spacing: 0.04em;
+      line-height: 1.4;
+      margin: 0 0 4px;
+      color: #111;
+      letter-spacing: 0.01em;
     }
-    .logic-map__plan-sub {
+    .advice-card__price {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.28em;
-      color: rgba(255,255,255,0.5);
+      font-size: 0.78rem;
+      color: #555;
+      margin: 0;
+      letter-spacing: 0.04em;
+      text-align: right;
+    }
+    .advice-card__price strong { font-weight: 600; color: #111; }
+
+    .advice-card__body {
+      padding: 0 16px 14px;
+    }
+    .advice-card__tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      padding: 4px 10px;
+      border: 1px solid #d4af37;
+      color: #b88a1a;
+      border-radius: 100px;
+      margin-bottom: 10px;
       text-transform: uppercase;
     }
-    .logic-map__plan-price {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      color: currentColor;
-      margin-left: auto;
+    .advice-card--basic   .advice-card__tag { border-color: #00b8c8; color: #008999; }
+    .advice-card--monthly .advice-card__tag { border-color: #00b8c8; color: #008999; }
+    .advice-card--yearly  .advice-card__tag { border-color: #a855f7; color: #7a3eb8; }
+
+    .advice-card__desc {
+      font-size: 0.8rem;
+      line-height: 1.75;
+      color: #444;
+      margin: 0;
+      letter-spacing: 0.02em;
+    }
+    .advice-card__foot {
+      background: rgba(212, 175, 55, 0.06);
+      border-top: 1px solid rgba(212, 175, 55, 0.18);
+      padding: 12px 16px;
+      text-align: center;
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      font-size: 0.78rem;
+      color: #b88a1a;
+      font-weight: 500;
       letter-spacing: 0.06em;
     }
-    .logic-map__plan-axis {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      color: rgba(255,255,255,0.55);
-      text-transform: uppercase;
-      margin-bottom: 6px;
+    .advice-card--basic   .advice-card__foot {
+      background: rgba(0, 240, 255, 0.06);
+      border-top-color: rgba(0, 184, 200, 0.3);
+      color: #008999;
+    }
+    .advice-card--monthly .advice-card__foot {
+      background: rgba(0, 240, 255, 0.06);
+      border-top-color: rgba(0, 184, 200, 0.3);
+      color: #008999;
+    }
+    .advice-card--yearly  .advice-card__foot {
+      background: rgba(168, 85, 247, 0.06);
+      border-top-color: rgba(168, 85, 247, 0.3);
+      color: #7a3eb8;
     }
 
-    .logic-map__cta {
-      margin-top: 36px;
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .logic-map__btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      background: linear-gradient(180deg, #d4af37, #e8c95a);
-      color: #020202;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      box-shadow: 0 0 0 1px #d4af37, 0 6px 24px rgba(212,175,55,0.25);
-      transition: transform 160ms ease, box-shadow 160ms ease;
-    }
-    .logic-map__btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 0 0 1px #d4af37, 0 8px 36px rgba(212,175,55,0.4);
-    }
-    .logic-map__btn--ghost {
-      background: transparent;
-      color: #d4af37;
-      box-shadow: 0 0 0 1px rgba(212,175,55,0.5);
-    }
-    .logic-map__btn--ghost:hover {
-      box-shadow: 0 0 0 1px #d4af37;
-      background: rgba(212,175,55,0.06);
-    }
-
-    /* デスクトップ: 表形式に変身 */
-    @media (min-width: 900px) {
-      .logic-map__row {
-        grid-template-columns:
-          minmax(220px, 1.4fr)
-          minmax(110px, 0.9fr)
-          minmax(180px, 1.4fr)
-          minmax(160px, 1.2fr)
-          minmax(160px, 1.2fr);
-        align-items: stretch;
+    @media (min-width: 640px) {
+      .advice-cards__grid {
+        grid-template-columns: 1fr 1fr;
         gap: 20px;
-        padding: 22px 22px 22px 28px;
       }
-      .logic-map__cell {
-        border-top: none;
-        border-left: 1px dashed rgba(212,175,55,0.12);
-        padding: 0 0 0 18px;
-      }
-      .logic-map__cell:first-of-type { border-left: none; padding-left: 0; }
-      .logic-map__plan-price {
-        margin-left: 0;
-        margin-top: 6px;
-        display: block;
-      }
-      .logic-map__plan {
-        flex-direction: column;
-        gap: 4px;
-      }
-      /* デスクトップでも cell-label を見せる（テーブルヘッダの代わり） */
+      .advice-card__thumb { width: 108px; height: 108px; }
+      .advice-card__title { font-size: 1.05rem; }
     }
 
   </style>
 </head>
 <body>
+
+  <!-- Global Nav (astrology-v2.html と同じビジュアル) -->
+  <nav class="nav" aria-label="グローバルナビゲーション">
+    <a href="index.html" class="nav__link nav__link--active">
+      <span class="nav__icon">&#9671;</span> TOP
+    </a>
+    <a href="astrology-v2.html#hack" class="nav__link">
+      <span class="nav__icon">&#9671;</span> Today's アドバイス
+    </a>
+    <a href="astrology-v2.html#month" class="nav__link">
+      <span class="nav__icon">&#9671;</span> This month's スケジュール
+    </a>
+    <a href="astrology-v2.html#year" class="nav__link">
+      <span class="nav__icon">&#9671;</span> This year's スケジュール
+    </a>
+    <a href="astrology-v2.html#core" class="nav__link">
+      <span class="nav__icon">&#9671;</span> あなたの基本構成
+    </a>
+    <a href="celestia/tarot.html" class="nav__link">
+      <span class="nav__icon">&#9826;</span> タロット占い
+    </a>
+    <a href="astrology-v2.html" class="plan-badge" title="プランを変更">
+      <span class="plan-badge__label">PLAN</span>
+      <span class="plan-badge__value" id="plan-badge-value">FREE</span>
+    </a>
+  </nav>
 
   <!-- Header -->
   <header class="header">
@@ -815,6 +882,91 @@
 
     <a href="astrology-v2.html" class="header__advice-date" id="header-advice-date" aria-live="polite"></a>
   </header>
+
+  <!-- ============================================================
+       Advice Cards Grid (4 つのアドバイス入口)
+       ============================================================ -->
+  <section class="advice-cards" aria-label="アドバイス入口">
+    <div class="advice-cards__grid">
+
+      <!-- 1. Today's アドバイス -->
+      <a href="astrology-v2.html#hack" class="advice-card advice-card--today">
+        <div class="advice-card__top">
+          <div class="advice-card__thumb">
+            <span class="advice-card__thumb-icon">今</span>
+            <span class="advice-card__thumb-sub">TODAY</span>
+          </div>
+          <div class="advice-card__head">
+            <h3 class="advice-card__title">Today's アドバイス</h3>
+            <p class="advice-card__price"><strong>0円</strong></p>
+          </div>
+        </div>
+        <div class="advice-card__body">
+          <span class="advice-card__tag">完全無料</span>
+          <p class="advice-card__desc">世界に一人だけの「今日、何時に、何を実行すべきか」のTODOリスト。宿曜占星術（ベース）× 四柱推命（補正）。AIが「キーマン1人と1対1で会え」など、行動をピンポイント最適化。</p>
+        </div>
+        <div class="advice-card__foot">今日のTODOを受け取る →</div>
+      </a>
+
+      <!-- 2. あなたの基本スペック -->
+      <a href="astrology-v2.html#core" class="advice-card advice-card--basic">
+        <div class="advice-card__top">
+          <div class="advice-card__thumb">
+            <span class="advice-card__thumb-icon">核</span>
+            <span class="advice-card__thumb-sub">CORE</span>
+          </div>
+          <div class="advice-card__head">
+            <h3 class="advice-card__title">あなたの基本スペック</h3>
+            <p class="advice-card__price"><strong>¥500</strong> / 月</p>
+          </div>
+        </div>
+        <div class="advice-card__body">
+          <span class="advice-card__tag">月額</span>
+          <p class="advice-card__desc">「自分」というハードウェアのスペックと過去のエビデンス解析。四柱推命で「生まれ持った才能・ビジネスの戦闘スタイル」、インド占星術で「人生全体の骨組み・宿命」を重ね、過去のターニングポイント（転職・激変）をズバリ言い当てる。</p>
+        </div>
+        <div class="advice-card__foot">自分のスペックを見る →</div>
+      </a>
+
+      <!-- 3. This month's スケジュール -->
+      <a href="astrology-v2.html#month" class="advice-card advice-card--monthly">
+        <div class="advice-card__top">
+          <div class="advice-card__thumb">
+            <span class="advice-card__thumb-icon">月</span>
+            <span class="advice-card__thumb-sub">MONTH</span>
+          </div>
+          <div class="advice-card__head">
+            <h3 class="advice-card__title">This month's スケジュール</h3>
+            <p class="advice-card__price"><strong>¥500</strong> / 月</p>
+          </div>
+        </div>
+        <div class="advice-card__body">
+          <span class="advice-card__tag">月額</span>
+          <p class="advice-card__desc">リスクを先回りしてハックする、1ヶ月の「攻め時・守り時」カレンダー。宿曜の月間バイオリズム × インド占星術のトランジット。大凶日でも幸運の星が巡れば「リスクを逆手に取れ」と前向きなハック案へ補正。</p>
+        </div>
+        <div class="advice-card__foot">月間スケジュールを開く →</div>
+      </a>
+
+      <!-- 4. This year's スケジュール -->
+      <a href="astrology-v2.html#year" class="advice-card advice-card--yearly">
+        <div class="advice-card__top">
+          <div class="advice-card__thumb">
+            <span class="advice-card__thumb-icon">年</span>
+            <span class="advice-card__thumb-sub">YEAR</span>
+          </div>
+          <div class="advice-card__head">
+            <h3 class="advice-card__title">This year's スケジュール</h3>
+            <p class="advice-card__price"><strong>¥19,800</strong> / 年</p>
+          </div>
+        </div>
+        <div class="advice-card__body">
+          <span class="advice-card__tag">PREMIUM · YEARLY</span>
+          <p class="advice-card__desc">「今年、どう動けば人生が10倍（x10）拡張するか」の長期戦略。インド占星術「ダシャー（惑星周期）」× 四柱推命「大運・歳運」の最重厚解析。向こう数年分のロードマップをAIが戦略レポート化し、時期外れの投資による大失敗を防ぐ「お守り」。</p>
+        </div>
+        <div class="advice-card__foot">年間ロードマップを開く →</div>
+      </a>
+
+    </div>
+  </section>
 
   <!-- Stats -->
   <div class="stats">
@@ -831,200 +983,6 @@
       <div class="stat__label">Sites Built</div>
     </div>
   </div>
-
-  <!-- ============================================================
-       Tactical Logic Map (占術ロジック配分マップ)
-       ============================================================ -->
-  <section class="logic-map-section">
-    <div class="logic-map-section__inner">
-      <p class="logic-map-section__label">// TACTICAL LOGIC MAP</p>
-      <h2 class="logic-map-section__title">占術ロジック配分マップ</h2>
-      <p class="logic-map-section__lead">
-        x-TEN の 4 ティアは <strong style="color:#d4af37;">時間軸</strong> と <strong style="color:#d4af37;">占術レイヤー</strong> に対応します。<br>
-        過去の的中検証から始め、今日の戦術、月年の戦略、そして一生の最適化へ。<br>
-        必要な深さだけを解放してください。
-      </p>
-
-      <div class="logic-map">
-
-        <!-- FREE -->
-        <div class="logic-map__row logic-map__row--free" id="plan-free">
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">PLAN</span>
-            <div class="logic-map__plan">
-              <span class="logic-map__plan-name">FREE</span>
-              <span class="logic-map__plan-sub">CORE / BACKTEST</span>
-              <span class="logic-map__plan-price">¥0</span>
-            </div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">TIME AXIS</span>
-            <div class="logic-map__cell-value">過去・現在</div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">SYSTEM</span>
-            <div class="logic-map__cell-value">CORE（核）：四柱推命 / インド占星術（一部）</div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">LOGIC</span>
-            <div class="logic-map__cell-value">
-              <strong>バックテスト（的中検証）</strong><br>
-              過去の運命の転換点を AI が特定し、「なぜ当たったのか」を1行で添えて信頼を担保。
-            </div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">UX</span>
-            <div class="logic-map__cell-value">
-              <strong>衝撃とエビデンス</strong><br>
-              過去の的中指摘で信頼獲得。今日のハックスコアと SNS シェア用画像を生成。
-            </div>
-          </div>
-        </div>
-
-        <!-- Today (SHOT @ ¥100/1日) -->
-        <div class="logic-map__row logic-map__row--today" id="plan-today">
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">PLAN</span>
-            <div class="logic-map__plan">
-              <span class="logic-map__plan-name">Today</span>
-              <span class="logic-map__plan-sub">SHOT / DAILY</span>
-              <span class="logic-map__plan-price">¥100 / 1日</span>
-            </div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">TIME AXIS</span>
-            <div class="logic-map__cell-value">今日</div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">SYSTEM</span>
-            <div class="logic-map__cell-value">HACK（術）：宿曜占星術 / 紫微斗数</div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">LOGIC</span>
-            <div class="logic-map__cell-value">
-              <strong>ミクロ・アクション</strong><br>
-              1日を「交渉・集中・休息」の時間帯に分解。AIが「今日の一手」へ翻訳。
-            </div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">UX</span>
-            <div class="logic-map__cell-value">
-              <strong>朝の戦略ブリーフィング</strong><br>
-              AI 軍師からの行動指示。夜の Sync Log で行動記録。
-            </div>
-          </div>
-        </div>
-
-        <!-- 〜1Week (SHOT @ ¥300/1週) -->
-        <div class="logic-map__row logic-map__row--1week" id="plan-1week">
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">PLAN</span>
-            <div class="logic-map__plan">
-              <span class="logic-map__plan-name">〜 1 Week</span>
-              <span class="logic-map__plan-sub">SHOT / WEEKLY</span>
-              <span class="logic-map__plan-price">¥300 / 1週</span>
-            </div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">TIME AXIS</span>
-            <div class="logic-map__cell-value">1週間</div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">SYSTEM</span>
-            <div class="logic-map__cell-value">HACK（術）：宿曜占星術 / 紫微斗数</div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">LOGIC</span>
-            <div class="logic-map__cell-value">
-              <strong>ミクロ・アクション ×7日</strong><br>
-              7日間の運気フローと「勝負日・休息日」を一覧化。週次の戦術プランをAIが提示。
-            </div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">UX</span>
-            <div class="logic-map__cell-value">
-              <strong>ウィークリー・タクティクス</strong><br>
-              毎朝のブリーフィング＋週初の作戦会議。Sync Log を一週間で振り返り。
-            </div>
-          </div>
-        </div>
-
-        <!-- 〜Monthly (BASIC) -->
-        <div class="logic-map__row logic-map__row--basic" id="plan-monthly">
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">PLAN</span>
-            <div class="logic-map__plan">
-              <span class="logic-map__plan-name">〜 Monthly</span>
-              <span class="logic-map__plan-sub">BASIC / MONTHLY</span>
-              <span class="logic-map__plan-price">¥500 / 月</span>
-            </div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">TIME AXIS</span>
-            <div class="logic-map__cell-value">未来（月・年）</div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">SYSTEM</span>
-            <div class="logic-map__cell-value">FLOW（波）：インド占星術ダシャー / 算命学</div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">LOGIC</span>
-            <div class="logic-map__cell-value">
-              <strong>マクロ・ストラテジー</strong><br>
-              長期の惑星周期を算出。天中殺・空亡を「リスク管理期間」として定義し、勝負月を特定。
-            </div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">UX</span>
-            <div class="logic-map__cell-value">
-              <strong>戦略カレンダー</strong><br>
-              3〜12 ヶ月先の運気マップ。Google カレンダー連携で「勝負日・要注意日」を自動リマインド。
-            </div>
-          </div>
-        </div>
-
-        <!-- Yearly (PREMIUM) -->
-        <div class="logic-map__row logic-map__row--premium" id="plan-yearly">
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">PLAN</span>
-            <div class="logic-map__plan">
-              <span class="logic-map__plan-name">Yearly</span>
-              <span class="logic-map__plan-sub">PREMIUM / PRO</span>
-              <span class="logic-map__plan-price">¥19,800 / 年</span>
-            </div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">TIME AXIS</span>
-            <div class="logic-map__cell-value">一生・全期間</div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">SYSTEM</span>
-            <div class="logic-map__cell-value">CORE × FLOW × HACK の完全統合</div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">LOGIC</span>
-            <div class="logic-map__cell-value">
-              <strong>パーソナル・最適化</strong><br>
-              蓄積された Sync Log を AI が学習。占術上の一般論を、ユーザー個人の行動特性で補正し、超高精度な予測を行う。
-            </div>
-          </div>
-          <div class="logic-map__cell">
-            <span class="logic-map__cell-label">UX</span>
-            <div class="logic-map__cell-value">
-              <strong>自分専用の人生 OS</strong><br>
-              一生モノのディープ解析レポート。自分の人生のバイオリズムと成果が完全に同期したダッシュボード。
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="logic-map__cta">
-        <a href="astrology-v2.html" class="logic-map__btn">&gt; RUN ANALYSIS</a>
-        <a href="astrology-v2.html#plan" class="logic-map__btn logic-map__btn--ghost">プランを比較</a>
-      </div>
-    </div>
-  </section>
 
   <!-- Research Summary -->
   <section class="research">
@@ -1090,6 +1048,23 @@
     })();
   </script>
 
+  <!-- PLAN バッジ: localStorage に保存されたプランを反映（未保存・旧shot は FREE 扱い） -->
+  <script>
+    (function () {
+      var badge = document.getElementById('plan-badge-value');
+      if (!badge) return;
+      var LABELS = { free: 'FREE', basic: 'BASIC', premium: 'PREMIUM' };
+      try {
+        var raw = localStorage.getItem('celestia.plan');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          // 旧 shot ティアは廃止 → free に正規化
+          var plan = parsed.plan === 'shot' ? 'free' : parsed.plan;
+          if (LABELS[plan]) badge.textContent = LABELS[plan];
+        }
+      } catch (e) { /* localStorage 不可なら FREE 表示のまま */ }
+    })();
+  </script>
 
 </body>
 </html>

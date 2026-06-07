@@ -129,23 +129,35 @@ body::before {
 .section-light { background: var(--xt-surface) !important; color: var(--xt-text) !important; }
 .container { position: relative; z-index: 2; }
 
-/* --- Navigation: タクティカルバー ----------------------------------------- */
+/* --- Navigation: タクティカルバー（整理版） -------------------------------- */
 .nav {
-  background: rgba(10, 10, 11, 0.78) !important;
+  background: rgba(10, 10, 11, 0.85) !important;
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--xt-line);
   box-shadow: 0 1px 0 rgba(0, 240, 255, 0.06);
+  padding: 4px 16px !important;
+  gap: 2px !important;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  align-items: center;
 }
+.nav::-webkit-scrollbar { display: none; }
 
 .nav__link {
   color: var(--xt-text-mute) !important;
   font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-size: 0.72rem !important;
+  letter-spacing: 0.08em !important;        /* was 0.22em → 余白を半分以下に */
+  text-transform: none !important;           /* "Today's" を大文字化しない */
+  font-size: 0.74rem !important;
+  font-family: "Inter", "Noto Sans JP", sans-serif !important;
+  padding: 12px 14px !important;             /* was 14px 20px → 横方向を圧縮 */
   position: relative;
   transition: color 180ms ease;
+  white-space: nowrap;
+  border-bottom: none !important;            /* 旧スタイルの下線を打消 */
+  flex-shrink: 0;
 }
 .nav__link:hover { color: var(--xt-gold-soft) !important; }
 .nav__link--active {
@@ -154,13 +166,26 @@ body::before {
 .nav__link--active::after {
   content: "";
   position: absolute;
-  left: 50%;
-  bottom: -10px;
-  width: 28px;
+  left: 14px;
+  right: 14px;
+  bottom: 6px;
   height: 1px;
   background: var(--xt-gold);
   box-shadow: 0 0 8px var(--xt-gold);
-  transform: translateX(-50%);
+}
+.nav__icon { font-size: 0.8rem !important; opacity: 0.7; }
+.nav__link--active .nav__icon { opacity: 1; }
+
+/* グループ間の区切り（縦の細線） */
+.nav__link[data-nav-layer="hack"]::before,         /* TOP と Astro グループの間 */
+.nav__link[href*="celestia/tarot"]::before {       /* Astro と Tarot の間 */
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 25%;
+  bottom: 25%;
+  width: 1px;
+  background: var(--xt-line);
 }
 
 .sync-log-btn,
@@ -169,14 +194,25 @@ body::before {
   border: 1px solid var(--xt-line) !important;
   color: var(--xt-text-mute) !important;
   border-radius: 2px !important;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em !important;
   font-family: "JetBrains Mono", monospace !important;
+  padding: 7px 10px !important;
+  font-size: 0.66rem !important;
+  flex-shrink: 0;
+  margin-left: 6px;
 }
-.plan-badge__value { color: var(--xt-gold) !important; }
+.plan-badge { margin-left: auto; }              /* PLAN は右端に押し出す */
+.plan-badge__value { color: var(--xt-gold) !important; font-weight: 600; }
 .sync-log-btn:hover,
 .plan-badge:hover {
   border-color: var(--xt-line-strong) !important;
   color: var(--xt-text) !important;
+}
+
+/* スマホで PLAN を右に飛ばすのをやめて、自然なフローに */
+@media (max-width: 720px) {
+  .plan-badge { margin-left: 6px; }
+  .nav__link { padding: 10px 10px !important; font-size: 0.7rem !important; }
 }
 
 /* --- Hero: x-TEN ブランドヘッダ ------------------------------------------ */

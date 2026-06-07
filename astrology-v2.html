@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=8">
   <link rel="stylesheet" href="css/fortune-v2.css?v=8">
-  <link rel="stylesheet" href="css/x-ten.css?v=3">
+  <link rel="stylesheet" href="css/x-ten.css?v=5">
 </head>
 <body>
 
@@ -19,11 +19,20 @@
     <a href="index.html" class="nav__link">
       <span class="nav__icon">&#9671;</span> TOP
     </a>
-    <a href="celestia/tarot.html" class="nav__link">
-      <span class="nav__icon">&#9826;</span> TAROT
+    <a href="astrology-v2.html#hack" class="nav__link nav__link--active" data-nav-layer="hack">
+      <span class="nav__icon">&#9671;</span> Today's アドバイス
     </a>
-    <a href="astrology-v2.html" class="nav__link nav__link--active">
-      <span class="nav__icon">&#9671;</span> x-TEN
+    <a href="astrology-v2.html#month" class="nav__link" data-nav-layer="flow" data-nav-flow="month">
+      <span class="nav__icon">&#9671;</span> This month's スケジュール
+    </a>
+    <a href="astrology-v2.html#year" class="nav__link" data-nav-layer="flow" data-nav-flow="year">
+      <span class="nav__icon">&#9671;</span> This year's スケジュール
+    </a>
+    <a href="astrology-v2.html#core" class="nav__link" data-nav-layer="core">
+      <span class="nav__icon">&#9671;</span> あなたの基本構成
+    </a>
+    <a href="celestia/tarot.html" class="nav__link">
+      <span class="nav__icon">&#9826;</span> タロット占い
     </a>
     <button class="sync-log-btn" id="ai-coach-btn" type="button" title="AIコーチ" hidden>
       <span class="sync-log-btn__icon">&#9881;</span>
@@ -258,17 +267,17 @@
           <button class="layer-tabs__tab layer-tabs__tab--active" data-layer="core">
             <span class="layer-tabs__icon">&#9671;</span>
             CORE
-            <span class="layer-tabs__label-sub">過去・現在 / バックテスト</span>
+            <span class="layer-tabs__label-sub">基本スペック / BASIC</span>
           </button>
           <button class="layer-tabs__tab layer-tabs__tab" data-layer="flow">
             <span class="layer-tabs__icon">&#9737;</span>
             FLOW
-            <span class="layer-tabs__label-sub">月・年 / マクロ戦略</span>
+            <span class="layer-tabs__label-sub">月間/年間 / BASIC〜PREMIUM</span>
           </button>
           <button class="layer-tabs__tab layer-tabs__tab" data-layer="hack">
             <span class="layer-tabs__icon">&#9881;</span>
             HACK
-            <span class="layer-tabs__label-sub">今日・1週 / ミクロ行動</span>
+            <span class="layer-tabs__label-sub">Today's アドバイス / 完全無料</span>
           </button>
         </div>
 
@@ -530,65 +539,51 @@
       <button class="plan-modal__close" id="plan-modal-close" type="button" aria-label="閉じる">×</button>
       <h2 class="plan-modal__title" id="plan-modal-title">// SELECT YOUR TIER</h2>
       <p class="plan-modal__lead">
-        4 つのティアは <strong>時間軸</strong> と <strong>占術レイヤー</strong> に対応します。<br>
-        過去の的中検証 → 今日の戦術 → 月年の戦略 → 一生の最適化、必要な深さだけ解放してください。
+        3 つのティアで <strong>4 つの機能</strong> を段階的に解放します。<br>
+        Today's は完全無料、自分の核と月間スケジュールは BASIC、年間ロードマップは PREMIUM。
       </p>
 
       <div class="plan-modal__grid">
-        <div class="plan-card" data-plan="free">
-          <div class="plan-card__meta">CORE · 過去 / 現在</div>
-          <div class="plan-card__name">FREE</div>
-          <div class="plan-card__price">¥0</div>
-          <div class="plan-card__tagline">バックテスト（的中検証）</div>
+        <div class="plan-card plan-card--accent" data-plan="free">
+          <div class="plan-card__meta">HACK · 今日</div>
+          <div class="plan-card__name">FREE <span class="plan-card__name-sub">TODAY'S ONLY</span></div>
+          <div class="plan-card__price">0円</div>
+          <div class="plan-card__tagline">Today's アドバイス</div>
           <ul class="plan-card__list">
-            <li>四柱推命 / インド占星術（一部）</li>
-            <li>過去の転換点を AI が指摘</li>
-            <li>本日のハックスコア＋最適時間</li>
-            <li>SNS シェア用 Tactical Report</li>
+            <li>宿曜占星術（ベース）× 四柱推命（補正）</li>
+            <li>「今日、何時に、何を実行すべきか」のTODOリスト</li>
+            <li>AIがキーマン1対1など行動をピンポイント最適化</li>
+            <li>毎日リセット・完全無料で使い続けられる</li>
           </ul>
-          <button class="plan-card__btn" data-plan-select="free" type="button">現在のティア</button>
-        </div>
-
-        <div class="plan-card plan-card--accent" data-plan="shot">
-          <div class="plan-card__meta">HACK · 今日 / 1週間</div>
-          <div class="plan-card__name">SHOT <span class="plan-card__name-sub">DAILY / WEEKLY</span></div>
-          <div class="plan-card__price">¥100<span class="plan-card__price-unit">〜 ¥300</span></div>
-          <div class="plan-card__tagline">ミクロ・アクション</div>
-          <ul class="plan-card__list">
-            <li>宿曜占星術 / 紫微斗数で時間帯分解</li>
-            <li>「交渉・集中・休息」の時間帯マップ</li>
-            <li>AI 軍師による「今日の一手」</li>
-            <li>夜の Sync Log で振り返り記録</li>
-          </ul>
-          <button class="plan-card__btn plan-card__btn--accent" data-plan-select="shot" type="button">朝の戦略ブリーフィングを起動</button>
+          <button class="plan-card__btn plan-card__btn--accent" data-plan-select="free" type="button">無料で今日のTODOを受け取る</button>
         </div>
 
         <div class="plan-card" data-plan="basic">
-          <div class="plan-card__meta">FLOW · 月 / 年</div>
-          <div class="plan-card__name">BASIC <span class="plan-card__name-sub">MONTHLY</span></div>
+          <div class="plan-card__meta">CORE + FLOW月間 · 自分の核 / 今月</div>
+          <div class="plan-card__name">BASIC <span class="plan-card__name-sub">基本スペック + 月間</span></div>
           <div class="plan-card__price">¥500<span class="plan-card__price-unit">/ 月</span></div>
-          <div class="plan-card__tagline">マクロ・ストラテジー</div>
+          <div class="plan-card__tagline">基本スペック解析 + 月間ハック</div>
           <ul class="plan-card__list">
-            <li>ダシャー（惑星周期）＋算命学で長期解析</li>
-            <li>天中殺・空亡を「リスク管理期間」として定義</li>
-            <li>3〜12ヶ月先の勝負月マップ</li>
-            <li>Google カレンダー連携リマインド（予定）</li>
+            <li>四柱推命 × インド占星術で「自分」のスペック可視化</li>
+            <li>過去のターニングポイント（転職・激変）をズバリ的中</li>
+            <li>宿曜 × トランジットで月間バイオリズム解析</li>
+            <li>「攻め時・守り時」カレンダー、リスク逆手ハック案</li>
           </ul>
-          <button class="plan-card__btn" data-plan-select="basic" type="button">戦略カレンダーを開く</button>
+          <button class="plan-card__btn" data-plan-select="basic" type="button">月額プランで開く</button>
         </div>
 
         <div class="plan-card plan-card--premium" data-plan="premium">
-          <div class="plan-card__meta">CORE × FLOW × HACK · 一生 / 全期間</div>
+          <div class="plan-card__meta">CORE × FLOW × HACK · 今年〜数年</div>
           <div class="plan-card__name">PREMIUM <span class="plan-card__name-sub">PRO / YEARLY</span></div>
           <div class="plan-card__price">¥19,800<span class="plan-card__price-unit">/ 年</span></div>
-          <div class="plan-card__tagline">パーソナル・最適化</div>
+          <div class="plan-card__tagline">年間ロードマップ（人生 10 倍拡張）</div>
           <ul class="plan-card__list">
-            <li>Sync Log を AI が学習し、占術一般論を個別補正</li>
-            <li>あなただけの「人生 OS」ダッシュボード</li>
-            <li>AI 対話タスク管理（軍師との常時セッション）</li>
-            <li>全レイヤー解放・一生モノのディープ解析レポート</li>
+            <li>BASIC 全機能（Today's + 基本スペック + 月間）</li>
+            <li>インド占星術ダシャー × 四柱推命 大運・歳運の最重厚解析</li>
+            <li>向こう数年分のロードマップを AI が戦略レポート化</li>
+            <li>無駄な焦りや時期外れの投資による大失敗を防ぐ「お守り」</li>
           </ul>
-          <button class="plan-card__btn plan-card__btn--premium" data-plan-select="premium" type="button">人生 OS を起動する</button>
+          <button class="plan-card__btn plan-card__btn--premium" data-plan-select="premium" type="button">年間ロードマップを起動する</button>
         </div>
       </div>
 
@@ -618,7 +613,7 @@
   </footer>
 
   <script src="js/x-ten-radar.js?v=1"></script>
-  <script type="module" src="js/ui-controller.js?v=3"></script>
+  <script type="module" src="js/ui-controller.js?v=5"></script>
 
   <!-- ヒーロー日付（JST / Asia/Tokyo の M/D） -->
   <script>
@@ -653,6 +648,60 @@
           btn.classList.add('blood-btn--active');
         });
       });
+    })();
+  </script>
+
+  <!-- ナビゲーションのアクティブ表示 & ハッシュに応じたレイヤー自動切替 -->
+  <script>
+    (function () {
+      // ハッシュ → レイヤー対応表
+      var HASH_TO_LAYER = { core: 'core', month: 'flow', year: 'flow', flow: 'flow', hack: 'hack' };
+
+      function currentHash() {
+        return (location.hash || '#hack').replace(/^#/, '').toLowerCase();
+      }
+
+      // ナビのアクティブ状態を URL ハッシュで更新
+      function refreshNavActive() {
+        var hash = currentHash();
+        document.querySelectorAll('.nav__link[data-nav-layer]').forEach(function (a) {
+          a.classList.remove('nav__link--active');
+        });
+        var current = document.querySelector('.nav__link[data-nav-layer][href*="#' + hash + '"]');
+        if (current) current.classList.add('nav__link--active');
+      }
+
+      // 結果画面が出ているときだけ、レイヤータブを切り替える
+      function applyLayerFromHash() {
+        var hash = currentHash();
+        var layer = HASH_TO_LAYER[hash];
+        if (!layer) return;
+        var result = document.getElementById('phase-result');
+        // 結果がまだ出ていなければ、表示されてから切り替える
+        if (!result || result.classList.contains('hidden')) return;
+        var tab = document.querySelector('.layer-tabs__tab[data-layer="' + layer + '"]');
+        if (tab && !tab.classList.contains('layer-tabs__tab--active')) {
+          tab.click();
+        }
+      }
+
+      // phase-result の class 変化を監視（hidden が外れた瞬間にレイヤー切替）
+      var phaseResult = document.getElementById('phase-result');
+      if (phaseResult && 'MutationObserver' in window) {
+        new MutationObserver(applyLayerFromHash).observe(phaseResult, {
+          attributes: true,
+          attributeFilter: ['class']
+        });
+      }
+
+      window.addEventListener('hashchange', function () {
+        refreshNavActive();
+        applyLayerFromHash();
+      });
+
+      // 初回ロード
+      refreshNavActive();
+      applyLayerFromHash();
     })();
   </script>
 </body>

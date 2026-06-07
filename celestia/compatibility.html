@@ -9,16 +9,33 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/nav.css?v=1">
 </head>
 <body>
 
-  <!-- Navigation -->
-  <nav class="nav">
+  <!-- Global Navigation -->
+  <nav class="nav" aria-label="グローバルナビゲーション">
     <a href="../index.html" class="nav__link">
       <span class="nav__icon">&#9671;</span> TOP
     </a>
-    <a href="compatibility.html" class="nav__link nav__link--active">
-      <span class="nav__icon">&#9825;</span> 相性診断
+    <a href="../astrology-v2.html#hack" class="nav__link">
+      <span class="nav__icon">&#9671;</span> Today's アドバイス
+    </a>
+    <a href="../astrology-v2.html#month" class="nav__link">
+      <span class="nav__icon">&#9671;</span> This month's スケジュール
+    </a>
+    <a href="../astrology-v2.html#year" class="nav__link">
+      <span class="nav__icon">&#9671;</span> This year's スケジュール
+    </a>
+    <a href="../astrology-v2.html#core" class="nav__link">
+      <span class="nav__icon">&#9671;</span> あなたの基本構成
+    </a>
+    <a href="tarot.html" class="nav__link">
+      <span class="nav__icon">&#9826;</span> タロット占い
+    </a>
+    <a href="../astrology-v2.html" class="plan-badge" title="プランを変更">
+      <span class="plan-badge__label">PLAN</span>
+      <span class="plan-badge__value">FREE</span>
     </a>
   </nav>
 
@@ -155,5 +172,6 @@
   </footer>
 
   <script src="../js/compatibility.js"></script>
+  <script src="../js/nav.js?v=1"></script>
 </body>
 </html>
