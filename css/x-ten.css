@@ -337,6 +337,57 @@ body::before {
   opacity: 0.75;
 }
 
+/* --- Profile required notice (入力フォーム不在時の誘導) ------------------- */
+.profile-required {
+  max-width: 620px;
+  margin: 48px auto;
+  padding: 48px 36px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(212,175,55,0.05), rgba(255,255,255,0.01));
+  border: 1px solid var(--xt-line-strong);
+  border-radius: 4px;
+  position: relative;
+}
+.profile-required__eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  color: var(--xt-gold);
+  margin: 0 0 14px;
+}
+.profile-required__title {
+  font-family: "Playfair Display", "Noto Serif JP", serif;
+  font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  color: var(--xt-text);
+  margin: 0 0 18px;
+  letter-spacing: 0.02em;
+}
+.profile-required__desc {
+  color: var(--xt-text-mute);
+  font-size: 0.92rem;
+  line-height: 1.95;
+  letter-spacing: 0.04em;
+  margin: 0 0 32px;
+}
+.profile-required__cta {
+  display: inline-block;
+  padding: 16px 36px;
+  background: linear-gradient(180deg, var(--xt-gold) 0%, var(--xt-gold-soft) 100%);
+  color: var(--xt-base);
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--xt-gold), 0 4px 24px rgba(212,175,55,0.2);
+  transition: transform 140ms ease, box-shadow 160ms ease;
+}
+.profile-required__cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px var(--xt-gold), 0 6px 32px rgba(212,175,55,0.32);
+}
+
 /* --- Form: ガラス + ゴールド輪郭 ------------------------------------------ */
 .form-section {
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005)) !important;
@@ -498,6 +549,142 @@ body::before {
 }
 .loading-v2__step--active .loading-v2__step-text {
   color: var(--xt-gold) !important;
+}
+
+/* --- Layer Intro / Section (新仕様の説明ブロック) -------------------------- */
+.layer-intro {
+  position: relative;
+  background: linear-gradient(180deg, rgba(212,175,55,0.04), rgba(255,255,255,0.01));
+  border: 1px solid var(--xt-line);
+  border-left: 3px solid var(--xt-gold);
+  border-radius: 4px;
+  padding: 20px 22px;
+  margin: 4px 0 24px;
+}
+.layer-intro__eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.3em;
+  color: var(--xt-gold);
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+.layer-intro__title {
+  font-family: "Playfair Display", "Noto Serif JP", serif;
+  font-size: clamp(1.05rem, 2.6vw, 1.4rem);
+  font-weight: 600;
+  color: var(--xt-text);
+  margin: 0 0 12px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+.layer-intro__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.layer-intro__chip {
+  display: inline-block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  padding: 4px 10px;
+  border-radius: 2px;
+  background: var(--xt-surface-2);
+  color: var(--xt-text-mute);
+  border: 1px solid var(--xt-line);
+}
+.layer-intro__chip--free {
+  color: var(--xt-emerald);
+  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.06);
+}
+.layer-intro__chip--basic {
+  color: var(--xt-cyan);
+  border-color: rgba(0, 240, 255, 0.45);
+  background: rgba(0, 240, 255, 0.05);
+}
+.layer-intro__chip--premium {
+  color: var(--xt-purple);
+  border-color: rgba(168, 85, 247, 0.5);
+  background: rgba(168, 85, 247, 0.07);
+}
+.layer-intro__desc {
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-size: 0.86rem;
+  line-height: 1.9;
+  color: var(--xt-text-mute);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+.layer-intro__desc strong {
+  color: var(--xt-gold);
+  font-weight: 600;
+}
+.layer-intro__desc em {
+  color: var(--xt-text);
+  font-style: normal;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  margin-right: 4px;
+}
+
+/* Layer 内のサブセクション（FLOW 内の Monthly / Yearly） */
+.layer-section { margin: 28px 0 32px; }
+.layer-section__head {
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px dashed var(--xt-line);
+  border-radius: 3px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+.layer-section__eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  color: var(--xt-gold-dim);
+  text-transform: uppercase;
+  margin: 0 0 6px;
+}
+.layer-section__title {
+  font-family: "Playfair Display", "Noto Serif JP", serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--xt-text);
+  margin: 0 0 10px;
+  line-height: 1.55;
+}
+.layer-section__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.layer-section__desc {
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.88;
+  color: var(--xt-text-mute);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+.layer-section__desc strong { color: var(--xt-gold); font-weight: 600; }
+.layer-section__desc em {
+  color: var(--xt-text);
+  font-style: normal;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  margin-right: 4px;
+}
+.layer-section__note {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.72rem;
+  color: var(--xt-text-faint);
+  letter-spacing: 0.04em;
 }
 
 /* --- Result panels --------------------------------------------------------- */

@@ -840,6 +840,235 @@
       .advice-card__title { font-size: 1.05rem; }
     }
 
+    /* =====================================================
+       Profile Form Section (タクティカル・ダーク島)
+       ===================================================== */
+    .profile-form-section {
+      background:
+        radial-gradient(ellipse at 0% 0%, rgba(212,175,55,0.10), transparent 55%),
+        radial-gradient(ellipse at 100% 100%, rgba(0,240,255,0.06), transparent 50%),
+        #020202;
+      color: #f4f4f5;
+      padding: 64px 24px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .profile-form-section::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(to bottom, rgba(255,255,255,0.012) 0 1px, transparent 1px 3px);
+      pointer-events: none;
+    }
+    .profile-form-section__inner {
+      max-width: 620px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .profile-form-section__label {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: #d4af37;
+      margin: 0 0 18px;
+    }
+    .profile-form-section__note {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      font-size: 0.86rem;
+      line-height: 2;
+      letter-spacing: 0.04em;
+      color: #c0c0c8;
+      margin: 0 0 28px;
+      padding: 16px 22px;
+      border-top: 1px dashed rgba(212,175,55,0.25);
+      border-bottom: 1px dashed rgba(212,175,55,0.25);
+      background: rgba(212,175,55,0.025);
+    }
+    .profile-form-section__note-marker {
+      color: #d4af37;
+      font-weight: 600;
+      margin-right: 6px;
+      font-size: 0.95rem;
+    }
+    .profile-form-section__note-indent {
+      display: inline-block;
+      padding-left: 1.5em;
+    }
+
+    .profile-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .profile-form__field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .profile-form__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.28em;
+      color: #f4f4f5;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .profile-form__required {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.28em;
+      color: #d4af37;
+      border: 1px solid rgba(212,175,55,0.5);
+      padding: 2px 6px;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+    .profile-form__input,
+    .profile-form__select {
+      background: rgba(255,255,255,0.025);
+      color: #f4f4f5;
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 2px;
+      padding: 14px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
+      width: 100%;
+      box-sizing: border-box;
+      cursor: pointer;
+      transition: border-color 160ms ease, box-shadow 200ms ease, background 160ms ease;
+    }
+    .profile-form__input { cursor: text; }
+    .profile-form__input::placeholder { color: #5a5a64; }
+    .profile-form__input:focus,
+    .profile-form__select:focus {
+      outline: none;
+      border-color: rgba(0,240,255,0.5);
+      background: rgba(0,240,255,0.04);
+      box-shadow: 0 0 0 1px rgba(0,240,255,0.4), 0 0 18px rgba(0,240,255,0.18);
+    }
+    .profile-form__select {
+      color-scheme: dark;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #d4af37 50%),
+        linear-gradient(135deg, #d4af37 50%, transparent 50%);
+      background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%;
+      background-size: 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 38px;
+    }
+    .profile-form__select option,
+    .profile-form__select optgroup {
+      background: #0a0a0b;
+      color: #f4f4f5;
+    }
+    .profile-form__row {
+      display: grid;
+      gap: 8px;
+    }
+    .profile-form__row--2 { grid-template-columns: 1fr 1fr; }
+    .profile-form__row--3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    .profile-form__pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .profile-form__pill {
+      flex: 1 1 auto;
+      min-width: 60px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(212,175,55,0.2);
+      color: #8b8b94;
+      border-radius: 2px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+      user-select: none;
+    }
+    .profile-form__pill:hover {
+      border-color: rgba(212,175,55,0.5);
+      color: #f4f4f5;
+    }
+    .profile-form__pill[aria-pressed="true"] {
+      background: rgba(212,175,55,0.12);
+      border-color: #d4af37;
+      color: #d4af37;
+      box-shadow: inset 0 0 0 1px rgba(212,175,55,0.3);
+    }
+
+    .profile-form__toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .profile-form__toggle input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: #d4af37;
+    }
+    .profile-form__toggle label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      color: #8b8b94;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+    }
+    .profile-form__field--disabled .profile-form__select,
+    .profile-form__field--disabled .profile-form__row {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .profile-form__error,
+    .profile-form__success {
+      margin: 0;
+      padding: 12px 16px;
+      border-radius: 2px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      line-height: 1.7;
+    }
+    .profile-form__error {
+      color: #ef4444;
+      background: rgba(239,68,68,0.06);
+      border: 1px solid rgba(239,68,68,0.4);
+    }
+    .profile-form__success {
+      color: #10b981;
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.5);
+    }
+
+    .profile-form__submit {
+      background: linear-gradient(180deg, #d4af37 0%, #e8c95a 100%);
+      color: #020202;
+      border: none;
+      border-radius: 2px;
+      padding: 18px 36px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 8px;
+      box-shadow: 0 0 0 1px #d4af37, 0 4px 24px rgba(212,175,55,0.22);
+      transition: transform 160ms ease, box-shadow 200ms ease;
+    }
+    .profile-form__submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 0 1px #d4af37, 0 8px 36px rgba(212,175,55,0.38);
+    }
+
   </style>
 </head>
 <body>
@@ -879,9 +1108,140 @@
       ―― AIが四柱推命×インド占星術を統合解析する、次世代戦略エンジン。<br>
       あなただけの最強「TODOリスト」。
     </p>
-
-    <a href="astrology-v2.html" class="header__advice-date" id="header-advice-date" aria-live="polite"></a>
   </header>
+
+  <!-- ============================================================
+       Profile Form (入力はここに集約。submit で localStorage + astrology-v2 へ遷移)
+       ============================================================ -->
+  <section class="profile-form-section" id="profile-form-section">
+    <div class="profile-form-section__inner">
+      <p class="profile-form-section__label">// PROFILE INTAKE</p>
+
+      <p class="profile-form-section__note">
+        <span class="profile-form-section__note-marker">※</span>あなたを攻略するための入力項目です。<br>
+        <span class="profile-form-section__note-indent">回答が多いほど適切な結果が表れ、ブーストがかかります。</span>
+      </p>
+
+      <form class="profile-form" id="profile-form" novalidate>
+
+        <!-- 1. ニックネーム -->
+        <div class="profile-form__field">
+          <label class="profile-form__label" for="pf-nickname">ニックネーム（任意）</label>
+          <input type="text" id="pf-nickname" class="profile-form__input" maxlength="20" placeholder="例: ほしよみ" autocomplete="nickname">
+        </div>
+
+        <!-- 2. 性別 -->
+        <div class="profile-form__field">
+          <label class="profile-form__label">性別（任意）</label>
+          <div class="profile-form__pills" role="radiogroup" aria-label="性別">
+            <button type="button" class="profile-form__pill" data-pf="gender" data-value="male">男性</button>
+            <button type="button" class="profile-form__pill" data-pf="gender" data-value="female">女性</button>
+            <button type="button" class="profile-form__pill" data-pf="gender" data-value="other">その他</button>
+          </div>
+        </div>
+
+        <!-- 3. 出生地 -->
+        <div class="profile-form__field" id="pf-place-field">
+          <label class="profile-form__label" for="pf-birth-place">出生地（任意）</label>
+          <select id="pf-birth-place" class="profile-form__select">
+            <option value="">都道府県を選択</option>
+          </select>
+          <div class="profile-form__toggle">
+            <input type="checkbox" id="pf-place-unknown">
+            <label for="pf-place-unknown">出生地がわからない</label>
+          </div>
+        </div>
+
+        <!-- 4. 生年月日（必須） -->
+        <div class="profile-form__field">
+          <label class="profile-form__label">生年月日<span class="profile-form__required">必須</span></label>
+          <div class="profile-form__row profile-form__row--3">
+            <select id="pf-birth-year" class="profile-form__select"><option value="">年</option></select>
+            <select id="pf-birth-month" class="profile-form__select"><option value="">月</option></select>
+            <select id="pf-birth-day" class="profile-form__select"><option value="">日</option></select>
+          </div>
+        </div>
+
+        <!-- 5. 出生時刻 -->
+        <div class="profile-form__field" id="pf-time-field">
+          <label class="profile-form__label">出生時刻（任意）</label>
+          <div class="profile-form__row profile-form__row--2">
+            <select id="pf-birth-hour" class="profile-form__select"><option value="">時</option></select>
+            <select id="pf-birth-minute" class="profile-form__select"><option value="">分</option></select>
+          </div>
+          <div class="profile-form__toggle">
+            <input type="checkbox" id="pf-time-unknown">
+            <label for="pf-time-unknown">出生時刻がわからない</label>
+          </div>
+        </div>
+
+        <!-- 6. 血液型 -->
+        <div class="profile-form__field">
+          <label class="profile-form__label">血液型（任意）</label>
+          <div class="profile-form__pills" role="radiogroup" aria-label="血液型">
+            <button type="button" class="profile-form__pill" data-pf="blood" data-value="A">A 型</button>
+            <button type="button" class="profile-form__pill" data-pf="blood" data-value="B">B 型</button>
+            <button type="button" class="profile-form__pill" data-pf="blood" data-value="AB">AB 型</button>
+            <button type="button" class="profile-form__pill" data-pf="blood" data-value="O">O 型</button>
+          </div>
+        </div>
+
+        <!-- 7. 職業 -->
+        <div class="profile-form__field">
+          <label class="profile-form__label" for="pf-job">職業（任意）</label>
+          <select id="pf-job" class="profile-form__select">
+            <option value="">選択してください</option>
+            <option value="executive">会社経営 / 会社役員</option>
+            <option value="employee">会社員</option>
+            <option value="public">公務員</option>
+            <option value="parttime">アルバイト / パート</option>
+            <option value="university">大学生</option>
+            <option value="highschool">高校生</option>
+            <option value="other">その他</option>
+          </select>
+        </div>
+
+        <!-- 8. MBTI -->
+        <div class="profile-form__field">
+          <label class="profile-form__label" for="pf-mbti">MBTI 性格診断（任意）</label>
+          <select id="pf-mbti" class="profile-form__select">
+            <option value="">選択してください（未診断でも OK）</option>
+            <optgroup label="分析家 (Analysts)">
+              <option value="INTJ">INTJ — 建築家</option>
+              <option value="INTP">INTP — 論理学者</option>
+              <option value="ENTJ">ENTJ — 指揮官</option>
+              <option value="ENTP">ENTP — 討論者</option>
+            </optgroup>
+            <optgroup label="外交官 (Diplomats)">
+              <option value="INFJ">INFJ — 提唱者</option>
+              <option value="INFP">INFP — 仲介者</option>
+              <option value="ENFJ">ENFJ — 主人公</option>
+              <option value="ENFP">ENFP — 運動家</option>
+            </optgroup>
+            <optgroup label="番人 (Sentinels)">
+              <option value="ISTJ">ISTJ — 管理者</option>
+              <option value="ISFJ">ISFJ — 擁護者</option>
+              <option value="ESTJ">ESTJ — 幹部</option>
+              <option value="ESFJ">ESFJ — 領事</option>
+            </optgroup>
+            <optgroup label="探検家 (Explorers)">
+              <option value="ISTP">ISTP — 巨匠</option>
+              <option value="ISFP">ISFP — 冒険家</option>
+              <option value="ESTP">ESTP — 起業家</option>
+              <option value="ESFP">ESFP — エンターテイナー</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <p class="profile-form__error" id="profile-form-error" hidden></p>
+        <p class="profile-form__success" id="profile-form-success" hidden>✓ プロフィールを保存しました。</p>
+
+        <button type="submit" class="profile-form__submit">&gt; RUN ANALYSIS</button>
+      </form>
+    </div>
+  </section>
+
+  <a href="astrology-v2.html#hack" class="header__advice-date" id="header-advice-date" aria-live="polite"></a>
 
   <!-- ============================================================
        Advice Cards Grid (4 つのアドバイス入口)
@@ -1063,6 +1423,182 @@
           if (LABELS[plan]) badge.textContent = LABELS[plan];
         }
       } catch (e) { /* localStorage 不可なら FREE 表示のまま */ }
+    })();
+  </script>
+
+  <!-- ============================================================
+       Profile Form: 初期化 / submit / localStorage 復元
+       (xten.profile に統一保存。astrology-v2.html は同じキーから読む)
+       ============================================================ -->
+  <script>
+    (function () {
+      var form = document.getElementById('profile-form');
+      if (!form) return;
+
+      var PREFECTURES = [
+        '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県',
+        '茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県',
+        '新潟県','富山県','石川県','福井県','山梨県','長野県',
+        '岐阜県','静岡県','愛知県','三重県',
+        '滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県',
+        '鳥取県','島根県','岡山県','広島県','山口県',
+        '徳島県','香川県','愛媛県','高知県',
+        '福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県',
+        '海外'
+      ];
+
+      // ---- セレクトの選択肢を生成 -------------------------------------
+      var ySel = document.getElementById('pf-birth-year');
+      var mSel = document.getElementById('pf-birth-month');
+      var dSel = document.getElementById('pf-birth-day');
+      var hSel = document.getElementById('pf-birth-hour');
+      var minSel = document.getElementById('pf-birth-minute');
+      var placeSel = document.getElementById('pf-birth-place');
+
+      var currentYear = new Date().getFullYear();
+      for (var y = currentYear; y >= 1930; y--) {
+        var o = document.createElement('option');
+        o.value = String(y); o.textContent = y + '年';
+        ySel.appendChild(o);
+      }
+      for (var m = 1; m <= 12; m++) {
+        var o2 = document.createElement('option');
+        o2.value = String(m); o2.textContent = m + '月';
+        mSel.appendChild(o2);
+      }
+      for (var d = 1; d <= 31; d++) {
+        var o3 = document.createElement('option');
+        o3.value = String(d); o3.textContent = d + '日';
+        dSel.appendChild(o3);
+      }
+      for (var h = 0; h <= 23; h++) {
+        var o4 = document.createElement('option');
+        o4.value = String(h); o4.textContent = h + '時';
+        hSel.appendChild(o4);
+      }
+      [0, 15, 30, 45].forEach(function (mm) {
+        var o5 = document.createElement('option');
+        o5.value = String(mm);
+        o5.textContent = String(mm).padStart(2, '0') + '分';
+        minSel.appendChild(o5);
+      });
+      PREFECTURES.forEach(function (pref) {
+        var o6 = document.createElement('option');
+        o6.value = pref; o6.textContent = pref;
+        placeSel.appendChild(o6);
+      });
+
+      // ---- ピル選択 (gender / blood) ----------------------------------
+      form.querySelectorAll('.profile-form__pill').forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          var key = pill.getAttribute('data-pf');
+          form.querySelectorAll('.profile-form__pill[data-pf="' + key + '"]').forEach(function (p) {
+            p.setAttribute('aria-pressed', p === pill ? 'true' : 'false');
+          });
+        });
+      });
+      function readPill(key) {
+        var picked = form.querySelector('.profile-form__pill[data-pf="' + key + '"][aria-pressed="true"]');
+        return picked ? picked.getAttribute('data-value') : '';
+      }
+      function writePill(key, value) {
+        if (!value) return;
+        var match = form.querySelector('.profile-form__pill[data-pf="' + key + '"][data-value="' + value + '"]');
+        if (match) match.setAttribute('aria-pressed', 'true');
+      }
+
+      // ---- "わからない" チェックでセレクト無効化 -----------------------
+      function wireUnknown(checkboxId, fieldId) {
+        var cb = document.getElementById(checkboxId);
+        var field = document.getElementById(fieldId);
+        if (!cb || !field) return;
+        cb.addEventListener('change', function () {
+          if (cb.checked) {
+            field.classList.add('profile-form__field--disabled');
+          } else {
+            field.classList.remove('profile-form__field--disabled');
+          }
+        });
+      }
+      wireUnknown('pf-place-unknown', 'pf-place-field');
+      wireUnknown('pf-time-unknown', 'pf-time-field');
+
+      // ---- localStorage から復元 --------------------------------------
+      var STORAGE_KEY = 'xten.profile';
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          var p = JSON.parse(raw);
+          if (p.nickname)    document.getElementById('pf-nickname').value = p.nickname;
+          if (p.gender)      writePill('gender', p.gender);
+          if (p.blood)       writePill('blood', p.blood);
+          if (p.birthPlace)  placeSel.value = p.birthPlace;
+          if (p.placeUnknown){ document.getElementById('pf-place-unknown').checked = true;
+                               document.getElementById('pf-place-field').classList.add('profile-form__field--disabled'); }
+          if (p.birthYear)   ySel.value = String(p.birthYear);
+          if (p.birthMonth)  mSel.value = String(p.birthMonth);
+          if (p.birthDay)    dSel.value = String(p.birthDay);
+          if (p.birthHour != null) hSel.value = String(p.birthHour);
+          if (p.birthMinute != null) minSel.value = String(p.birthMinute);
+          if (p.timeUnknown) { document.getElementById('pf-time-unknown').checked = true;
+                               document.getElementById('pf-time-field').classList.add('profile-form__field--disabled'); }
+          if (p.job)  document.getElementById('pf-job').value  = p.job;
+          if (p.mbti) document.getElementById('pf-mbti').value = p.mbti;
+        }
+      } catch (e) { /* noop */ }
+
+      // ---- submit ----------------------------------------------------
+      var errorEl   = document.getElementById('profile-form-error');
+      var successEl = document.getElementById('profile-form-success');
+      function showError(msg) {
+        errorEl.textContent = '⚠ ' + msg;
+        errorEl.hidden = false;
+        successEl.hidden = true;
+      }
+
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        errorEl.hidden = true;
+
+        var placeUnknown = document.getElementById('pf-place-unknown').checked;
+        var timeUnknown  = document.getElementById('pf-time-unknown').checked;
+
+        var profile = {
+          nickname:     document.getElementById('pf-nickname').value.trim(),
+          gender:       readPill('gender'),
+          birthPlace:   placeUnknown ? null : (placeSel.value || null),
+          placeUnknown: placeUnknown,
+          birthYear:    parseInt(ySel.value, 10) || null,
+          birthMonth:   parseInt(mSel.value, 10) || null,
+          birthDay:     parseInt(dSel.value, 10) || null,
+          birthHour:    timeUnknown ? null : (hSel.value === '' ? null : parseInt(hSel.value, 10)),
+          birthMinute:  timeUnknown ? null : (minSel.value === '' ? null : parseInt(minSel.value, 10)),
+          timeUnknown:  timeUnknown,
+          blood:        readPill('blood'),
+          job:          document.getElementById('pf-job').value,
+          mbti:         document.getElementById('pf-mbti').value,
+          savedAt:      new Date().toISOString()
+        };
+
+        if (!profile.birthYear || !profile.birthMonth || !profile.birthDay) {
+          showError('生年月日は必須です。');
+          ySel.focus();
+          return;
+        }
+
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+        } catch (e) {
+          showError('保存に失敗しました（localStorage が利用できません）。');
+          return;
+        }
+
+        // 成功表示 → astrology-v2.html へ遷移
+        successEl.hidden = false;
+        setTimeout(function () {
+          location.href = 'astrology-v2.html#hack';
+        }, 300);
+      });
     })();
   </script>
 

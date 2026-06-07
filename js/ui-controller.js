@@ -51,12 +51,12 @@ const PREFECTURES = [
 ];
 
 // --- Initialize ---
-// 個々の init を try/catch で囲み、後段の失敗が前段（フォーム生成系）を巻き込まないようにする
+// astrology-v2.html はフォームを持たない（入力は index.html に集約）。
+// 結果表示系の init だけ走らせ、プロフィールがあれば自動で解析を走らせる。
 function runAllInitializers() {
   console.log('[x-TEN] runAllInitializers start, readyState =', document.readyState);
   const steps = [
-    initDateSelectors, initTimeSelectors, initPlaceSelector, initToggleHandlers,
-    initGenderButtons, initAnalyzeButton, initResetButton, initLayerTabs,
+    initResetButton, initLayerTabs,
     initShareButtons, initDownloadButton,
     initPlanBadge, initPlanModal, initAuthModal, initSyncLogModal, initCoachModal,
     refreshPlanBadge, refreshSyncLogButton, refreshCoachButton
@@ -72,35 +72,13 @@ function runAllInitializers() {
     }
   }
   console.log('[x-TEN] init complete:', okCount, 'ok /', failCount, 'failed');
-  // 詳細診断（不具合解析用）
-  const ySel = document.getElementById('birth-year');
-  const hSel = document.getElementById('birth-hour');
-  const pSel = document.getElementById('birth-place');
-  const gBtns = document.querySelectorAll('.gender-btn');
-  const bBtns = document.querySelectorAll('.blood-btn');
-  const checkPointerEvents = (el, label) => {
-    if (!el) { console.log('[x-TEN]', label, 'NOT FOUND'); return; }
-    const cs = getComputedStyle(el);
-    console.log('[x-TEN]', label,
-      '| options=', el.tagName === 'SELECT' ? el.options.length : 'n/a',
-      '| pointer-events=', cs.pointerEvents,
-      '| cursor=', cs.cursor,
-      '| disabled=', el.disabled,
-      '| visibility=', cs.visibility);
-  };
-  checkPointerEvents(ySel,  'birth-year');
-  checkPointerEvents(hSel,  'birth-hour');
-  checkPointerEvents(pSel,  'birth-place');
-  if (gBtns[0]) checkPointerEvents(gBtns[0], 'gender-btn[0]');
-  if (bBtns[0]) checkPointerEvents(bBtns[0], 'blood-btn[0]');
-  console.log('[x-TEN] gender-btn count =', gBtns.length, '| blood-btn count =', bBtns.length);
 
-  // form-group 全体がオーバーレイで覆われていないか
-  const formSec = document.querySelector('.form-section');
-  if (formSec) {
-    const rect = formSec.getBoundingClientRect();
-    const elAtCenter = document.elementFromPoint(rect.left + rect.width/2, rect.top + 100);
-    console.log('[x-TEN] element at form center:', elAtCenter && elAtCenter.tagName, elAtCenter && elAtCenter.className);
+  // プロフィールがあれば自動で解析を走らせる
+  if (loadProfile()) {
+    console.log('[x-TEN] profile found → auto-start analysis');
+    startAnalysis();
+  } else {
+    console.log('[x-TEN] no profile → showing PROFILE REQUIRED notice');
   }
 }
 
@@ -112,92 +90,8 @@ if (document.readyState === 'loading') {
   runAllInitializers();
 }
 
-function initDateSelectors() {
-  const yearSelect = document.getElementById('birth-year');
-  const monthSelect = document.getElementById('birth-month');
-  const daySelect = document.getElementById('birth-day');
-  const currentYear = new Date().getFullYear();
-  for (let y = currentYear; y >= 1930; y--) {
-    const opt = document.createElement('option');
-    opt.value = y; opt.textContent = `${y}年`;
-    yearSelect.appendChild(opt);
-  }
-  for (let m = 1; m <= 12; m++) {
-    const opt = document.createElement('option');
-    opt.value = m; opt.textContent = `${m}月`;
-    monthSelect.appendChild(opt);
-  }
-  for (let d = 1; d <= 31; d++) {
-    const opt = document.createElement('option');
-    opt.value = d; opt.textContent = `${d}日`;
-    daySelect.appendChild(opt);
-  }
-}
-
-function initTimeSelectors() {
-  const hourSelect = document.getElementById('birth-hour');
-  const minuteSelect = document.getElementById('birth-minute');
-  for (let h = 0; h <= 23; h++) {
-    const opt = document.createElement('option');
-    opt.value = h; opt.textContent = `${h}時`;
-    hourSelect.appendChild(opt);
-  }
-  [0, 15, 30, 45].forEach(m => {
-    const opt = document.createElement('option');
-    opt.value = m; opt.textContent = `${String(m).padStart(2, '0')}分`;
-    minuteSelect.appendChild(opt);
-  });
-}
-
-function initPlaceSelector() {
-  const placeSelect = document.getElementById('birth-place');
-  PREFECTURES.forEach(pref => {
-    const opt = document.createElement('option');
-    opt.value = pref; opt.textContent = pref;
-    placeSelect.appendChild(opt);
-  });
-}
-
-function initToggleHandlers() {
-  document.getElementById('time-unknown').addEventListener('change', (e) => {
-    const group = document.getElementById('time-group');
-    if (e.target.checked) {
-      group.classList.add('form-group--disabled');
-      document.getElementById('birth-hour').value = '';
-      document.getElementById('birth-minute').value = '';
-    } else {
-      group.classList.remove('form-group--disabled');
-    }
-  });
-  document.getElementById('place-unknown').addEventListener('change', (e) => {
-    const group = document.getElementById('place-group');
-    if (e.target.checked) {
-      group.classList.add('form-group--disabled');
-      document.getElementById('birth-place').value = '';
-    } else {
-      group.classList.remove('form-group--disabled');
-    }
-  });
-}
-
-function initGenderButtons() {
-  document.querySelectorAll('.gender-btn').forEach(btn => {
-    btn.addEventListener('click', (ev) => {
-      ev.preventDefault();
-      selectedGender = btn.dataset.gender;
-      document.querySelectorAll('.gender-btn').forEach(b => {
-        b.classList.remove('gender-btn--active', 'btn--primary');
-        b.classList.add('btn--outline');
-      });
-      btn.classList.remove('btn--outline');
-      btn.classList.add('gender-btn--active');
-    });
-  });
-}
-
-function initAnalyzeButton() {
-  document.getElementById('btn-analyze').addEventListener('click', startAnalysis);
-}
+// 旧 init* (フォーム DOM 生成系) は index.html 側に移管されたため astrology-v2 では不要。
+// 結果フェーズの再表示用 reset ボタンだけ残す。
 
 function initResetButton() {
   document.getElementById('btn-reset').addEventListener('click', resetAnalysis);
@@ -259,21 +153,39 @@ function completeAllSteps() {
   });
 }
 
+// --- Profile (localStorage) -----------------------------------------------
+// 入力は index.html の profile-form に集約。ここでは保存済みプロフィールを読むのみ。
+const PROFILE_KEY = 'xten.profile';
+
+function loadProfile() {
+  try {
+    const raw = localStorage.getItem(PROFILE_KEY);
+    if (!raw) return null;
+    const p = JSON.parse(raw);
+    if (!p || !p.birthYear || !p.birthMonth || !p.birthDay) return null;
+    return p;
+  } catch { return null; }
+}
+
 // --- Main Analysis Flow ---
 async function startAnalysis() {
-  const year = parseInt(document.getElementById('birth-year').value);
-  const month = parseInt(document.getElementById('birth-month').value);
-  const day = parseInt(document.getElementById('birth-day').value);
-
-  if (!year || !month || !day) {
-    alert('生年月日を入力してください');
+  const profile = loadProfile();
+  if (!profile) {
+    // プロフィール未入力 → index.html に誘導
+    if (confirm('プロフィールが未入力です。入力ページへ移動しますか？')) {
+      location.href = 'index.html';
+    }
     return;
   }
 
-  const timeUnknown = document.getElementById('time-unknown').checked;
-  const placeUnknown = document.getElementById('place-unknown').checked;
-  const hour = timeUnknown ? null : (document.getElementById('birth-hour').value === '' ? null : parseInt(document.getElementById('birth-hour').value));
-  const place = placeUnknown ? null : (document.getElementById('birth-place').value || null);
+  const year  = profile.birthYear;
+  const month = profile.birthMonth;
+  const day   = profile.birthDay;
+  const hour  = profile.timeUnknown ? null : (profile.birthHour != null ? profile.birthHour : null);
+  const place = profile.placeUnknown ? null : (profile.birthPlace || null);
+  const timeUnknown  = !!profile.timeUnknown;
+  const placeUnknown = !!profile.placeUnknown;
+  selectedGender = profile.gender || null;
 
   resetLoadingSteps();
   showPhase('phase-loading');
@@ -837,15 +749,9 @@ function downloadShareCard() {
 }
 
 // --- Reset ---
+// 入力フォームは index.html にあるため、ボタンの役割は「TOP で再入力」に変更。
 function resetAnalysis() {
-  currentResult = null;
-  selectedGender = null;
-  document.querySelectorAll('.gender-btn').forEach(btn => {
-    btn.classList.remove('btn--primary');
-    btn.classList.add('btn--outline');
-  });
-  showPhase('phase-input');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  location.href = 'index.html#profile-form-section';
 }
 
 // --- Share ---

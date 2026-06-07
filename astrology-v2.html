@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=8">
   <link rel="stylesheet" href="css/fortune-v2.css?v=8">
-  <link rel="stylesheet" href="css/x-ten.css?v=5">
+  <link rel="stylesheet" href="css/x-ten.css?v=7">
 </head>
 <body>
 
@@ -62,159 +62,26 @@
             ―― 今日の自分を超スピードで攻略する。
           </p>
         </div>
+
+        <!-- URL ハッシュに応じて表示される、選択中レイヤーの説明 -->
+        <div id="hash-layer-preview" class="layer-intro" hidden></div>
       </div>
     </section>
 
     <section class="section-light">
       <div class="container">
 
-        <p class="hero-note">
-          <span class="hero-note__marker">※</span>あなたを攻略するための入力項目です。<br>
-          <span class="hero-note__indent">回答が多いほど適切な結果が表れ、ブーストがかかります。</span>
-        </p>
-
-        <div class="form-section">
-
-          <!-- 1. ニックネーム（任意） -->
-          <div class="form-group">
-            <label class="form-group__label" for="nickname">ニックネーム（任意）</label>
-            <div class="form-group__row">
-              <input
-                type="text"
-                id="nickname"
-                class="form-group__input"
-                maxlength="20"
-                placeholder="例: ほしよみ"
-                autocomplete="nickname"
-                style="flex: 1;">
-            </div>
-          </div>
-
-          <!-- 2. 性別（任意） -->
-          <div class="form-group">
-            <label class="form-group__label">性別（任意）</label>
-            <div class="form-group__row">
-              <button id="gender-male" class="gender-btn" data-gender="male">男性</button>
-              <button id="gender-female" class="gender-btn" data-gender="female">女性</button>
-              <button id="gender-other" class="gender-btn" data-gender="other">その他</button>
-            </div>
-          </div>
-
-          <!-- 3. 出生地（任意） -->
-          <div class="form-group" id="place-group">
-            <label class="form-group__label">出生地（任意）</label>
-            <div class="form-group__row">
-              <select id="birth-place" class="form-group__select" style="flex: 1;">
-                <option value="">都道府県を選択</option>
-              </select>
-            </div>
-            <div class="form-group__toggle">
-              <input type="checkbox" id="place-unknown">
-              <label for="place-unknown">出生地がわからない</label>
-            </div>
-          </div>
-
-          <!-- 4. 生年月日（必須） -->
-          <div class="form-group">
-            <label class="form-group__label">生年月日</label>
-            <div class="form-group__row">
-              <select id="birth-year" class="form-group__select">
-                <option value="">年</option>
-              </select>
-              <select id="birth-month" class="form-group__select">
-                <option value="">月</option>
-              </select>
-              <select id="birth-day" class="form-group__select">
-                <option value="">日</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- 5. 出生時刻（任意） -->
-          <div class="form-group" id="time-group">
-            <label class="form-group__label">出生時刻（任意）</label>
-            <div class="form-group__row">
-              <select id="birth-hour" class="form-group__select">
-                <option value="">時</option>
-              </select>
-              <select id="birth-minute" class="form-group__select">
-                <option value="">分</option>
-              </select>
-            </div>
-            <div class="form-group__toggle">
-              <input type="checkbox" id="time-unknown">
-              <label for="time-unknown">出生時刻がわからない</label>
-            </div>
-          </div>
-
-          <!-- 6. 血液型 -->
-          <div class="form-group">
-            <label class="form-group__label">血液型</label>
-            <div class="form-group__row">
-              <button type="button" id="blood-A"  class="blood-btn" data-blood="A">A 型</button>
-              <button type="button" id="blood-B"  class="blood-btn" data-blood="B">B 型</button>
-              <button type="button" id="blood-AB" class="blood-btn" data-blood="AB">AB 型</button>
-              <button type="button" id="blood-O"  class="blood-btn" data-blood="O">O 型</button>
-            </div>
-          </div>
-
-          <!-- 7. 職業 -->
-          <div class="form-group">
-            <label class="form-group__label" for="job">職業</label>
-            <div class="form-group__row">
-              <select id="job" class="form-group__select" style="flex: 1;">
-                <option value="">選択してください</option>
-                <option value="executive">会社経営 / 会社役員</option>
-                <option value="employee">会社員</option>
-                <option value="public">公務員</option>
-                <option value="parttime">アルバイト / パート</option>
-                <option value="university">大学生</option>
-                <option value="highschool">高校生</option>
-                <option value="other">その他</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- 8. MBTI性格診断（任意） -->
-          <div class="form-group">
-            <label class="form-group__label" for="mbti">MBTI性格診断（任意）</label>
-            <div class="form-group__row">
-              <select id="mbti" class="form-group__select" style="flex: 1;">
-                <option value="">選択してください（未診断でも OK）</option>
-                <optgroup label="分析家 (Analysts)">
-                  <option value="INTJ">INTJ — 建築家</option>
-                  <option value="INTP">INTP — 論理学者</option>
-                  <option value="ENTJ">ENTJ — 指揮官</option>
-                  <option value="ENTP">ENTP — 討論者</option>
-                </optgroup>
-                <optgroup label="外交官 (Diplomats)">
-                  <option value="INFJ">INFJ — 提唱者</option>
-                  <option value="INFP">INFP — 仲介者</option>
-                  <option value="ENFJ">ENFJ — 主人公</option>
-                  <option value="ENFP">ENFP — 運動家</option>
-                </optgroup>
-                <optgroup label="番人 (Sentinels)">
-                  <option value="ISTJ">ISTJ — 管理者</option>
-                  <option value="ISFJ">ISFJ — 擁護者</option>
-                  <option value="ESTJ">ESTJ — 幹部</option>
-                  <option value="ESFJ">ESFJ — 領事</option>
-                </optgroup>
-                <optgroup label="探検家 (Explorers)">
-                  <option value="ISTP">ISTP — 巨匠</option>
-                  <option value="ISFP">ISFP — 冒険家</option>
-                  <option value="ESTP">ESTP — 起業家</option>
-                  <option value="ESFP">ESFP — エンターテイナー</option>
-                </optgroup>
-              </select>
-            </div>
-          </div>
-
-          <div class="text-center mt-24">
-            <button class="btn btn--dark" id="btn-analyze">
-              &gt; RUN ANALYSIS
-            </button>
-          </div>
+        <!-- プロフィール未入力時の誘導 -->
+        <div class="profile-required">
+          <p class="profile-required__eyebrow">// PROFILE REQUIRED</p>
+          <h2 class="profile-required__title">プロフィールが未入力です</h2>
+          <p class="profile-required__desc">
+            あなた専用の解析を行うには、TOP ページのプロフィール入力が必要です。<br>
+            生年月日・血液型・職業など、入力した情報は端末に保存され、各レイヤーの解析に反映されます。
+          </p>
+          <a href="index.html" class="profile-required__cta">&gt; プロフィールを入力する</a>
         </div>
+
       </div>
     </section>
   </div>
@@ -283,6 +150,20 @@
 
         <!-- ===== CORE Layer Content ===== -->
         <div class="layer-content layer-content--active" data-layer-content="core">
+
+          <!-- レイヤー導入 (新仕様: あなたの基本スペック) -->
+          <div class="layer-intro">
+            <p class="layer-intro__eyebrow">// CORE · あなたの基本スペック</p>
+            <h2 class="layer-intro__title">「自分」というハードウェアのスペックと過去のエビデンス解析</h2>
+            <div class="layer-intro__meta">
+              <span class="layer-intro__chip">使用占術：四柱推命 × インド占星術</span>
+              <span class="layer-intro__chip layer-intro__chip--basic">BASIC · ¥500 / 月</span>
+            </div>
+            <p class="layer-intro__desc">
+              <strong>四柱推命</strong>で「生まれ持った才能・ビジネスの戦闘スタイル」を可視化し、<strong>インド占星術</strong>で「人生全体の骨組み・宿命」を重ねます。<br>
+              同時に、二つの占術の周期が重なる<strong>過去の人生のターニングポイント</strong>（転職や環境の激変など）を AI がズバリ言い当てます。
+            </p>
+          </div>
 
           <!-- FREE: スコア表示 -->
           <div id="free-score" class="free-score"></div>
@@ -356,25 +237,85 @@
         <!-- ===== FLOW Layer Content ===== -->
         <div class="layer-content" data-layer-content="flow">
 
+          <!-- レイヤー導入 (新仕様: This month's / This year's スケジュール) -->
+          <div class="layer-intro">
+            <p class="layer-intro__eyebrow">// FLOW · 月間 / 年間スケジュール</p>
+            <h2 class="layer-intro__title">リスクを先回りしてハックする戦略カレンダー</h2>
+            <p class="layer-intro__desc">
+              月単位・年単位の「攻め時・守り時」を、占術の重ね掛けで先回り把握します。<br>
+              下に <strong>This month's</strong>（BASIC ¥500/月）と <strong>This year's</strong>（PREMIUM ¥19,800/年）の 2 つのレポートが表示されます。
+            </p>
+          </div>
+
           <!-- CTA: FLOW を BASIC/PREMIUM でアンロック -->
           <div class="paywall-slot" data-cta-slot="flow"></div>
 
-          <!-- 天中殺情報（BASIC以上） -->
-          <div id="flow-tenchusatsu" class="result__box result__box--highlight" data-feature="flow.monthly"></div>
+          <!-- ───── This month's スケジュール ───── -->
+          <div class="layer-section" id="flow-month-section">
+            <div class="layer-section__head">
+              <p class="layer-section__eyebrow">▸ THIS MONTH'S スケジュール</p>
+              <h3 class="layer-section__title">1 ヶ月の「攻め時・守り時」カレンダー</h3>
+              <div class="layer-section__meta">
+                <span class="layer-intro__chip">宿曜占星術（ベース）× インド占星術（補正）</span>
+                <span class="layer-intro__chip layer-intro__chip--basic">BASIC · ¥500 / 月</span>
+              </div>
+              <p class="layer-section__desc">
+                宿曜が持つ<strong>月間のバイオリズム</strong>（要注意日・魔の期間）をベースに、インド占星術の<strong>現行トランジット</strong>を掛け合わせます。<br>
+                <em>例：</em>宿曜で「大凶日」でも、インド占星術で「強力な幸運の星が巡っている」なら、AI が
+                <strong>「ビビる必要はない。リスクを逆手に取ってライバルに差をつける提案を出せ」</strong>とハック案へ補正します。<br>
+                <span class="layer-section__note">※ 3ヶ月先まで運気カレンダーを可視化。Google カレンダー連携で「勝負日・要注意日」を自動リマインド。</span>
+              </p>
+            </div>
 
-          <!-- 大運（BASIC以上） -->
-          <div id="flow-taiun" class="result__box" data-feature="flow.monthly"></div>
+            <!-- 天中殺情報（BASIC以上） -->
+            <div id="flow-tenchusatsu" class="result__box result__box--highlight" data-feature="flow.monthly"></div>
 
-          <!-- 宿曜情報（BASIC以上） -->
-          <div id="flow-shukuyo" class="vedic-info" data-feature="flow.monthly"></div>
+            <!-- 大運（BASIC以上） -->
+            <div id="flow-taiun" class="result__box" data-feature="flow.monthly"></div>
 
-          <!-- 運気カレンダー：年間（PREMIUM） -->
-          <div id="flow-calendar" class="energy-calendar" data-feature="flow.yearly"></div>
+            <!-- 宿曜情報（BASIC以上） -->
+            <div id="flow-shukuyo" class="vedic-info" data-feature="flow.monthly"></div>
+          </div>
+
+          <!-- ───── This year's スケジュール ───── -->
+          <div class="layer-section" id="flow-year-section">
+            <div class="layer-section__head">
+              <p class="layer-section__eyebrow">▸ THIS YEAR'S スケジュール</p>
+              <h3 class="layer-section__title">「今年、どう動けば人生が x10 拡張するか」の長期戦略</h3>
+              <div class="layer-section__meta">
+                <span class="layer-intro__chip">インド占星術ダシャー × 四柱推命 大運・歳運</span>
+                <span class="layer-intro__chip layer-intro__chip--premium">PREMIUM · ¥19,800 / 年</span>
+              </div>
+              <p class="layer-section__desc">
+                時期予測において世界最高峰の精度を持つ<strong>インド占星術ダシャー（惑星周期）</strong>を軸に、四柱推命の<strong>大運・歳運</strong>を重ねる、最も重厚な長期解析です。<br>
+                <strong>「今年は仕込みの 1 年。無理に拡大せず、来年からの 3 年間の爆発期に向けてリソースを蓄えよ」</strong>など、向こう数年分のロードマップを AI が戦略レポートとして出力します。<br>
+                <span class="layer-section__note">※ 無駄な焦りや時期外れの投資による大失敗を防ぐ「お守り」。</span>
+              </p>
+            </div>
+
+            <!-- 運気カレンダー：年間（PREMIUM） -->
+            <div id="flow-calendar" class="energy-calendar" data-feature="flow.yearly"></div>
+          </div>
 
         </div>
 
         <!-- ===== HACK Layer Content ===== -->
         <div class="layer-content" data-layer-content="hack">
+
+          <!-- レイヤー導入 (新仕様: Today's アドバイス) -->
+          <div class="layer-intro">
+            <p class="layer-intro__eyebrow">// HACK · Today's アドバイス</p>
+            <h2 class="layer-intro__title">24 時間の行動指針 — 世界に一人だけの「今日の TODO リスト」</h2>
+            <div class="layer-intro__meta">
+              <span class="layer-intro__chip">使用占術：宿曜占星術（ベース）× 四柱推命（補正）</span>
+              <span class="layer-intro__chip layer-intro__chip--free">完全無料 · 0 円</span>
+            </div>
+            <p class="layer-intro__desc">
+              「日ごとの運気」が強い<strong>宿曜占星術</strong>をベースにしつつ、四柱推命の<strong>「その日のエネルギー（五行・通変星）」</strong>を掛け合わせます。<br>
+              <em>例：</em>宿曜で「交渉に向く日」でも、四柱推命で「単独行動が吉」と出た場合、AI が
+              <strong>「大勢との交渉ではなく、キーマン 1 人とだけ 1 対 1 で会え」</strong>と行動をピンポイントに最適化します。
+            </p>
+          </div>
 
           <!-- AIキャラクター（FREE: 簡易メッセージのみ） -->
           <div id="hack-character" class="ai-character"></div>
@@ -407,7 +348,7 @@
 
         <!-- Actions -->
         <div class="result__actions">
-          <button class="btn btn--dark" id="btn-reset">もう一度解析する</button>
+          <button class="btn btn--dark" id="btn-reset">プロフィールを編集する</button>
           <a href="celestia/tarot.html" class="btn btn--outline-light">タロット占いも試す</a>
         </div>
 
@@ -613,7 +554,7 @@
   </footer>
 
   <script src="js/x-ten-radar.js?v=1"></script>
-  <script type="module" src="js/ui-controller.js?v=5"></script>
+  <script type="module" src="js/ui-controller.js?v=7"></script>
 
   <!-- ヒーロー日付（JST / Asia/Tokyo の M/D） -->
   <script>
@@ -651,17 +592,66 @@
     })();
   </script>
 
-  <!-- ナビゲーションのアクティブ表示 & ハッシュに応じたレイヤー自動切替 -->
+  <!-- ナビゲーションのアクティブ表示 & ハッシュに応じたレイヤー自動切替 + 入力画面プレビュー -->
   <script>
     (function () {
       // ハッシュ → レイヤー対応表
       var HASH_TO_LAYER = { core: 'core', month: 'flow', year: 'flow', flow: 'flow', hack: 'hack' };
 
+      // 入力画面で表示する各タブの説明
+      var HASH_TO_PREVIEW = {
+        hack: {
+          eyebrow: "// HACK · Today's アドバイス",
+          title: '24 時間の行動指針 — 世界に一人だけの「今日の TODO リスト」',
+          chips: [
+            { text: '使用占術：宿曜占星術（ベース）× 四柱推命（補正）' },
+            { text: '完全無料 · 0 円', cls: 'layer-intro__chip--free' }
+          ],
+          desc:
+            '「日ごとの運気」が強い<strong>宿曜占星術</strong>をベースに、四柱推命の<strong>「その日のエネルギー（五行・通変星）」</strong>を掛け合わせます。<br>' +
+            '<em>例：</em>宿曜で「交渉に向く日」でも、四柱推命で「単独行動が吉」と出た場合、AI が<strong>「大勢との交渉ではなく、キーマン 1 人とだけ 1 対 1 で会え」</strong>と行動をピンポイントに最適化します。'
+        },
+        core: {
+          eyebrow: '// CORE · あなたの基本スペック',
+          title: '「自分」というハードウェアのスペックと過去のエビデンス解析',
+          chips: [
+            { text: '使用占術：四柱推命 × インド占星術' },
+            { text: 'BASIC · ¥500 / 月', cls: 'layer-intro__chip--basic' }
+          ],
+          desc:
+            '<strong>四柱推命</strong>で「生まれ持った才能・ビジネスの戦闘スタイル」を可視化し、<strong>インド占星術</strong>で「人生全体の骨組み・宿命」を重ねます。<br>' +
+            '同時に、二つの占術の周期が重なる<strong>過去の人生のターニングポイント</strong>（転職や環境の激変など）を AI がズバリ言い当てます。'
+        },
+        month: {
+          eyebrow: "// FLOW · This month's スケジュール",
+          title: '1 ヶ月の「攻め時・守り時」カレンダー',
+          chips: [
+            { text: '宿曜占星術（ベース）× インド占星術（補正）' },
+            { text: 'BASIC · ¥500 / 月', cls: 'layer-intro__chip--basic' }
+          ],
+          desc:
+            '宿曜が持つ<strong>月間のバイオリズム</strong>（要注意日・魔の期間）をベースに、インド占星術の<strong>現行トランジット</strong>を掛け合わせます。<br>' +
+            '<em>例：</em>宿曜で「大凶日」でも、インド占星術で「強力な幸運の星が巡っている」なら、AI が<strong>「ビビる必要はない。リスクを逆手に取ってライバルに差をつける提案を出せ」</strong>とハック案へ補正します。<br>' +
+            '<span class="layer-section__note">※ 3ヶ月先まで可視化 / Google カレンダー連携で「勝負日・要注意日」を自動リマインド。</span>'
+        },
+        year: {
+          eyebrow: "// FLOW · This year's スケジュール",
+          title: '「今年、どう動けば人生が x10 拡張するか」の長期戦略',
+          chips: [
+            { text: 'インド占星術ダシャー × 四柱推命 大運・歳運' },
+            { text: 'PREMIUM · ¥19,800 / 年', cls: 'layer-intro__chip--premium' }
+          ],
+          desc:
+            '時期予測において世界最高峰の精度を持つ<strong>インド占星術ダシャー（惑星周期）</strong>を軸に、四柱推命の<strong>大運・歳運</strong>を重ねる、最も重厚な長期解析です。<br>' +
+            '<strong>「今年は仕込みの 1 年。無理に拡大せず、来年からの 3 年間の爆発期に向けてリソースを蓄えよ」</strong>など、向こう数年分のロードマップを AI が戦略レポートとして出力。<br>' +
+            '<span class="layer-section__note">※ 無駄な焦りや時期外れの投資による大失敗を防ぐ「お守り」。</span>'
+        }
+      };
+
       function currentHash() {
         return (location.hash || '#hack').replace(/^#/, '').toLowerCase();
       }
 
-      // ナビのアクティブ状態を URL ハッシュで更新
       function refreshNavActive() {
         var hash = currentHash();
         document.querySelectorAll('.nav__link[data-nav-layer]').forEach(function (a) {
@@ -671,36 +661,49 @@
         if (current) current.classList.add('nav__link--active');
       }
 
-      // 結果画面が出ているときだけ、レイヤータブを切り替える
+      function renderHashPreview() {
+        var slot = document.getElementById('hash-layer-preview');
+        if (!slot) return;
+        var hash = currentHash();
+        var data = HASH_TO_PREVIEW[hash];
+        if (!data) { slot.hidden = true; slot.innerHTML = ''; return; }
+        var chipsHtml = data.chips.map(function (c) {
+          return '<span class="layer-intro__chip ' + (c.cls || '') + '">' + c.text + '</span>';
+        }).join('');
+        slot.innerHTML =
+          '<p class="layer-intro__eyebrow">' + data.eyebrow + '</p>' +
+          '<h2 class="layer-intro__title">' + data.title + '</h2>' +
+          '<div class="layer-intro__meta">' + chipsHtml + '</div>' +
+          '<p class="layer-intro__desc">' + data.desc + '</p>';
+        slot.hidden = false;
+      }
+
       function applyLayerFromHash() {
         var hash = currentHash();
         var layer = HASH_TO_LAYER[hash];
         if (!layer) return;
         var result = document.getElementById('phase-result');
-        // 結果がまだ出ていなければ、表示されてから切り替える
         if (!result || result.classList.contains('hidden')) return;
         var tab = document.querySelector('.layer-tabs__tab[data-layer="' + layer + '"]');
-        if (tab && !tab.classList.contains('layer-tabs__tab--active')) {
-          tab.click();
-        }
+        if (tab && !tab.classList.contains('layer-tabs__tab--active')) tab.click();
       }
 
-      // phase-result の class 変化を監視（hidden が外れた瞬間にレイヤー切替）
       var phaseResult = document.getElementById('phase-result');
       if (phaseResult && 'MutationObserver' in window) {
         new MutationObserver(applyLayerFromHash).observe(phaseResult, {
-          attributes: true,
-          attributeFilter: ['class']
+          attributes: true, attributeFilter: ['class']
         });
       }
 
       window.addEventListener('hashchange', function () {
         refreshNavActive();
+        renderHashPreview();
         applyLayerFromHash();
       });
 
       // 初回ロード
       refreshNavActive();
+      renderHashPreview();
       applyLayerFromHash();
     })();
   </script>
