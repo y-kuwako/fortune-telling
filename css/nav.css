@@ -68,10 +68,16 @@
 }
 .nav__link--active .nav__icon { opacity: 1; }
 
+/* month / year スケジュールのタブは現在非表示（戻す場合はこのルールを削除） */
+.nav__link[href*="month.html"],
+.nav__link[href*="year.html"] {
+  display: none;
+}
+
 /* グループ区切り（薄い縦線）—— astro グループの直前 / tarot の直前 */
 .nav__link[href*="#hack"]::before,
 .nav__link[href$="tarot.html"]::before,
-.nav__link[href$="celestia/tarot.html"]::before {
+.nav__link[href$="xten/tarot.html"]::before {
   content: "";
   position: absolute;
   left: -2px;

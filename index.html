@@ -84,6 +84,12 @@
     .nav__icon { color: inherit; opacity: 0.7; font-size: 0.85rem; }
     .nav__link--active .nav__icon { opacity: 1; }
 
+    /* month / year スケジュールのタブは現在非表示（戻す場合はこのルールを削除） */
+    .nav__link[href*="month.html"],
+    .nav__link[href*="year.html"] {
+      display: none;
+    }
+
 @media (max-width: 720px) {
       .nav { padding: 4px 12px; }
       .nav__link { padding: 10px 10px; font-size: 0.7rem; }
@@ -1031,16 +1037,16 @@
     <a href="index.html" class="nav__link nav__link--active">
       <span class="nav__icon">&#9671;</span> TOP
     </a>
-    <a href="celestia/today.html" class="nav__link">
+    <a href="xten/today.html" class="nav__link">
       <span class="nav__icon">&#9671;</span> Today's アドバイス
     </a>
-    <a href="celestia/month.html" class="nav__link">
+    <a href="xten/month.html" class="nav__link">
       <span class="nav__icon">&#9671;</span> This month's スケジュール
     </a>
-    <a href="celestia/year.html" class="nav__link">
+    <a href="xten/year.html" class="nav__link">
       <span class="nav__icon">&#9671;</span> This year's スケジュール
     </a>
-    <a href="celestia/astrology.html" class="nav__link">
+    <a href="xten/astrology.html" class="nav__link">
       <span class="nav__icon">&#9671;</span> あなたの基本構成
     </a>
   </nav>
@@ -1059,7 +1065,7 @@
   </header>
 
   <!-- ============================================================
-       Profile Form (入力はここに集約。submit で xten.profile を localStorage 保存 → celestia/today.html へ遷移)
+       Profile Form (入力はここに集約。submit で xten.profile を localStorage 保存 → xten/today.html へ遷移)
        ============================================================ -->
   <section class="profile-form-section" id="profile-form-section">
     <div class="profile-form-section__inner">
@@ -1193,7 +1199,7 @@
     </div>
   </section>
 
-  <a href="celestia/today.html" class="header__advice-date" id="header-advice-date" aria-live="polite"></a>
+  <a href="xten/today.html" class="header__advice-date" id="header-advice-date" aria-live="polite"></a>
 
   <!-- ============================================================
        Advice Cards Grid (4 つのアドバイス入口)
@@ -1202,7 +1208,7 @@
     <div class="advice-cards__grid">
 
       <!-- 1. Today's アドバイス -->
-      <a href="celestia/today.html" class="advice-card advice-card--today">
+      <a href="xten/today.html" class="advice-card advice-card--today">
         <div class="advice-card__top">
           <div class="advice-card__thumb">
             <span class="advice-card__thumb-icon">今</span>
@@ -1221,7 +1227,7 @@
       </a>
 
       <!-- 2. あなたの基本スペック -->
-      <a href="celestia/astrology.html" class="advice-card advice-card--basic">
+      <a href="xten/astrology.html" class="advice-card advice-card--basic">
         <div class="advice-card__top">
           <div class="advice-card__thumb">
             <span class="advice-card__thumb-icon">核</span>
@@ -1240,7 +1246,7 @@
       </a>
 
       <!-- 3. This month's スケジュール -->
-      <a href="celestia/month.html" class="advice-card advice-card--monthly">
+      <a href="xten/month.html" class="advice-card advice-card--monthly">
         <div class="advice-card__top">
           <div class="advice-card__thumb">
             <span class="advice-card__thumb-icon">月</span>
@@ -1259,7 +1265,7 @@
       </a>
 
       <!-- 4. This year's スケジュール -->
-      <a href="celestia/year.html" class="advice-card advice-card--yearly">
+      <a href="xten/year.html" class="advice-card advice-card--yearly">
         <div class="advice-card__top">
           <div class="advice-card__thumb">
             <span class="advice-card__thumb-icon">年</span>
@@ -1315,7 +1321,7 @@
 
   <!-- ============================================================
        Profile Form: 初期化 / submit / localStorage 復元
-       (xten.profile に統一保存。celestia 各ページは同じキーから読む)
+       (xten.profile に統一保存。xten/ 各ページは同じキーから読む)
        ============================================================ -->
   <script>
     (function () {
@@ -1498,10 +1504,10 @@
           return;
         }
 
-        // 成功表示 → 本日の診断（celestia）へ直接遷移（xten.profile を localStorage 経由で読込）
+        // 成功表示 → 本日の診断（xten/today.html）へ直接遷移（xten.profile を localStorage 経由で読込）
         successEl.hidden = false;
         setTimeout(function () {
-          location.href = 'celestia/today.html';
+          location.href = 'xten/today.html';
         }, 300);
       });
 
