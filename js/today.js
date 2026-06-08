@@ -617,8 +617,8 @@
     const url  = encodeURIComponent(window.location.href);
     window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
   };
-  window.todayShareLine = function () {
+  window.todayShareThreads = function () {
     const text = encodeURIComponent('本日の x-TEN 診断結果をチェック！');
-    window.open(`https://social-plugins.line.me/lineit/share?text=${text}`, '_blank');
+    window.open(`https://www.threads.net/intent/post?text=${text}`, '_blank');
   };
 })();

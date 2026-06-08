@@ -1102,6 +1102,11 @@ a:hover {
   letter-spacing: 0.05em;
 }
 
+/* 利用規約・プライバシーポリシーは一旦非表示（戻す場合はこのルールを削除） */
+.footer__links {
+  display: none;
+}
+
 /* ===== About Box ===== */
 .about-box {
   max-width: 440px;

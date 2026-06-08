@@ -1103,8 +1103,8 @@ function shareTwitter() {
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
 }
 
-function shareLine() {
+function shareThreads() {
   if (!currentResult) return;
   const text = encodeURIComponent(`🌟 x-TENの命術占い結果：「${currentResult.title}」\n${currentResult.overall.slice(0, 60)}...`);
-  window.open(`https://social-plugins.line.me/lineit/share?text=${text}`, '_blank');
+  window.open(`https://www.threads.net/intent/post?text=${text}`, '_blank');
 }

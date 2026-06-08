@@ -433,8 +433,8 @@
     const url  = encodeURIComponent(window.location.href);
     window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
   };
-  window.yearShareLine = function () {
+  window.yearShareThreads = function () {
     const text = encodeURIComponent('今年の x-TEN 診断結果をチェック！');
-    window.open(`https://social-plugins.line.me/lineit/share?text=${text}`, '_blank');
+    window.open(`https://www.threads.net/intent/post?text=${text}`, '_blank');
   };
 })();
