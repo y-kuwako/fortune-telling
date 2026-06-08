@@ -1,0 +1,7 @@
+{
+  "name": "x-ten-fortune",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "x-TEN 占いサイト（静的サイト＋/api/fortune サーバーレス関数）"
+}
