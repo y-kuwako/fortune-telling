@@ -84,42 +84,9 @@
     .nav__icon { color: inherit; opacity: 0.7; font-size: 0.85rem; }
     .nav__link--active .nav__icon { opacity: 1; }
 
-    /* グループ区切り（薄い縦線）— astro グループの直前と tarot の直前に */
-    .nav__link[href*="#hack"]::before,
-    .nav__link[href*="celestia/tarot"]::before {
-      content: "";
-      position: absolute;
-      left: -2px;
-      top: 25%;
-      bottom: 25%;
-      width: 1px;
-      background: rgba(212, 175, 55, 0.18);
-    }
-
-    .plan-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 10px;
-      margin-left: auto;            /* 右端に押し出す */
-      background: #0a0a0b;
-      border: 1px solid rgba(212, 175, 55, 0.18);
-      border-radius: 2px;
-      font-family: 'JetBrains Mono', 'Roboto Mono', monospace;
-      color: #8b8b94;
-      font-size: 0.66rem;
-      letter-spacing: 0.14em;
-      text-decoration: none;
-      transition: border-color 160ms ease;
-      flex-shrink: 0;
-    }
-    .plan-badge:hover { border-color: rgba(212, 175, 55, 0.45); }
-    .plan-badge__value { color: #d4af37; font-weight: 600; }
-
-    @media (max-width: 720px) {
+@media (max-width: 720px) {
       .nav { padding: 4px 12px; }
       .nav__link { padding: 10px 10px; font-size: 0.7rem; }
-      .plan-badge { margin-left: 6px; }
     }
 
     /* Header */
@@ -137,13 +104,39 @@
       margin-bottom: 16px;
     }
 
+    .header__title-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
     .header__title {
       font-family: 'Playfair Display', serif;
       font-size: 3.2rem;
       font-weight: 700;
       letter-spacing: 0.02em;
-      margin-bottom: 12px;
+      margin-bottom: 0;
       line-height: 1.05;
+    }
+    .header__catch {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text, #111);
+      letter-spacing: 0.08em;
+      text-align: left;
+      line-height: 1.6;
+    }
+    .header__title-x {
+      font-size: 0.5em;
+      vertical-align: 0.45em;
+      letter-spacing: 0.02em;
+      margin-right: 0.02em;
+    }
+    .header__title-num {
+      font-size: 1em;
     }
 
     .header__title-ruby {
@@ -161,7 +154,7 @@
       font-size: 0.85rem;
       color: var(--muted);
       font-weight: 300;
-      max-width: 520px;
+      max-width: 720px;
       margin: 0 auto;
       line-height: 1.95;
       letter-spacing: 0.04em;
@@ -1048,6 +1041,14 @@
       border: 1px solid rgba(16,185,129,0.5);
     }
 
+    /* RUN ANALYSIS + リセット を横並びにする */
+    .profile-form__actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
     .profile-form__submit {
       background: linear-gradient(180deg, #d4af37 0%, #e8c95a 100%);
       color: #020202;
@@ -1060,13 +1061,40 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       cursor: pointer;
-      margin-top: 8px;
       box-shadow: 0 0 0 1px #d4af37, 0 4px 24px rgba(212,175,55,0.22);
       transition: transform 160ms ease, box-shadow 200ms ease;
     }
     .profile-form__submit:hover {
       transform: translateY(-2px);
       box-shadow: 0 0 0 1px #d4af37, 0 8px 36px rgba(212,175,55,0.38);
+    }
+
+    /* リセットボタン: ゴーストスタイルで主アクションと差別化 */
+    .profile-form__reset {
+      background: transparent;
+      color: rgba(212,175,55,0.85);
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 2px;
+      padding: 18px 24px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+    }
+    .profile-form__reset:hover {
+      border-color: #d4af37;
+      color: #e8c95a;
+      background: rgba(212,175,55,0.06);
+    }
+
+    /* 480px 以下では縦並びに */
+    @media (max-width: 480px) {
+      .profile-form__actions {
+        grid-template-columns: 1fr;
+      }
     }
 
   </style>
@@ -1090,23 +1118,18 @@
     <a href="astrology-v2.html#core" class="nav__link">
       <span class="nav__icon">&#9671;</span> あなたの基本構成
     </a>
-    <a href="celestia/tarot.html" class="nav__link">
-      <span class="nav__icon">&#9826;</span> タロット占い
-    </a>
-    <a href="astrology-v2.html" class="plan-badge" title="プランを変更">
-      <span class="plan-badge__label">PLAN</span>
-      <span class="plan-badge__value" id="plan-badge-value">FREE</span>
-    </a>
   </nav>
 
   <!-- Header -->
   <header class="header">
     <p class="header__label">Tactical Analysis Engine</p>
-    <h1 class="header__title">x-TEN<br><span class="header__title-ruby">エクステン</span></h1>
+    <div class="header__title-row">
+      <h1 class="header__title"><span class="header__title-x">x</span><span class="header__title-num">10</span><br><span class="header__title-ruby">エクス・テン</span></h1>
+      <p class="header__catch">-運命-を10倍速で攻略せよ。</p>
+    </div>
     <p class="header__subtitle">
-      運命を10倍速で攻略する。<br>
-      ―― AIが四柱推命×インド占星術を統合解析する、次世代戦略エンジン。<br>
-      あなただけの最強「TODOリスト」。
+      ―― 複数の占星術から、人々の生まれ持った資質を解析し、人生の最適行動を紐解く。<br>
+      あなただけの【次世代人生攻略エンジン】です。
     </p>
   </header>
 
@@ -1124,15 +1147,15 @@
 
       <form class="profile-form" id="profile-form" novalidate>
 
-        <!-- 1. ニックネーム -->
+        <!-- 1. お名前 -->
         <div class="profile-form__field">
-          <label class="profile-form__label" for="pf-nickname">ニックネーム（任意）</label>
+          <label class="profile-form__label" for="pf-nickname">お名前(ニックネーム可)<span class="profile-form__required">必須</span></label>
           <input type="text" id="pf-nickname" class="profile-form__input" maxlength="20" placeholder="例: ほしよみ" autocomplete="nickname">
         </div>
 
         <!-- 2. 性別 -->
         <div class="profile-form__field">
-          <label class="profile-form__label">性別（任意）</label>
+          <label class="profile-form__label">性別<span class="profile-form__required">必須</span></label>
           <div class="profile-form__pills" role="radiogroup" aria-label="性別">
             <button type="button" class="profile-form__pill" data-pf="gender" data-value="male">男性</button>
             <button type="button" class="profile-form__pill" data-pf="gender" data-value="female">女性</button>
@@ -1177,7 +1200,7 @@
 
         <!-- 6. 血液型 -->
         <div class="profile-form__field">
-          <label class="profile-form__label">血液型（任意）</label>
+          <label class="profile-form__label">血液型<span class="profile-form__required">必須</span></label>
           <div class="profile-form__pills" role="radiogroup" aria-label="血液型">
             <button type="button" class="profile-form__pill" data-pf="blood" data-value="A">A 型</button>
             <button type="button" class="profile-form__pill" data-pf="blood" data-value="B">B 型</button>
@@ -1188,7 +1211,7 @@
 
         <!-- 7. 職業 -->
         <div class="profile-form__field">
-          <label class="profile-form__label" for="pf-job">職業（任意）</label>
+          <label class="profile-form__label" for="pf-job">職業<span class="profile-form__required">必須</span></label>
           <select id="pf-job" class="profile-form__select">
             <option value="">選択してください</option>
             <option value="executive">会社経営 / 会社役員</option>
@@ -1206,6 +1229,7 @@
           <label class="profile-form__label" for="pf-mbti">MBTI 性格診断（任意）</label>
           <select id="pf-mbti" class="profile-form__select">
             <option value="">選択してください（未診断でも OK）</option>
+            <option value="unknown">不明</option>
             <optgroup label="分析家 (Analysts)">
               <option value="INTJ">INTJ — 建築家</option>
               <option value="INTP">INTP — 論理学者</option>
@@ -1236,7 +1260,10 @@
         <p class="profile-form__error" id="profile-form-error" hidden></p>
         <p class="profile-form__success" id="profile-form-success" hidden>✓ プロフィールを保存しました。</p>
 
-        <button type="submit" class="profile-form__submit">&gt; RUN ANALYSIS</button>
+        <div class="profile-form__actions">
+          <button type="submit" class="profile-form__submit">&gt; RUN ANALYSIS</button>
+          <button type="button" class="profile-form__reset" id="profile-form-reset">リセット</button>
+        </div>
       </form>
     </div>
   </section>
@@ -1408,24 +1435,6 @@
     })();
   </script>
 
-  <!-- PLAN バッジ: localStorage に保存されたプランを反映（未保存・旧shot は FREE 扱い） -->
-  <script>
-    (function () {
-      var badge = document.getElementById('plan-badge-value');
-      if (!badge) return;
-      var LABELS = { free: 'FREE', basic: 'BASIC', premium: 'PREMIUM' };
-      try {
-        var raw = localStorage.getItem('celestia.plan');
-        if (raw) {
-          var parsed = JSON.parse(raw);
-          // 旧 shot ティアは廃止 → free に正規化
-          var plan = parsed.plan === 'shot' ? 'free' : parsed.plan;
-          if (LABELS[plan]) badge.textContent = LABELS[plan];
-        }
-      } catch (e) { /* localStorage 不可なら FREE 表示のまま */ }
-    })();
-  </script>
-
   <!-- ============================================================
        Profile Form: 初期化 / submit / localStorage 復元
        (xten.profile に統一保存。astrology-v2.html は同じキーから読む)
@@ -1580,9 +1589,27 @@
           savedAt:      new Date().toISOString()
         };
 
+        if (!profile.nickname) {
+          showError('お名前は必須です。');
+          document.getElementById('pf-nickname').focus();
+          return;
+        }
+        if (!profile.gender) {
+          showError('性別は必須です。');
+          return;
+        }
         if (!profile.birthYear || !profile.birthMonth || !profile.birthDay) {
           showError('生年月日は必須です。');
           ySel.focus();
+          return;
+        }
+        if (!profile.blood) {
+          showError('血液型は必須です。');
+          return;
+        }
+        if (!profile.job) {
+          showError('職業は必須です。');
+          document.getElementById('pf-job').focus();
           return;
         }
 
@@ -1599,6 +1626,42 @@
           location.href = 'astrology-v2.html#hack';
         }, 300);
       });
+
+      // ---- リセット ---------------------------------------------------
+      // フォーム全項目を初期状態に戻し、localStorage の xten.profile も削除
+      var resetBtn = document.getElementById('profile-form-reset');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', function () {
+          if (!confirm('入力内容と保存済みプロフィールをすべてリセットしますか？')) return;
+
+          // 1) localStorage を消去
+          try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* noop */ }
+
+          // 2) フォーム要素を初期化
+          //    - native reset で <input>/<select>/<checkbox> をデフォルト値に戻す
+          form.reset();
+
+          //    - ピル（性別・血液型）の選択を解除
+          form.querySelectorAll('.profile-form__pill').forEach(function (btn) {
+            btn.setAttribute('aria-pressed', 'false');
+            btn.classList.remove('profile-form__pill--active');
+          });
+
+          //    - 「わからない」チェックで disabled になった行を元に戻す
+          ['pf-place-field', 'pf-time-field'].forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) el.classList.remove('profile-form__field--disabled');
+          });
+
+          // 3) エラー/成功メッセージを隠す
+          errorEl.hidden = true;
+          successEl.hidden = true;
+
+          // 4) フォーカスを最初の項目に戻す
+          var nick = document.getElementById('pf-nickname');
+          if (nick) nick.focus();
+        });
+      }
     })();
   </script>
 

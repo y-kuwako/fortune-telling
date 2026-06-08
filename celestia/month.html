@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>四柱推命 × インド占星術 - x-TEN</title>
-  <meta name="description" content="生年月日から四柱推命とインド占星術を融合したあなただけの運命鑑定。">
+  <title>今月の診断結果 — インド占星術 × 宿曜占星術 - x-TEN</title>
+  <meta name="description" content="今月のあなたへ。インド占星術 × 宿曜占星術 の 2 つの占術を統合した月間運勢診断。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
@@ -37,7 +37,7 @@
     <div class="container">
       <div class="loading">
         <div class="loading__spinner"></div>
-        <p class="loading__text">星の配置を読み解いています...</p>
+        <p class="loading__text">今月の運気の波を読み解いています...</p>
       </div>
     </div>
   </div>
@@ -50,47 +50,49 @@
           <div id="astro-symbol" class="astro-result__symbol"></div>
           <h2 id="astro-title" class="astro-result__title"></h2>
           <p id="astro-subtitle" class="astro-result__subtitle"></p>
+          <p class="astro-result__systems">インド占星術 × 宿曜占星術 による今月の診断</p>
         </div>
 
-        <!-- Chart Overview -->
+        <!-- 4 ブロック -->
         <div id="astro-chart" class="astro-result__chart"></div>
 
-        <!-- Detailed Results -->
+        <!-- 詳細 5 ボックス -->
         <div class="result__box">
-          <div class="result__box-title">&#10023; 総合運</div>
+          <div class="result__box-title">&#10023; 今月の総合運</div>
           <p id="astro-overall" class="result__box-text"></p>
         </div>
 
         <div class="result__box">
-          <div class="result__box-title">&#10023; 仕事運</div>
+          <div class="result__box-title">&#10023; 今月の仕事運</div>
           <p id="astro-career" class="result__box-text"></p>
         </div>
 
         <div class="result__box">
-          <div class="result__box-title">&#10023; 恋愛運</div>
+          <div class="result__box-title">&#10023; 今月の対人運</div>
           <p id="astro-love" class="result__box-text"></p>
         </div>
 
         <div class="result__box">
-          <div class="result__box-title">&#10023; 金運</div>
+          <div class="result__box-title">&#10023; 今月の金運</div>
           <p id="astro-money" class="result__box-text"></p>
         </div>
 
         <div class="result__box">
-          <div class="result__box-title">&#10023; 健康運</div>
+          <div class="result__box-title">&#10023; 今月の健康運</div>
           <p id="astro-health" class="result__box-text"></p>
         </div>
 
         <div class="share-section">
           <p class="share-section__label">S H A R E</p>
           <div class="share">
-            <button class="share__btn" onclick="shareTwitter()" title="Xでシェア">&#120143;</button>
-            <button class="share__btn" onclick="shareLine()" title="LINEでシェア">L</button>
+            <button class="share__btn" onclick="window.monthShareTwitter()" title="Xでシェア">&#120143;</button>
+            <button class="share__btn" onclick="window.monthShareLine()" title="LINEでシェア">L</button>
           </div>
         </div>
 
         <div class="result__actions">
-          <a href="../index.html#profile-form-section" class="btn btn--dark">プロフィールを編集する</a>
+          <a href="today.html" class="btn btn--dark">本日のアドバイスを見る</a>
+          <a href="astrology.html" class="btn btn--outline-light">あなたの基本構成を見る</a>
         </div>
       </div>
     </div>
@@ -103,7 +105,7 @@
         <div class="deco-divider">&#10023; &#10023; &#10023;</div>
         <h1 class="page-hero__title">プロフィール未入力</h1>
         <p class="page-hero__desc">
-          あなたの基本構成を診断するには、まず TOP ページで<br>
+          今月の診断結果を表示するには、まず TOP ページで<br>
           プロフィールを入力してください。
         </p>
         <div class="text-center mt-24">
@@ -123,7 +125,7 @@
     </div>
   </footer>
 
-  <script src="../js/astrology.js?v=2"></script>
+  <script src="../js/month.js"></script>
   <script src="../js/nav.js?v=1"></script>
 </body>
 </html>

@@ -829,83 +829,57 @@ function generateHealthFortune(elementInfo, nakshatra) {
 let selectedGender = null;
 let currentResult = null;
 
-// Initialize date selectors
-document.addEventListener('DOMContentLoaded', () => {
-  const yearSelect = document.getElementById('birth-year');
-  const monthSelect = document.getElementById('birth-month');
-  const daySelect = document.getElementById('birth-day');
-
-  const currentYear = new Date().getFullYear();
-  for (let y = currentYear; y >= 1930; y--) {
-    const opt = document.createElement('option');
-    opt.value = y;
-    opt.textContent = `${y}年`;
-    yearSelect.appendChild(opt);
-  }
-
-  for (let m = 1; m <= 12; m++) {
-    const opt = document.createElement('option');
-    opt.value = m;
-    opt.textContent = `${m}月`;
-    monthSelect.appendChild(opt);
-  }
-
-  for (let d = 1; d <= 31; d++) {
-    const opt = document.createElement('option');
-    opt.value = d;
-    opt.textContent = `${d}日`;
-    daySelect.appendChild(opt);
-  }
-
-  // index.html で保存済みの profile があれば、フォームを自動入力し即時鑑定
+// 初期化: index.html で保存済みの profile があれば自動鑑定、なければ no-profile CTA を表示
+//
+// 入力フォームは index.html の profile-form に集約されたので、ここでは:
+//   - profile あり → 即時鑑定 → 4 ブロックを表示
+//   - profile なし → phase-no-profile に誘導
+function initAstrologyPage() {
   const p = loadStoredProfile();
   if (p && p.birthYear && p.birthMonth && p.birthDay) {
-    yearSelect.value = String(p.birthYear);
-    monthSelect.value = String(p.birthMonth);
-    daySelect.value = String(p.birthDay);
-    if (p.gender) {
-      const gBtn = document.getElementById(`gender-${p.gender}`);
-      if (gBtn) selectGender(p.gender);
-    }
+    if (p.gender) selectedGender = p.gender;
     // 0 秒後に発火（DOM 確定後）
     setTimeout(() => startAstrology(), 0);
+  } else {
+    // プロフィール未入力 → loading を隠して no-profile CTA を表示
+    showPhase('phase-no-profile');
   }
-});
+}
 
+// DOMContentLoaded を取りこぼした場合（スクリプトが遅延読み込みされた等）にも確実に走らせる
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAstrologyPage);
+} else {
+  initAstrologyPage();
+}
+
+// onclick="selectGender(...)" の互換用に残す（フォーム自体は削除済み）
 function selectGender(gender) {
   selectedGender = gender;
-  document.querySelectorAll('[id^="gender-"]').forEach(btn => {
-    btn.classList.remove('btn--primary');
-    btn.classList.add('btn--outline');
-  });
-  const selected = document.getElementById(`gender-${gender}`);
-  selected.classList.remove('btn--outline');
-  selected.classList.add('btn--primary');
 }
 
 function showPhase(phaseId) {
   document.querySelectorAll('[id^="phase-"]').forEach(el => el.classList.add('hidden'));
-  document.getElementById(phaseId).classList.remove('hidden');
+  const target = document.getElementById(phaseId);
+  if (target) target.classList.remove('hidden');
 }
 
 function startAstrology() {
-  const year = parseInt(document.getElementById('birth-year').value);
-  const month = parseInt(document.getElementById('birth-month').value);
-  const day = parseInt(document.getElementById('birth-day').value);
-
-  if (!year || !month || !day) {
-    alert('生年月日を入力してください');
+  // profile から生年月日を取得（フォームは廃止）
+  const p = loadStoredProfile();
+  if (!p || !p.birthYear || !p.birthMonth || !p.birthDay) {
+    showPhase('phase-no-profile');
     return;
   }
 
   showPhase('phase-loading');
 
   setTimeout(() => {
-    currentResult = generateFortune(year, month, day);
+    currentResult = generateFortune(p.birthYear, p.birthMonth, p.birthDay);
     displayResult(currentResult);
     showPhase('phase-result');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 2000);
+  }, 1200);
 }
 
 function displayResult(result) {
@@ -1115,15 +1089,10 @@ function renderTendencyBlock(t) {
   `;
 }
 
+// 「もう一度鑑定する」ボタンは index.html へのリンクに置き換え済みのため、
+// 旧 onclick 経由で誤って呼ばれた場合は profile 編集画面に遷移させる（互換用）
 function resetAstrology() {
-  currentResult = null;
-  selectedGender = null;
-  document.querySelectorAll('[id^="gender-"]').forEach(btn => {
-    btn.classList.remove('btn--primary');
-    btn.classList.add('btn--outline');
-  });
-  showPhase('phase-input');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  location.href = '../index.html#profile-form-section';
 }
 
 // Share

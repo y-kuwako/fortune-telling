@@ -31,9 +31,6 @@
     <a href="astrology-v2.html#core" class="nav__link" data-nav-layer="core">
       <span class="nav__icon">&#9671;</span> あなたの基本構成
     </a>
-    <a href="celestia/tarot.html" class="nav__link">
-      <span class="nav__icon">&#9826;</span> タロット占い
-    </a>
     <button class="sync-log-btn" id="ai-coach-btn" type="button" title="AIコーチ" hidden>
       <span class="sync-log-btn__icon">&#9881;</span>
       <span class="sync-log-btn__label">COACH</span>
@@ -41,11 +38,6 @@
     <button class="sync-log-btn" id="sync-log-btn" type="button" title="運気ログ" hidden>
       <span class="sync-log-btn__icon">&#9966;</span>
       <span class="sync-log-btn__label">LOG</span>
-    </button>
-    <button class="plan-badge" id="plan-badge" type="button" title="プランを変更">
-      <span class="plan-badge__label">PLAN</span>
-      <span class="plan-badge__value" id="plan-badge-value">FREE</span>
-      <span class="plan-badge__nickname" id="plan-badge-nickname" hidden></span>
     </button>
   </nav>
 
@@ -349,7 +341,6 @@
         <!-- Actions -->
         <div class="result__actions">
           <button class="btn btn--dark" id="btn-reset">プロフィールを編集する</button>
-          <a href="celestia/tarot.html" class="btn btn--outline-light">タロット占いも試す</a>
         </div>
 
       </div>
@@ -595,6 +586,31 @@
   <!-- ナビゲーションのアクティブ表示 & ハッシュに応じたレイヤー自動切替 + 入力画面プレビュー -->
   <script>
     (function () {
+      // 各ハッシュは celestia/ の専用診断画面に転送
+      //   #core  → celestia/astrology.html  (あなたの基本構成: 4 ブロック)
+      //   #hack  → celestia/today.html       (本日の診断結果: 四柱推命 × 宿曜占星術)
+      //   #month → celestia/month.html       (月間の診断結果: インド占星術 × 宿曜占星術)
+      //   #year  → celestia/year.html        (年間の診断結果: 四柱推命 × インド占星術)
+      // localStorage の xten.profile が自動読込されて即座に診断結果が表示される
+      var HASH_REDIRECT = {
+        core:  'celestia/astrology.html',
+        hack:  'celestia/today.html',
+        month: 'celestia/month.html',
+        year:  'celestia/year.html'
+      };
+      function redirectByHash() {
+        var h = (location.hash || '').replace(/^#/, '').toLowerCase();
+        if (HASH_REDIRECT[h]) {
+          location.replace(HASH_REDIRECT[h]);
+          return true;
+        }
+        return false;
+      }
+      if (redirectByHash()) return;
+      window.addEventListener('hashchange', function () {
+        redirectByHash();
+      });
+
       // ハッシュ → レイヤー対応表
       var HASH_TO_LAYER = { core: 'core', month: 'flow', year: 'flow', flow: 'flow', hack: 'hack' };
 

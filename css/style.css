@@ -729,6 +729,20 @@ a:hover {
   letter-spacing: 0.15em;
 }
 
+/* 使用占術バッジ（本日の診断結果用） */
+.astro-result__systems {
+  display: inline-block;
+  margin: 14px auto 0;
+  padding: 6px 14px;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--gold-light);
+  background: rgba(232, 168, 32, 0.08);
+  border: 1px solid rgba(232, 168, 32, 0.35);
+  border-radius: 100px;
+  font-family: 'Noto Serif JP', serif;
+}
+
 .astro-result__chart {
   display: block;
   margin-bottom: 32px;
