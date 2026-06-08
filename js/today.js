@@ -482,6 +482,14 @@
     set('astro-love',    byKey.love);
     set('astro-money',   byKey.money);
     set('astro-health',  byKey.health);
+
+    // AIが効いたことを画面で分かるようにバッジ表示（キャッシュヒット時も含む）
+    var badge = document.getElementById('ai-badge');
+    if (badge) {
+      var prov = data.meta && data.meta.provider ? data.meta.provider : 'AI';
+      badge.textContent = '✦ AIが本日のアドバイスを最適化（' + prov + '）';
+      badge.style.display = 'inline-block';
+    }
   }
 
   function renderBlocks(r) {
