@@ -441,6 +441,49 @@
     document.getElementById('astro-health').textContent  = r.health;
   }
 
+  // ----------------- AI解釈エンハンス（/api/fortune） -----------------
+  // テンプレ表示後に非同期でAI鑑定文を取得し、取得できたら差し替える。
+  // 失敗・未デプロイ時は何もしない（テンプレ文がそのまま残る）。
+  function buildFortunePayload(profile, r) {
+    const t = getJSTToday();
+    const pad = n => String(n).padStart(2, '0');
+    return {
+      layer: 'hack',
+      tier: 'free',
+      date: `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())}`,
+      profile: {
+        mbti:  (profile.mbti && profile.mbti !== 'unknown') ? String(profile.mbti).toUpperCase() : null,
+        job:   profile.job || null,
+        blood: profile.blood || null,
+        birthYearOnly: profile.birthYear || null
+      },
+      calculated: {
+        fourPillars: { todayPillar: r.todayPillar, element: r.todayElement, yinYang: r.todayYinYang, birthPillar: r.birthPillar },
+        shukuyo: {
+          today: r.todayShukuyo, todayLuck: r.todayShukuyoLuck, birth: r.birthShukuyo,
+          relation: { type: r.relation.type, label: r.relation.label, level: r.relation.level }
+        },
+        basic: r.basic,
+        lucky: r.lucky
+      }
+    };
+  }
+
+  async function enhanceWithAI(profile, r) {
+    if (typeof window.xtenFetchFortune !== 'function') return;
+    const data = await window.xtenFetchFortune(buildFortunePayload(profile, r));
+    if (!data || !Array.isArray(data.sections)) return;   // 失敗時はテンプレ表示のまま
+
+    const byKey = {};
+    data.sections.forEach(s => { if (s && s.key) byKey[s.key] = s.body; });
+    const set = (id, txt) => { if (txt) { const el = document.getElementById(id); if (el) el.textContent = txt; } };
+    set('astro-overall', byKey.overall);
+    set('astro-career',  byKey.career);
+    set('astro-love',    byKey.love);
+    set('astro-money',   byKey.money);
+    set('astro-health',  byKey.health);
+  }
+
   function renderBlocks(r) {
     const item = (label, value) => `
       <div class="astro-block__item">
@@ -608,6 +651,8 @@
       if (loadingEl) loadingEl.classList.add('hidden');
       if (resultEl)  resultEl.classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      // テンプレ表示後、AI鑑定文が取れれば差し替える（失敗してもテンプレが残る）
+      enhanceWithAI(profile, result);
     }, 1200);
   });
 
