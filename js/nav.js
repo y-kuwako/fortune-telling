@@ -26,24 +26,10 @@
     if (!links.length) return;
     var path = location.pathname.replace(/\/+$/, '');
     var file = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
-    var hash = (location.hash || '').toLowerCase();
 
     links.forEach(function (a) { a.classList.remove('nav__link--active'); });
 
-    // 1) astrology-v2.html はハッシュで判定 (#hack/#month/#year/#core)
-    if (file === 'astrology-v2.html') {
-      var hashKey = (hash || '#hack').slice(1);
-      var match = null;
-      links.forEach(function (a) {
-        var href = (a.getAttribute('href') || '').toLowerCase();
-        var idx = href.indexOf('#');
-        if (idx >= 0 && href.slice(idx + 1) === hashKey) match = a;
-      });
-      if (match) match.classList.add('nav__link--active');
-      return;
-    }
-
-    // 2) それ以外はファイル名で判定
+    // 現在のファイル名と一致するナビ項目をアクティブ表示
     var matched = null;
     links.forEach(function (a) {
       var href = a.getAttribute('href') || '';
@@ -64,6 +50,4 @@
   } else {
     init();
   }
-
-  window.addEventListener('hashchange', refreshActive);
 })();

@@ -30,7 +30,7 @@
     }
 
     /* =====================================================
-       Global Nav（整理版・astrology-v2.html と同じ仕様）
+       Global Nav（全ページ共通仕様）
        index.html のライト調ボディに乗せる、自己完結ダーク帯
        ===================================================== */
     .nav {
@@ -299,33 +299,6 @@
       .header__advice-date__arrow { width: 42px; height: 42px; font-size: 1.2rem; }
     }
 
-    /* Stats bar */
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--border);
-      background: #fff;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat__number {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-    }
-
-    .stat__label {
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
     /* Section */
     .section {
       max-width: 960px;
@@ -586,51 +559,6 @@
       margin-top: 4px;
     }
 
-    /* Research section */
-    .research {
-      background: #fff;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .research-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .research-item {
-      padding: 16px;
-      border: 1px solid var(--border);
-    }
-
-    .research-item__category {
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
-
-    .research-item__title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .research-item__desc {
-      font-size: 0.65rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .research-item__count {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 2px;
-    }
-
     /* Footer */
     .footer {
       text-align: center;
@@ -654,9 +582,6 @@
       }
       .card--featured .card__preview {
         height: 240px;
-      }
-      .research-grid {
-        grid-template-columns: repeat(4, 1fr);
       }
     }
 
@@ -1101,21 +1026,21 @@
 </head>
 <body>
 
-  <!-- Global Nav (astrology-v2.html と同じビジュアル) -->
+  <!-- Global Nav (全ページ共通ビジュアル) -->
   <nav class="nav" aria-label="グローバルナビゲーション">
     <a href="index.html" class="nav__link nav__link--active">
       <span class="nav__icon">&#9671;</span> TOP
     </a>
-    <a href="astrology-v2.html#hack" class="nav__link">
+    <a href="celestia/today.html" class="nav__link">
       <span class="nav__icon">&#9671;</span> Today's アドバイス
     </a>
-    <a href="astrology-v2.html#month" class="nav__link">
+    <a href="celestia/month.html" class="nav__link">
       <span class="nav__icon">&#9671;</span> This month's スケジュール
     </a>
-    <a href="astrology-v2.html#year" class="nav__link">
+    <a href="celestia/year.html" class="nav__link">
       <span class="nav__icon">&#9671;</span> This year's スケジュール
     </a>
-    <a href="astrology-v2.html#core" class="nav__link">
+    <a href="celestia/astrology.html" class="nav__link">
       <span class="nav__icon">&#9671;</span> あなたの基本構成
     </a>
   </nav>
@@ -1134,7 +1059,7 @@
   </header>
 
   <!-- ============================================================
-       Profile Form (入力はここに集約。submit で localStorage + astrology-v2 へ遷移)
+       Profile Form (入力はここに集約。submit で xten.profile を localStorage 保存 → celestia/today.html へ遷移)
        ============================================================ -->
   <section class="profile-form-section" id="profile-form-section">
     <div class="profile-form-section__inner">
@@ -1268,7 +1193,7 @@
     </div>
   </section>
 
-  <a href="astrology-v2.html#hack" class="header__advice-date" id="header-advice-date" aria-live="polite"></a>
+  <a href="celestia/today.html" class="header__advice-date" id="header-advice-date" aria-live="polite"></a>
 
   <!-- ============================================================
        Advice Cards Grid (4 つのアドバイス入口)
@@ -1277,7 +1202,7 @@
     <div class="advice-cards__grid">
 
       <!-- 1. Today's アドバイス -->
-      <a href="astrology-v2.html#hack" class="advice-card advice-card--today">
+      <a href="celestia/today.html" class="advice-card advice-card--today">
         <div class="advice-card__top">
           <div class="advice-card__thumb">
             <span class="advice-card__thumb-icon">今</span>
@@ -1296,7 +1221,7 @@
       </a>
 
       <!-- 2. あなたの基本スペック -->
-      <a href="astrology-v2.html#core" class="advice-card advice-card--basic">
+      <a href="celestia/astrology.html" class="advice-card advice-card--basic">
         <div class="advice-card__top">
           <div class="advice-card__thumb">
             <span class="advice-card__thumb-icon">核</span>
@@ -1315,7 +1240,7 @@
       </a>
 
       <!-- 3. This month's スケジュール -->
-      <a href="astrology-v2.html#month" class="advice-card advice-card--monthly">
+      <a href="celestia/month.html" class="advice-card advice-card--monthly">
         <div class="advice-card__top">
           <div class="advice-card__thumb">
             <span class="advice-card__thumb-icon">月</span>
@@ -1334,7 +1259,7 @@
       </a>
 
       <!-- 4. This year's スケジュール -->
-      <a href="astrology-v2.html#year" class="advice-card advice-card--yearly">
+      <a href="celestia/year.html" class="advice-card advice-card--yearly">
         <div class="advice-card__top">
           <div class="advice-card__thumb">
             <span class="advice-card__thumb-icon">年</span>
@@ -1355,56 +1280,9 @@
     </div>
   </section>
 
-  <!-- Stats -->
-  <div class="stats">
-    <div class="stat">
-      <div class="stat__number">50+</div>
-      <div class="stat__label">Sites Analyzed</div>
-    </div>
-    <div class="stat">
-      <div class="stat__number">7</div>
-      <div class="stat__label">Design Patterns</div>
-    </div>
-    <div class="stat">
-      <div class="stat__number">7</div>
-      <div class="stat__label">Sites Built</div>
-    </div>
-  </div>
-
-  <!-- Research Summary -->
-  <section class="research">
-    <div class="section">
-      <p class="section__label">Research</p>
-      <h2 class="section__title">調査・分析サマリ</h2>
-
-      <div class="research-grid">
-        <div class="research-item">
-          <div class="research-item__count">15</div>
-          <div class="research-item__category">Japanese Celebrity</div>
-          <div class="research-item__desc">しいたけ占い、細木かおり、ゲッターズ飯田、星ひとみ、水晶玉子、石井ゆかり、鏡リュウジ ほか</div>
-        </div>
-        <div class="research-item">
-          <div class="research-item__count">15</div>
-          <div class="research-item__category">Japanese Media / Portal</div>
-          <div class="research-item__desc">VOGUE、ELLE、an・an、SPUR、LINE占い、cocoloni、エキサイト占い ほか</div>
-        </div>
-        <div class="research-item">
-          <div class="research-item__count">20</div>
-          <div class="research-item__category">Western / International</div>
-          <div class="research-item__desc">Co-Star、Sanctuary、Cafe Astrology、Chani Nicholas、Labyrinthos、Nebula ほか</div>
-        </div>
-        <div class="research-item">
-          <div class="research-item__count">7</div>
-          <div class="research-item__category">Design Patterns</div>
-          <div class="research-item__desc">Mystical-Dark、Pop-Kawaii、Luxury-Elegant、Minimalist-Modern、Traditional-Japanese、Pastel-Soft、Bold-Editorial</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Footer -->
   <footer class="footer">
-    <p class="footer__text">Fortune Telling Portfolio &mdash; 50+ sites analyzed, 7 design patterns, 7 sites built.</p>
+    <p class="footer__text">&copy; 2026 x-TEN. All rights reserved.</p>
   </footer>
 
   <!-- Header advice date: JST (Asia/Tokyo) で今日の M/D を表示 -->
@@ -1437,7 +1315,7 @@
 
   <!-- ============================================================
        Profile Form: 初期化 / submit / localStorage 復元
-       (xten.profile に統一保存。astrology-v2.html は同じキーから読む)
+       (xten.profile に統一保存。celestia 各ページは同じキーから読む)
        ============================================================ -->
   <script>
     (function () {
@@ -1620,10 +1498,10 @@
           return;
         }
 
-        // 成功表示 → astrology-v2.html へ遷移
+        // 成功表示 → 本日の診断（celestia）へ直接遷移（xten.profile を localStorage 経由で読込）
         successEl.hidden = false;
         setTimeout(function () {
-          location.href = 'astrology-v2.html#hack';
+          location.href = 'celestia/today.html';
         }, 300);
       });
 
