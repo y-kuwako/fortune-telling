@@ -730,10 +730,7 @@ a:hover {
 }
 
 .astro-result__chart {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--border-dark);
+  display: block;
   margin-bottom: 32px;
 }
 
@@ -754,6 +751,268 @@ a:hover {
   font-size: 0.95rem;
   color: var(--gold-light);
   font-weight: 600;
+}
+
+/* ===== Astro Blocks (4 ブロック構造: 縦並び / 各ブロック横長) ===== */
+
+/* 結果フェーズのコンテナ幅を広げて横長レイアウトを成立させる */
+#phase-result .container {
+  max-width: 1040px;
+}
+
+/* 各ブロックは縦に積み、横方向にはコンテナいっぱいに広げる */
+.astro-block {
+  background: var(--navy);
+  border: 1px solid var(--border-dark);
+  border-radius: 4px;
+  padding: 20px 24px;
+  margin: 0 0 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 隣接ブロックとくっつけて 1 つのブロックに見せる修飾子 */
+.astro-block--joined-down {
+  margin-bottom: 0;
+  border-bottom: 1px dashed var(--border-dark);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-bottom: 18px;
+}
+.astro-block--joined-up {
+  margin-top: 0;
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding-top: 18px;
+}
+
+/* ===== 分析テキストパネル ===== */
+.astro-analysis {
+  /* 上のブロックから自然に繋がるよう、わずかに色味を変える */
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep, var(--navy)) 100%);
+}
+.astro-analysis__section {
+  margin: 0 0 20px;
+}
+.astro-analysis__section:last-child {
+  margin-bottom: 0;
+}
+.astro-analysis__title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.92rem;
+  color: var(--gold-light);
+  margin: 0 0 10px;
+  letter-spacing: 0.14em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.astro-analysis__title::before {
+  content: "❖";
+  color: var(--gold-light);
+  font-size: 0.78rem;
+  opacity: 0.85;
+}
+.astro-analysis__text {
+  font-size: 0.85rem;
+  line-height: 1.95;
+  color: var(--text-light, #fff8ee);
+  margin: 0;
+  letter-spacing: 0.03em;
+}
+.astro-analysis__text strong {
+  color: var(--gold-light);
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .astro-analysis__title { font-size: 0.86rem; }
+  .astro-analysis__text  { font-size: 0.8rem; line-height: 1.85; }
+}
+
+.astro-block__title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.05rem;
+  color: var(--gold-light);
+  margin: 0 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-dark);
+  letter-spacing: 0.14em;
+}
+
+.astro-block__sub {
+  font-size: 0.72rem;
+  color: var(--text-muted-light);
+  letter-spacing: 0.2em;
+  margin: 16px 0 8px;
+}
+
+.astro-block__sub:first-of-type { margin-top: 4px; }
+
+/* グリッド: アイテムを 1 行に並べ、入らないときだけ折り返す */
+.astro-block__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  background: var(--border-dark);
+}
+
+.astro-block__grid--four { /* 互換のため残す（flex で同じ挙動になる） */ }
+
+.astro-block__item {
+  flex: 1 1 0;
+  min-width: 110px;
+  background: var(--navy);
+  padding: 14px 8px;
+  text-align: center;
+}
+
+.astro-block__label {
+  font-size: 0.62rem;
+  color: var(--text-muted-light);
+  margin-bottom: 6px;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+}
+
+.astro-block__value {
+  font-size: 0.92rem;
+  color: var(--gold-light);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* タブレット以下: 最小幅を縮めて 4〜5 列に */
+@media (max-width: 720px) {
+  .astro-block { padding: 18px 16px; }
+  .astro-block__item { min-width: 88px; padding: 12px 6px; }
+  .astro-block__value { font-size: 0.84rem; }
+}
+
+/* スマホ: 2 列 ~ 3 列にゆるく折り返す */
+@media (max-width: 480px) {
+  .astro-block { padding: 16px 12px; }
+  .astro-block__item { min-width: 70px; padding: 10px 4px; }
+  .astro-block__label { font-size: 0.58rem; }
+  .astro-block__value { font-size: 0.78rem; }
+}
+
+/* ===== 傾向分析ブロック: 性格 6 軸 + 感情円グラフ ===== */
+.astro-block--tendency {
+  padding: 20px 24px;
+}
+
+.tendency-columns {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.astro-block__title--inner {
+  font-size: 0.95rem;
+  margin: 0 0 14px;
+  padding-bottom: 8px;
+  letter-spacing: 0.16em;
+  text-align: center;
+}
+
+/* 性格傾向: 6 本のバー */
+.tendency-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tendency-bar {
+  display: grid;
+  grid-template-columns: 50px minmax(96px, auto) 1fr minmax(96px, auto);
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  color: var(--text-light, #fff8ee);
+}
+.tendency-bar__category {
+  color: var(--gold-light);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-size: 0.7rem;
+}
+.tendency-bar__side {
+  font-size: 0.66rem;
+  color: var(--text-muted-light);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.tendency-bar__side--left  { text-align: right; }
+.tendency-bar__side--right { text-align: left; }
+.tendency-bar__visual {
+  display: flex;
+  height: 12px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+}
+.tendency-bar__fill {
+  height: 100%;
+}
+.tendency-bar__fill--left  { background: linear-gradient(90deg, #f0c840, #e8a820); }
+.tendency-bar__fill--right { background: rgba(255, 255, 255, 0.10); }
+
+/* 感情円グラフ（参考画像スタイル: 扇内ラベル / 上位6+その他） */
+.emotion-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+}
+.emotion-chart__pie {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  display: block;
+}
+/* リーダー線（扇 → 折れ点 → 横） */
+.emotion-chart__leader {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+/* ラベル：暗い navy 背景上に置くので白文字 + 金色のパーセント */
+.emotion-chart__label-name {
+  font-size: 14px;
+  font-weight: 500;
+  fill: var(--text-light, #fff8ee);
+  font-family: 'Noto Serif JP', serif;
+  letter-spacing: 0.02em;
+}
+.emotion-chart__label-percent {
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--gold-light);
+  font-family: 'Noto Serif JP', serif;
+  letter-spacing: 0.02em;
+}
+
+/* タブレット以下: 2 カラムを縦並びに */
+@media (max-width: 720px) {
+  .tendency-columns { grid-template-columns: 1fr; gap: 24px; }
+  .tendency-bar { grid-template-columns: 44px minmax(80px, auto) 1fr minmax(80px, auto); gap: 6px; font-size: 0.66rem; }
+  .tendency-bar__side { font-size: 0.6rem; }
+  .emotion-chart__pie { max-width: 480px; }
+  .emotion-chart__label-name { font-size: 13px; }
+  .emotion-chart__label-percent { font-size: 12px; }
+}
+
+@media (max-width: 480px) {
+  .astro-block--tendency { padding: 16px 12px; }
+  .tendency-bar { grid-template-columns: 38px 1fr; row-gap: 4px; }
+  .tendency-bar__side--left, .tendency-bar__side--right { grid-column: 2; }
+  .tendency-bar__visual { grid-column: 2; }
+  .emotion-chart__pie { max-width: 100%; }
+  .emotion-chart__label-name { font-size: 12px; }
+  .emotion-chart__label-percent { font-size: 11px; }
 }
 
 /* ===== Share ===== */
