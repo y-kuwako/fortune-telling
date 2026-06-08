@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fortune Telling Portfolio - 占いサイトコレクション</title>
-  <meta name="description" content="7つの異なるデザインテイストで作られた占いサイトのポートフォリオ。50以上の占いサイトを調査・分析し、主要デザインパターンを網羅。">
+  <title>x-TEN（エクステン） — 運命を10倍速で攻略する戦略エンジン</title>
+  <meta name="description" content="x-TEN（エクステン）は、AIが四柱推命×インド占星術を統合解析する次世代戦略エンジン。あなただけの最強「TODOリスト」で運命を10倍速で攻略する。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -29,6 +29,79 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* =====================================================
+       Global Nav（全ページ共通仕様）
+       index.html のライト調ボディに乗せる、自己完結ダーク帯
+       ===================================================== */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 2px;
+      padding: 4px 16px;
+      background: rgba(10, 10, 11, 0.92);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+      box-shadow: 0 1px 0 rgba(0, 240, 255, 0.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav::-webkit-scrollbar { display: none; }
+
+    .nav__link {
+      color: #8b8b94;
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      font-size: 0.74rem;
+      text-decoration: none;
+      padding: 12px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      white-space: nowrap;
+      transition: color 180ms ease;
+      flex-shrink: 0;
+    }
+    .nav__link:hover { color: #e8c95a; }
+    .nav__link--active { color: #d4af37; }
+    .nav__link--active::after {
+      content: "";
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 6px;
+      height: 1px;
+      background: #d4af37;
+      box-shadow: 0 0 8px #d4af37;
+    }
+    .nav__icon { color: inherit; opacity: 0.7; font-size: 0.85rem; }
+    .nav__link--active .nav__icon { opacity: 1; }
+
+    /* month / year スケジュールのタブは現在非表示（戻す場合はこのルールを削除） */
+    .nav__link[href*="month.html"],
+    .nav__link[href*="year.html"],
+    .nav__link[href*="astrology.html"] {
+      display: none;
+    }
+
+    /* アドバイス入口（日付CTA＋4枚のアドバイスカード）は一旦非表示（戻す場合はこのルールを削除） */
+    .header__advice-date,
+    .advice-cards {
+      display: none !important;
+    }
+
+@media (max-width: 720px) {
+      .nav { padding: 4px 12px; }
+      .nav__link { padding: 10px 10px; font-size: 0.7rem; }
+    }
+
     /* Header */
     .header {
       padding: 48px 24px 40px;
@@ -44,48 +117,199 @@
       margin-bottom: 16px;
     }
 
+    .header__title-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
     .header__title {
       font-family: 'Playfair Display', serif;
-      font-size: 2.4rem;
+      font-size: 3.2rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+      margin-bottom: 0;
+      line-height: 1.05;
+    }
+    .header__catch {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text, #111);
+      letter-spacing: 0.08em;
+      text-align: left;
+      line-height: 1.6;
+    }
+    .header__title-x {
+      font-size: 0.5em;
+      vertical-align: 0.45em;
+      letter-spacing: 0.02em;
+      margin-right: 0.02em;
+    }
+    .header__title-num {
+      font-size: 1em;
+    }
+
+    .header__title-ruby {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.5em;
+      color: var(--muted);
+      margin-top: 12px;
+      text-transform: uppercase;
     }
 
     .header__subtitle {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--muted);
       font-weight: 300;
-      max-width: 400px;
+      max-width: 720px;
       margin: 0 auto;
-      line-height: 1.8;
+      line-height: 1.95;
+      letter-spacing: 0.04em;
     }
 
-    /* Stats bar */
-    .stats {
-      display: flex;
+    /* --- Header advice date: クリッカブルなカード型 CTA ------------------ */
+    .header__advice-date {
+      margin: 40px auto 0;
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      gap: 32px;
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--border);
-      background: #fff;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat__number {
+      flex-wrap: nowrap;
+      gap: 4px;
       font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
+      color: #111;
+      letter-spacing: 0.02em;
+      padding: 16px 18px 16px 28px;
+      background: #fff;
+      border: 1.5px solid #d4af37;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      box-shadow:
+        0 0 0 4px rgba(212, 175, 55, 0.08),
+        0 12px 36px rgba(212, 175, 55, 0.22),
+        0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: transform 220ms ease, box-shadow 240ms ease, background 200ms ease;
+      animation: xt-cta-pulse 2.6s ease-in-out infinite;
+    }
+    .header__advice-date::before {
+      /* 左上の「CLICK」インジケータ */
+      content: 'CLICK';
+      position: absolute;
+      top: -10px;
+      left: 14px;
+      background: #d4af37;
+      color: #fff;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.55rem;
       font-weight: 700;
+      letter-spacing: 0.35em;
+      padding: 3px 8px 3px 10px;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+    }
+    .header__advice-date:hover {
+      transform: translateY(-3px);
+      background: #fffdf5;
+      animation-play-state: paused;
+      box-shadow:
+        0 0 0 6px rgba(212, 175, 55, 0.20),
+        0 18px 52px rgba(212, 175, 55, 0.42),
+        0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    .header__advice-date:active {
+      transform: translateY(-1px);
+    }
+    .header__advice-date:focus-visible {
+      outline: 2px solid #d4af37;
+      outline-offset: 8px;
     }
 
-    .stat__label {
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
+    /* アテンション・パルス（ホバーで停止） */
+    @keyframes xt-cta-pulse {
+      0%, 100% {
+        box-shadow:
+          0 0 0 4px rgba(212, 175, 55, 0.08),
+          0 12px 36px rgba(212, 175, 55, 0.22),
+          0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+      50% {
+        box-shadow:
+          0 0 0 10px rgba(212, 175, 55, 0.04),
+          0 14px 44px rgba(212, 175, 55, 0.36),
+          0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+    }
+
+    .header__advice-date__num {
+      font-family: 'Playfair Display', serif;
+      color: #d4af37;
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+    .header__advice-date__sep {
+      font-family: 'Playfair Display', serif;
+      color: rgba(212, 175, 55, 0.75);
+      font-size: 1.7rem;
+      margin: 0 6px;
+      font-weight: 500;
+    }
+    .header__advice-date__suffix {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: #222;
+      margin-left: 10px;
+    }
+    /* 矢印を「明らかにクリックできるボタン」に */
+    .header__advice-date__arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      margin-left: 14px;
+      background: linear-gradient(135deg, #d4af37 0%, #b88a1a 100%);
+      color: #fff;
+      border-radius: 50%;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      line-height: 1;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.45);
+      transition: transform 220ms ease, box-shadow 220ms ease;
+      flex-shrink: 0;
+    }
+    .header__advice-date:hover .header__advice-date__arrow {
+      transform: translateX(4px) scale(1.06);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+    }
+
+    @media (max-width: 480px) {
+      .header__advice-date {
+        flex-wrap: wrap;
+        padding: 14px 16px 14px 22px;
+      }
+      .header__advice-date__num { font-size: 1.8rem; }
+      .header__advice-date__suffix { font-size: 0.85rem; margin-left: 6px; }
+      .header__advice-date__arrow { width: 34px; height: 34px; margin-left: 8px; }
+    }
+
+    @media (min-width: 640px) {
+      .header__advice-date { margin-top: 48px; padding: 18px 20px 18px 32px; }
+      .header__advice-date__num { font-size: 2.3rem; }
+      .header__advice-date__sep { font-size: 2rem; }
+      .header__advice-date__suffix { font-size: 1rem; }
+      .header__advice-date__arrow { width: 42px; height: 42px; font-size: 1.2rem; }
     }
 
     /* Section */
@@ -224,7 +448,7 @@
       display: flex; align-items: center; justify-content: center;
     }
     .preview-mystical::after {
-      content: '天 推  A I';
+      content: 'x — T E N';
       font-family: 'Playfair Display', serif;
       color: rgba(201,169,110,0.7);
       font-size: 1.2rem;
@@ -348,51 +572,6 @@
       margin-top: 4px;
     }
 
-    /* Research section */
-    .research {
-      background: #fff;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .research-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .research-item {
-      padding: 16px;
-      border: 1px solid var(--border);
-    }
-
-    .research-item__category {
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
-
-    .research-item__title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .research-item__desc {
-      font-size: 0.65rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .research-item__count {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 2px;
-    }
-
     /* Footer */
     .footer {
       text-align: center;
@@ -417,211 +596,965 @@
       .card--featured .card__preview {
         height: 240px;
       }
-      .research-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
     }
 
     @media (min-width: 900px) {
       .header__title {
-        font-size: 3rem;
+        font-size: 4.2rem;
       }
     }
+
+    /* =====================================================
+       Advice Cards Grid（占いサイト風 4 枚カード）
+       ===================================================== */
+    .advice-cards {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px 24px 56px;
+    }
+    .advice-cards__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .advice-card {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+    .advice-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+      border-color: rgba(212, 175, 55, 0.45);
+    }
+
+    .advice-card__top {
+      display: flex;
+      gap: 14px;
+      padding: 16px 16px 12px;
+      align-items: stretch;
+    }
+    .advice-card__thumb {
+      width: 96px;
+      height: 96px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(212,175,55,0.18), transparent 65%),
+        linear-gradient(135deg, #0a0a0b 0%, #1a1a2a 100%);
+      border-radius: 6px;
+      color: #d4af37;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .advice-card__thumb::after {
+      content: "";
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        to bottom, rgba(255,255,255,0.02) 0 1px, transparent 1px 4px
+      );
+      pointer-events: none;
+    }
+    .advice-card__thumb-icon {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .advice-card__thumb-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.55);
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+    .advice-card--basic .advice-card__thumb     { color: #00f0ff; }
+    .advice-card--monthly .advice-card__thumb   { color: #66e0ff; }
+    .advice-card--yearly .advice-card__thumb    { color: #c084fc; }
+
+    .advice-card__head {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+    }
+    .advice-card__title {
+      font-family: 'Playfair Display', 'Noto Serif JP', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.4;
+      margin: 0 0 4px;
+      color: #111;
+      letter-spacing: 0.01em;
+    }
+    .advice-card__price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: #555;
+      margin: 0;
+      letter-spacing: 0.04em;
+      text-align: right;
+    }
+    .advice-card__price strong { font-weight: 600; color: #111; }
+
+    .advice-card__body {
+      padding: 0 16px 14px;
+    }
+    .advice-card__tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      padding: 4px 10px;
+      border: 1px solid #d4af37;
+      color: #b88a1a;
+      border-radius: 100px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .advice-card--basic   .advice-card__tag { border-color: #00b8c8; color: #008999; }
+    .advice-card--monthly .advice-card__tag { border-color: #00b8c8; color: #008999; }
+    .advice-card--yearly  .advice-card__tag { border-color: #a855f7; color: #7a3eb8; }
+
+    .advice-card__desc {
+      font-size: 0.8rem;
+      line-height: 1.75;
+      color: #444;
+      margin: 0;
+      letter-spacing: 0.02em;
+    }
+    .advice-card__foot {
+      background: rgba(212, 175, 55, 0.06);
+      border-top: 1px solid rgba(212, 175, 55, 0.18);
+      padding: 12px 16px;
+      text-align: center;
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      font-size: 0.78rem;
+      color: #b88a1a;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+    }
+    .advice-card--basic   .advice-card__foot {
+      background: rgba(0, 240, 255, 0.06);
+      border-top-color: rgba(0, 184, 200, 0.3);
+      color: #008999;
+    }
+    .advice-card--monthly .advice-card__foot {
+      background: rgba(0, 240, 255, 0.06);
+      border-top-color: rgba(0, 184, 200, 0.3);
+      color: #008999;
+    }
+    .advice-card--yearly  .advice-card__foot {
+      background: rgba(168, 85, 247, 0.06);
+      border-top-color: rgba(168, 85, 247, 0.3);
+      color: #7a3eb8;
+    }
+
+    @media (min-width: 640px) {
+      .advice-cards__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .advice-card__thumb { width: 108px; height: 108px; }
+      .advice-card__title { font-size: 1.05rem; }
+    }
+
+    /* =====================================================
+       Profile Form Section (タクティカル・ダーク島)
+       ===================================================== */
+    .profile-form-section {
+      background:
+        radial-gradient(ellipse at 0% 0%, rgba(212,175,55,0.10), transparent 55%),
+        radial-gradient(ellipse at 100% 100%, rgba(0,240,255,0.06), transparent 50%),
+        #020202;
+      color: #f4f4f5;
+      padding: 64px 24px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .profile-form-section::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(to bottom, rgba(255,255,255,0.012) 0 1px, transparent 1px 3px);
+      pointer-events: none;
+    }
+    .profile-form-section__inner {
+      max-width: 620px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .profile-form-section__label {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: #d4af37;
+      margin: 0 0 18px;
+    }
+    .profile-form-section__note {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      font-size: 0.86rem;
+      line-height: 2;
+      letter-spacing: 0.04em;
+      color: #c0c0c8;
+      margin: 0 0 28px;
+      padding: 16px 22px;
+      border-top: 1px dashed rgba(212,175,55,0.25);
+      border-bottom: 1px dashed rgba(212,175,55,0.25);
+      background: rgba(212,175,55,0.025);
+    }
+    .profile-form-section__note-marker {
+      color: #d4af37;
+      font-weight: 600;
+      margin-right: 6px;
+      font-size: 0.95rem;
+    }
+    .profile-form-section__note-indent {
+      display: inline-block;
+      padding-left: 1.5em;
+    }
+
+    .profile-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .profile-form__field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .profile-form__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.28em;
+      color: #f4f4f5;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .profile-form__required {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.28em;
+      color: #d4af37;
+      border: 1px solid rgba(212,175,55,0.5);
+      padding: 2px 6px;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+    .profile-form__input,
+    .profile-form__select {
+      background: rgba(255,255,255,0.025);
+      color: #f4f4f5;
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 2px;
+      padding: 14px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
+      width: 100%;
+      box-sizing: border-box;
+      cursor: pointer;
+      transition: border-color 160ms ease, box-shadow 200ms ease, background 160ms ease;
+    }
+    .profile-form__input { cursor: text; }
+    .profile-form__input::placeholder { color: #5a5a64; }
+    .profile-form__input:focus,
+    .profile-form__select:focus {
+      outline: none;
+      border-color: rgba(0,240,255,0.5);
+      background: rgba(0,240,255,0.04);
+      box-shadow: 0 0 0 1px rgba(0,240,255,0.4), 0 0 18px rgba(0,240,255,0.18);
+    }
+    .profile-form__select {
+      color-scheme: dark;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #d4af37 50%),
+        linear-gradient(135deg, #d4af37 50%, transparent 50%);
+      background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%;
+      background-size: 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 38px;
+    }
+    .profile-form__select option,
+    .profile-form__select optgroup {
+      background: #0a0a0b;
+      color: #f4f4f5;
+    }
+    .profile-form__row {
+      display: grid;
+      gap: 8px;
+    }
+    .profile-form__row--2 { grid-template-columns: 1fr 1fr; }
+    .profile-form__row--3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    .profile-form__pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .profile-form__pill {
+      flex: 1 1 auto;
+      min-width: 60px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(212,175,55,0.2);
+      color: #8b8b94;
+      border-radius: 2px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+      user-select: none;
+    }
+    .profile-form__pill:hover {
+      border-color: rgba(212,175,55,0.5);
+      color: #f4f4f5;
+    }
+    .profile-form__pill[aria-pressed="true"] {
+      background: rgba(212,175,55,0.12);
+      border-color: #d4af37;
+      color: #d4af37;
+      box-shadow: inset 0 0 0 1px rgba(212,175,55,0.3);
+    }
+
+    .profile-form__toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .profile-form__toggle input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: #d4af37;
+    }
+    .profile-form__toggle label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      color: #8b8b94;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+    }
+    .profile-form__field--disabled .profile-form__select,
+    .profile-form__field--disabled .profile-form__row {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .profile-form__error,
+    .profile-form__success {
+      margin: 0;
+      padding: 12px 16px;
+      border-radius: 2px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      line-height: 1.7;
+    }
+    .profile-form__error {
+      color: #ef4444;
+      background: rgba(239,68,68,0.06);
+      border: 1px solid rgba(239,68,68,0.4);
+    }
+    .profile-form__success {
+      color: #10b981;
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.5);
+    }
+
+    /* RUN ANALYSIS + リセット を横並びにする */
+    .profile-form__actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .profile-form__submit {
+      background: linear-gradient(180deg, #d4af37 0%, #e8c95a 100%);
+      color: #020202;
+      border: none;
+      border-radius: 2px;
+      padding: 18px 36px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 0 0 1px #d4af37, 0 4px 24px rgba(212,175,55,0.22);
+      transition: transform 160ms ease, box-shadow 200ms ease;
+    }
+    .profile-form__submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 0 1px #d4af37, 0 8px 36px rgba(212,175,55,0.38);
+    }
+
+    /* リセットボタン: ゴーストスタイルで主アクションと差別化 */
+    .profile-form__reset {
+      background: transparent;
+      color: rgba(212,175,55,0.85);
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 2px;
+      padding: 18px 24px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+    }
+    .profile-form__reset:hover {
+      border-color: #d4af37;
+      color: #e8c95a;
+      background: rgba(212,175,55,0.06);
+    }
+
+    /* 480px 以下では縦並びに */
+    @media (max-width: 480px) {
+      .profile-form__actions {
+        grid-template-columns: 1fr;
+      }
+    }
+
   </style>
 </head>
 <body>
 
+  <!-- Global Nav (全ページ共通ビジュアル) -->
+  <nav class="nav" aria-label="グローバルナビゲーション">
+    <a href="index.html" class="nav__link nav__link--active">
+      <span class="nav__icon">&#9671;</span> TOP
+    </a>
+    <a href="xten/today.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> Today's アドバイス
+    </a>
+    <a href="xten/month.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> This month's スケジュール
+    </a>
+    <a href="xten/year.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> This year's スケジュール
+    </a>
+    <a href="xten/astrology.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> あなたの基本構成
+    </a>
+  </nav>
+
   <!-- Header -->
   <header class="header">
-    <p class="header__label">Fortune Telling Site Collection</p>
-    <h1 class="header__title">占いサイト<br>ポートフォリオ</h1>
+    <p class="header__label">Tactical Analysis Engine</p>
+    <div class="header__title-row">
+      <h1 class="header__title"><span class="header__title-x">x</span><span class="header__title-num">10</span><br><span class="header__title-ruby">エクス・テン</span></h1>
+      <p class="header__catch">-運命-を10倍速で攻略せよ。</p>
+    </div>
     <p class="header__subtitle">
-      50以上の占いサイトを調査・分析。<br>
-      7つの主要デザインパターンを、それぞれ異なるテイストの占いサイトとして制作しました。
+      ―― 複数の占星術から、人々の生まれ持った資質を解析し、人生の最適行動を紐解く。<br>
+      あなただけの【次世代人生攻略エンジン】です。
     </p>
   </header>
 
-  <!-- Stats -->
-  <div class="stats">
-    <div class="stat">
-      <div class="stat__number">50+</div>
-      <div class="stat__label">Sites Analyzed</div>
-    </div>
-    <div class="stat">
-      <div class="stat__number">7</div>
-      <div class="stat__label">Design Patterns</div>
-    </div>
-    <div class="stat">
-      <div class="stat__number">7</div>
-      <div class="stat__label">Sites Built</div>
-    </div>
-  </div>
+  <!-- ============================================================
+       Profile Form (入力はここに集約。submit で xten.profile を localStorage 保存 → xten/today.html へ遷移)
+       ============================================================ -->
+  <section class="profile-form-section" id="profile-form-section">
+    <div class="profile-form-section__inner">
+      <p class="profile-form-section__label">// PROFILE INTAKE</p>
 
-  <!-- Portfolio -->
-  <section class="section">
-    <p class="section__label">Portfolio</p>
-    <h2 class="section__title">制作サイト一覧</h2>
+      <p class="profile-form-section__note">
+        <span class="profile-form-section__note-marker">※</span>あなたを攻略するための入力項目です。<br>
+        <span class="profile-form-section__note-indent">回答が多いほど適切な結果が表れ、ブーストがかかります。</span>
+      </p>
 
-    <div class="portfolio">
+      <form class="profile-form" id="profile-form" novalidate>
 
-      <!-- 0. AI Fortune Engine (NEW) -->
-      <a href="astrology-v2.html" class="card card--featured">
-        <div class="card__preview preview-ai"></div>
-        <div class="card__body">
-          <div class="card__number">NEW</div>
-          <h3 class="card__title">AI命術解析エンジン - 四柱推命 × インド占星術</h3>
-          <p class="card__desc">四柱推命とインド占星術をAIが統合解析する3層構造エンジン。CORE（自己リソース）・FLOW（勝負タイミング）・HACK（日常最適化）の3レイヤーで人生戦略を導く次世代鑑定。</p>
-          <div class="card__tags">
-            <span class="tag">AI × 命術</span>
-            <span class="tag">3層解析</span>
-            <span class="tag">四柱推命 × ヴェーダ占星術</span>
+        <!-- 1. お名前 -->
+        <div class="profile-form__field">
+          <label class="profile-form__label" for="pf-nickname">お名前(ニックネーム可)<span class="profile-form__required">必須</span></label>
+          <input type="text" id="pf-nickname" class="profile-form__input" maxlength="20" placeholder="例: ほしよみ" autocomplete="nickname">
+        </div>
+
+        <!-- 2. 性別 -->
+        <div class="profile-form__field">
+          <label class="profile-form__label">性別<span class="profile-form__required">必須</span></label>
+          <div class="profile-form__pills" role="radiogroup" aria-label="性別">
+            <button type="button" class="profile-form__pill" data-pf="gender" data-value="male">男性</button>
+            <button type="button" class="profile-form__pill" data-pf="gender" data-value="female">女性</button>
+            <button type="button" class="profile-form__pill" data-pf="gender" data-value="other">その他</button>
           </div>
         </div>
-      </a>
 
-      <!-- 1. Mystical-Dark (天推 AI) -->
-      <a href="celestia/tarot.html" class="card card--featured">
-        <div class="card__preview preview-mystical"></div>
-        <div class="card__body">
-          <div class="card__number">01</div>
-          <h3 class="card__title">天推 AI（テンスイ・アイ） - 星が導く運命の占い</h3>
-          <p class="card__desc">深いネイビーとゴールドの配色。明朝体、扇形カード配置。タロット・四柱推命・星座占い・姓名判断・数秘術・おみくじ・相性診断の7種を収録したポータル型。</p>
-          <div class="card__tags">
-            <span class="tag">Mystical-Dark</span>
-            <span class="tag">7種の占い</span>
-            <span class="tag">星ひとみ / 鏡リュウジ風</span>
+        <!-- 3. 出生地 -->
+        <div class="profile-form__field" id="pf-place-field">
+          <label class="profile-form__label" for="pf-birth-place">出生地（任意）</label>
+          <select id="pf-birth-place" class="profile-form__select">
+            <option value="">都道府県を選択</option>
+          </select>
+          <div class="profile-form__toggle">
+            <input type="checkbox" id="pf-place-unknown">
+            <label for="pf-place-unknown">出生地がわからない</label>
           </div>
         </div>
-      </a>
 
-      <!-- 2. Pop-Kawaii -->
-      <a href="site-pop/index.html" class="card">
-        <div class="card__preview preview-pop"></div>
-        <div class="card__body">
-          <div class="card__number">02</div>
-          <h3 class="card__title">きょうの星占い</h3>
-          <p class="card__desc">コーラル×ティール×イエロー。丸ゴシック体、丸みのあるカード。ポップで親しみやすいデザイン。</p>
-          <div class="card__tags">
-            <span class="tag">Pop-Kawaii</span>
-            <span class="tag">12星座占い</span>
-            <span class="tag">しいたけ占い風</span>
+        <!-- 4. 生年月日（必須） -->
+        <div class="profile-form__field">
+          <label class="profile-form__label">生年月日<span class="profile-form__required">必須</span></label>
+          <div class="profile-form__row profile-form__row--3">
+            <select id="pf-birth-year" class="profile-form__select"><option value="">年</option></select>
+            <select id="pf-birth-month" class="profile-form__select"><option value="">月</option></select>
+            <select id="pf-birth-day" class="profile-form__select"><option value="">日</option></select>
           </div>
         </div>
-      </a>
 
-      <!-- 3. Luxury-Elegant -->
-      <a href="site-luxury/index.html" class="card">
-        <div class="card__preview preview-luxury"></div>
-        <div class="card__body">
-          <div class="card__number">03</div>
-          <h3 class="card__title">運命星占い</h3>
-          <p class="card__desc">漆黒×ゴールド×深紅。権威的で重厚感のあるプレミアムデザイン。六星占術風の運命星鑑定。</p>
-          <div class="card__tags">
-            <span class="tag">Luxury-Elegant</span>
-            <span class="tag">運命星鑑定</span>
-            <span class="tag">細木数子 / 木下レオン風</span>
+        <!-- 5. 出生時刻 -->
+        <div class="profile-form__field" id="pf-time-field">
+          <label class="profile-form__label">出生時刻（任意）</label>
+          <div class="profile-form__row profile-form__row--2">
+            <select id="pf-birth-hour" class="profile-form__select"><option value="">時</option></select>
+            <select id="pf-birth-minute" class="profile-form__select"><option value="">分</option></select>
+          </div>
+          <div class="profile-form__toggle">
+            <input type="checkbox" id="pf-time-unknown">
+            <label for="pf-time-unknown">出生時刻がわからない</label>
           </div>
         </div>
-      </a>
 
-      <!-- 4. Minimalist-Modern -->
-      <a href="site-minimal/index.html" class="card">
-        <div class="card__preview preview-minimal"></div>
-        <div class="card__body">
-          <div class="card__number">04</div>
-          <h3 class="card__title">horoscope</h3>
-          <p class="card__desc">モノクロ、装飾ゼロ、余白で語るミニマルデザイン。タイポグラフィのみで構成されたアプリ的UI。</p>
-          <div class="card__tags">
-            <span class="tag">Minimalist-Modern</span>
-            <span class="tag">デイリー星座</span>
-            <span class="tag">Co-Star / LINE占い風</span>
+        <!-- 6. 血液型 -->
+        <div class="profile-form__field">
+          <label class="profile-form__label">血液型<span class="profile-form__required">必須</span></label>
+          <div class="profile-form__pills" role="radiogroup" aria-label="血液型">
+            <button type="button" class="profile-form__pill" data-pf="blood" data-value="A">A 型</button>
+            <button type="button" class="profile-form__pill" data-pf="blood" data-value="B">B 型</button>
+            <button type="button" class="profile-form__pill" data-pf="blood" data-value="AB">AB 型</button>
+            <button type="button" class="profile-form__pill" data-pf="blood" data-value="O">O 型</button>
           </div>
         </div>
-      </a>
 
-      <!-- 5. Traditional-Japanese -->
-      <a href="site-japanese/index.html" class="card">
-        <div class="card__preview preview-japanese"></div>
-        <div class="card__body">
-          <div class="card__number">05</div>
-          <h3 class="card__title">御神籤 ・ 九星気学</h3>
-          <p class="card__desc">和紙テクスチャ、朱色、筆文字風。デジタルの中に神社の厳かさを再現した和風デザイン。</p>
-          <div class="card__tags">
-            <span class="tag">Traditional-Japanese</span>
-            <span class="tag">おみくじ + 九星</span>
-            <span class="tag">銀座の母風</span>
-          </div>
+        <!-- 7. 職業 -->
+        <div class="profile-form__field">
+          <label class="profile-form__label" for="pf-job">職業<span class="profile-form__required">必須</span></label>
+          <select id="pf-job" class="profile-form__select">
+            <option value="">選択してください</option>
+            <option value="executive">会社経営 / 会社役員</option>
+            <option value="employee">会社員</option>
+            <option value="public">公務員</option>
+            <option value="parttime">アルバイト / パート</option>
+            <option value="university">大学生</option>
+            <option value="highschool">高校生</option>
+            <option value="other">その他</option>
+          </select>
         </div>
-      </a>
 
-      <!-- 6. Pastel-Soft -->
-      <a href="site-pastel/index.html" class="card">
-        <div class="card__preview preview-pastel"></div>
-        <div class="card__body">
-          <div class="card__number">06</div>
-          <h3 class="card__title">Love Tarot</h3>
-          <p class="card__desc">ブラッシュピンク×ラベンダー。ドット罫線、柔らかな影。手紙のような温もりの恋愛タロット。</p>
-          <div class="card__tags">
-            <span class="tag">Pastel-Soft</span>
-            <span class="tag">恋愛タロット</span>
-            <span class="tag">さちこい / Chani Nicholas風</span>
-          </div>
+        <!-- 8. MBTI -->
+        <div class="profile-form__field">
+          <label class="profile-form__label" for="pf-mbti">MBTI 性格診断（任意）</label>
+          <select id="pf-mbti" class="profile-form__select">
+            <option value="">選択してください（未診断でも OK）</option>
+            <option value="unknown">不明</option>
+            <optgroup label="分析家 (Analysts)">
+              <option value="INTJ">INTJ — 建築家</option>
+              <option value="INTP">INTP — 論理学者</option>
+              <option value="ENTJ">ENTJ — 指揮官</option>
+              <option value="ENTP">ENTP — 討論者</option>
+            </optgroup>
+            <optgroup label="外交官 (Diplomats)">
+              <option value="INFJ">INFJ — 提唱者</option>
+              <option value="INFP">INFP — 仲介者</option>
+              <option value="ENFJ">ENFJ — 主人公</option>
+              <option value="ENFP">ENFP — 運動家</option>
+            </optgroup>
+            <optgroup label="番人 (Sentinels)">
+              <option value="ISTJ">ISTJ — 管理者</option>
+              <option value="ISFJ">ISFJ — 擁護者</option>
+              <option value="ESTJ">ESTJ — 幹部</option>
+              <option value="ESFJ">ESFJ — 領事</option>
+            </optgroup>
+            <optgroup label="探検家 (Explorers)">
+              <option value="ISTP">ISTP — 巨匠</option>
+              <option value="ISFP">ISFP — 冒険家</option>
+              <option value="ESTP">ESTP — 起業家</option>
+              <option value="ESFP">ESFP — エンターテイナー</option>
+            </optgroup>
+          </select>
         </div>
-      </a>
 
-      <!-- 7. Bold-Editorial -->
-      <a href="site-editorial/index.html" class="card">
-        <div class="card__preview preview-editorial"></div>
-        <div class="card__body">
-          <div class="card__number">07</div>
-          <h3 class="card__title">WEEKLY HOROSCOPE</h3>
-          <p class="card__desc">白黒×赤のハイコントラスト。超太字タイポグラフィ、雑誌風レイアウト。ランキング形式の星座占い。</p>
-          <div class="card__tags">
-            <span class="tag">Bold-Editorial</span>
-            <span class="tag">星座ランキング</span>
-            <span class="tag">VOGUE / ELLE風</span>
-          </div>
+        <p class="profile-form__error" id="profile-form-error" hidden></p>
+        <p class="profile-form__success" id="profile-form-success" hidden>✓ プロフィールを保存しました。</p>
+
+        <div class="profile-form__actions">
+          <button type="submit" class="profile-form__submit">&gt; RUN ANALYSIS</button>
+          <button type="button" class="profile-form__reset" id="profile-form-reset">リセット</button>
         </div>
-      </a>
-
+      </form>
     </div>
   </section>
 
-  <!-- Research Summary -->
-  <section class="research">
-    <div class="section">
-      <p class="section__label">Research</p>
-      <h2 class="section__title">調査・分析サマリ</h2>
+  <a href="xten/today.html" class="header__advice-date" id="header-advice-date" aria-live="polite"></a>
 
-      <div class="research-grid">
-        <div class="research-item">
-          <div class="research-item__count">15</div>
-          <div class="research-item__category">Japanese Celebrity</div>
-          <div class="research-item__desc">しいたけ占い、細木かおり、ゲッターズ飯田、星ひとみ、水晶玉子、石井ゆかり、鏡リュウジ ほか</div>
+  <!-- ============================================================
+       Advice Cards Grid (4 つのアドバイス入口)
+       ============================================================ -->
+  <section class="advice-cards" aria-label="アドバイス入口">
+    <div class="advice-cards__grid">
+
+      <!-- 1. Today's アドバイス -->
+      <a href="xten/today.html" class="advice-card advice-card--today">
+        <div class="advice-card__top">
+          <div class="advice-card__thumb">
+            <span class="advice-card__thumb-icon">今</span>
+            <span class="advice-card__thumb-sub">TODAY</span>
+          </div>
+          <div class="advice-card__head">
+            <h3 class="advice-card__title">Today's アドバイス</h3>
+            <p class="advice-card__price"><strong>0円</strong></p>
+          </div>
         </div>
-        <div class="research-item">
-          <div class="research-item__count">15</div>
-          <div class="research-item__category">Japanese Media / Portal</div>
-          <div class="research-item__desc">VOGUE、ELLE、an・an、SPUR、LINE占い、cocoloni、エキサイト占い ほか</div>
+        <div class="advice-card__body">
+          <span class="advice-card__tag">完全無料</span>
+          <p class="advice-card__desc">世界に一人だけの「今日、何時に、何を実行すべきか」のTODOリスト。宿曜占星術（ベース）× 四柱推命（補正）。AIが「キーマン1人と1対1で会え」など、行動をピンポイント最適化。</p>
         </div>
-        <div class="research-item">
-          <div class="research-item__count">20</div>
-          <div class="research-item__category">Western / International</div>
-          <div class="research-item__desc">Co-Star、Sanctuary、Cafe Astrology、Chani Nicholas、Labyrinthos、Nebula ほか</div>
+        <div class="advice-card__foot">今日のTODOを受け取る →</div>
+      </a>
+
+      <!-- 2. あなたの基本スペック -->
+      <a href="xten/astrology.html" class="advice-card advice-card--basic">
+        <div class="advice-card__top">
+          <div class="advice-card__thumb">
+            <span class="advice-card__thumb-icon">核</span>
+            <span class="advice-card__thumb-sub">CORE</span>
+          </div>
+          <div class="advice-card__head">
+            <h3 class="advice-card__title">あなたの基本スペック</h3>
+            <p class="advice-card__price"><strong>¥500</strong> / 月</p>
+          </div>
         </div>
-        <div class="research-item">
-          <div class="research-item__count">7</div>
-          <div class="research-item__category">Design Patterns</div>
-          <div class="research-item__desc">Mystical-Dark、Pop-Kawaii、Luxury-Elegant、Minimalist-Modern、Traditional-Japanese、Pastel-Soft、Bold-Editorial</div>
+        <div class="advice-card__body">
+          <span class="advice-card__tag">月額</span>
+          <p class="advice-card__desc">「自分」というハードウェアのスペックと過去のエビデンス解析。四柱推命で「生まれ持った才能・ビジネスの戦闘スタイル」、インド占星術で「人生全体の骨組み・宿命」を重ね、過去のターニングポイント（転職・激変）をズバリ言い当てる。</p>
         </div>
-      </div>
+        <div class="advice-card__foot">自分のスペックを見る →</div>
+      </a>
+
+      <!-- 3. This month's スケジュール -->
+      <a href="xten/month.html" class="advice-card advice-card--monthly">
+        <div class="advice-card__top">
+          <div class="advice-card__thumb">
+            <span class="advice-card__thumb-icon">月</span>
+            <span class="advice-card__thumb-sub">MONTH</span>
+          </div>
+          <div class="advice-card__head">
+            <h3 class="advice-card__title">This month's スケジュール</h3>
+            <p class="advice-card__price"><strong>¥500</strong> / 月</p>
+          </div>
+        </div>
+        <div class="advice-card__body">
+          <span class="advice-card__tag">月額</span>
+          <p class="advice-card__desc">リスクを先回りしてハックする、1ヶ月の「攻め時・守り時」カレンダー。宿曜の月間バイオリズム × インド占星術のトランジット。大凶日でも幸運の星が巡れば「リスクを逆手に取れ」と前向きなハック案へ補正。</p>
+        </div>
+        <div class="advice-card__foot">月間スケジュールを開く →</div>
+      </a>
+
+      <!-- 4. This year's スケジュール -->
+      <a href="xten/year.html" class="advice-card advice-card--yearly">
+        <div class="advice-card__top">
+          <div class="advice-card__thumb">
+            <span class="advice-card__thumb-icon">年</span>
+            <span class="advice-card__thumb-sub">YEAR</span>
+          </div>
+          <div class="advice-card__head">
+            <h3 class="advice-card__title">This year's スケジュール</h3>
+            <p class="advice-card__price"><strong>¥19,800</strong> / 年</p>
+          </div>
+        </div>
+        <div class="advice-card__body">
+          <span class="advice-card__tag">PREMIUM · YEARLY</span>
+          <p class="advice-card__desc">「今年、どう動けば人生が10倍（x10）拡張するか」の長期戦略。インド占星術「ダシャー（惑星周期）」× 四柱推命「大運・歳運」の最重厚解析。向こう数年分のロードマップをAIが戦略レポート化し、時期外れの投資による大失敗を防ぐ「お守り」。</p>
+        </div>
+        <div class="advice-card__foot">年間ロードマップを開く →</div>
+      </a>
+
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="footer">
-    <p class="footer__text">Fortune Telling Portfolio &mdash; 50+ sites analyzed, 7 design patterns, 7 sites built.</p>
+    <p class="footer__text">&copy; 2026 x-TEN. All rights reserved.</p>
   </footer>
+
+  <!-- Header advice date: JST (Asia/Tokyo) で今日の M/D を表示 -->
+  <script>
+    (function () {
+      var el = document.getElementById('header-advice-date');
+      if (!el) return;
+      // Intl で JST の月日を取得（サーバーやブラウザ側のタイムゾーンに依存しない）
+      var fmt = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Tokyo',
+        month: 'numeric',
+        day: 'numeric'
+      });
+      var parts = fmt.formatToParts(new Date());
+      var pick = function (type) {
+        var p = parts.find(function (x) { return x.type === type; });
+        return p ? p.value : '';
+      };
+      var month = pick('month');
+      var day   = pick('day');
+      el.innerHTML =
+        '<span class="header__advice-date__num">' + month + '</span>' +
+        '<span class="header__advice-date__sep">/</span>' +
+        '<span class="header__advice-date__num">' + day + '</span>' +
+        '<span class="header__advice-date__suffix">のあなたへアドバイス</span>' +
+        '<span class="header__advice-date__arrow" aria-hidden="true">→</span>';
+      el.setAttribute('aria-label', month + '月' + day + '日のあなたへのアドバイスを受け取る');
+    })();
+  </script>
+
+  <!-- ============================================================
+       Profile Form: 初期化 / submit / localStorage 復元
+       (xten.profile に統一保存。xten/ 各ページは同じキーから読む)
+       ============================================================ -->
+  <script>
+    (function () {
+      var form = document.getElementById('profile-form');
+      if (!form) return;
+
+      var PREFECTURES = [
+        '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県',
+        '茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県',
+        '新潟県','富山県','石川県','福井県','山梨県','長野県',
+        '岐阜県','静岡県','愛知県','三重県',
+        '滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県',
+        '鳥取県','島根県','岡山県','広島県','山口県',
+        '徳島県','香川県','愛媛県','高知県',
+        '福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県',
+        '海外'
+      ];
+
+      // ---- セレクトの選択肢を生成 -------------------------------------
+      var ySel = document.getElementById('pf-birth-year');
+      var mSel = document.getElementById('pf-birth-month');
+      var dSel = document.getElementById('pf-birth-day');
+      var hSel = document.getElementById('pf-birth-hour');
+      var minSel = document.getElementById('pf-birth-minute');
+      var placeSel = document.getElementById('pf-birth-place');
+
+      var currentYear = new Date().getFullYear();
+      for (var y = currentYear; y >= 1930; y--) {
+        var o = document.createElement('option');
+        o.value = String(y); o.textContent = y + '年';
+        ySel.appendChild(o);
+      }
+      for (var m = 1; m <= 12; m++) {
+        var o2 = document.createElement('option');
+        o2.value = String(m); o2.textContent = m + '月';
+        mSel.appendChild(o2);
+      }
+      for (var d = 1; d <= 31; d++) {
+        var o3 = document.createElement('option');
+        o3.value = String(d); o3.textContent = d + '日';
+        dSel.appendChild(o3);
+      }
+      for (var h = 0; h <= 23; h++) {
+        var o4 = document.createElement('option');
+        o4.value = String(h); o4.textContent = h + '時';
+        hSel.appendChild(o4);
+      }
+      [0, 15, 30, 45].forEach(function (mm) {
+        var o5 = document.createElement('option');
+        o5.value = String(mm);
+        o5.textContent = String(mm).padStart(2, '0') + '分';
+        minSel.appendChild(o5);
+      });
+      PREFECTURES.forEach(function (pref) {
+        var o6 = document.createElement('option');
+        o6.value = pref; o6.textContent = pref;
+        placeSel.appendChild(o6);
+      });
+
+      // ---- ピル選択 (gender / blood) ----------------------------------
+      form.querySelectorAll('.profile-form__pill').forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          var key = pill.getAttribute('data-pf');
+          form.querySelectorAll('.profile-form__pill[data-pf="' + key + '"]').forEach(function (p) {
+            p.setAttribute('aria-pressed', p === pill ? 'true' : 'false');
+          });
+        });
+      });
+      function readPill(key) {
+        var picked = form.querySelector('.profile-form__pill[data-pf="' + key + '"][aria-pressed="true"]');
+        return picked ? picked.getAttribute('data-value') : '';
+      }
+      function writePill(key, value) {
+        if (!value) return;
+        var match = form.querySelector('.profile-form__pill[data-pf="' + key + '"][data-value="' + value + '"]');
+        if (match) match.setAttribute('aria-pressed', 'true');
+      }
+
+      // ---- "わからない" チェックでセレクト無効化 -----------------------
+      function wireUnknown(checkboxId, fieldId) {
+        var cb = document.getElementById(checkboxId);
+        var field = document.getElementById(fieldId);
+        if (!cb || !field) return;
+        cb.addEventListener('change', function () {
+          if (cb.checked) {
+            field.classList.add('profile-form__field--disabled');
+          } else {
+            field.classList.remove('profile-form__field--disabled');
+          }
+        });
+      }
+      wireUnknown('pf-place-unknown', 'pf-place-field');
+      wireUnknown('pf-time-unknown', 'pf-time-field');
+
+      // ---- localStorage から復元 --------------------------------------
+      var STORAGE_KEY = 'xten.profile';
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          var p = JSON.parse(raw);
+          if (p.nickname)    document.getElementById('pf-nickname').value = p.nickname;
+          if (p.gender)      writePill('gender', p.gender);
+          if (p.blood)       writePill('blood', p.blood);
+          if (p.birthPlace)  placeSel.value = p.birthPlace;
+          if (p.placeUnknown){ document.getElementById('pf-place-unknown').checked = true;
+                               document.getElementById('pf-place-field').classList.add('profile-form__field--disabled'); }
+          if (p.birthYear)   ySel.value = String(p.birthYear);
+          if (p.birthMonth)  mSel.value = String(p.birthMonth);
+          if (p.birthDay)    dSel.value = String(p.birthDay);
+          if (p.birthHour != null) hSel.value = String(p.birthHour);
+          if (p.birthMinute != null) minSel.value = String(p.birthMinute);
+          if (p.timeUnknown) { document.getElementById('pf-time-unknown').checked = true;
+                               document.getElementById('pf-time-field').classList.add('profile-form__field--disabled'); }
+          if (p.job)  document.getElementById('pf-job').value  = p.job;
+          if (p.mbti) document.getElementById('pf-mbti').value = p.mbti;
+        }
+      } catch (e) { /* noop */ }
+
+      // ---- submit ----------------------------------------------------
+      var errorEl   = document.getElementById('profile-form-error');
+      var successEl = document.getElementById('profile-form-success');
+      function showError(msg) {
+        errorEl.textContent = '⚠ ' + msg;
+        errorEl.hidden = false;
+        successEl.hidden = true;
+      }
+
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        errorEl.hidden = true;
+
+        var placeUnknown = document.getElementById('pf-place-unknown').checked;
+        var timeUnknown  = document.getElementById('pf-time-unknown').checked;
+
+        var profile = {
+          nickname:     document.getElementById('pf-nickname').value.trim(),
+          gender:       readPill('gender'),
+          birthPlace:   placeUnknown ? null : (placeSel.value || null),
+          placeUnknown: placeUnknown,
+          birthYear:    parseInt(ySel.value, 10) || null,
+          birthMonth:   parseInt(mSel.value, 10) || null,
+          birthDay:     parseInt(dSel.value, 10) || null,
+          birthHour:    timeUnknown ? null : (hSel.value === '' ? null : parseInt(hSel.value, 10)),
+          birthMinute:  timeUnknown ? null : (minSel.value === '' ? null : parseInt(minSel.value, 10)),
+          timeUnknown:  timeUnknown,
+          blood:        readPill('blood'),
+          job:          document.getElementById('pf-job').value,
+          mbti:         document.getElementById('pf-mbti').value,
+          savedAt:      new Date().toISOString()
+        };
+
+        if (!profile.nickname) {
+          showError('お名前は必須です。');
+          document.getElementById('pf-nickname').focus();
+          return;
+        }
+        if (!profile.gender) {
+          showError('性別は必須です。');
+          return;
+        }
+        if (!profile.birthYear || !profile.birthMonth || !profile.birthDay) {
+          showError('生年月日は必須です。');
+          ySel.focus();
+          return;
+        }
+        if (!profile.blood) {
+          showError('血液型は必須です。');
+          return;
+        }
+        if (!profile.job) {
+          showError('職業は必須です。');
+          document.getElementById('pf-job').focus();
+          return;
+        }
+
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+        } catch (e) {
+          showError('保存に失敗しました（localStorage が利用できません）。');
+          return;
+        }
+
+        // 成功表示 → 本日の診断（xten/today.html）へ直接遷移（xten.profile を localStorage 経由で読込）
+        successEl.hidden = false;
+        setTimeout(function () {
+          location.href = 'xten/today.html';
+        }, 300);
+      });
+
+      // ---- リセット ---------------------------------------------------
+      // フォーム全項目を初期状態に戻し、localStorage の xten.profile も削除
+      var resetBtn = document.getElementById('profile-form-reset');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', function () {
+          if (!confirm('入力内容と保存済みプロフィールをすべてリセットしますか？')) return;
+
+          // 1) localStorage を消去
+          try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* noop */ }
+
+          // 2) フォーム要素を初期化
+          //    - native reset で <input>/<select>/<checkbox> をデフォルト値に戻す
+          form.reset();
+
+          //    - ピル（性別・血液型）の選択を解除
+          form.querySelectorAll('.profile-form__pill').forEach(function (btn) {
+            btn.setAttribute('aria-pressed', 'false');
+            btn.classList.remove('profile-form__pill--active');
+          });
+
+          //    - 「わからない」チェックで disabled になった行を元に戻す
+          ['pf-place-field', 'pf-time-field'].forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) el.classList.remove('profile-form__field--disabled');
+          });
+
+          // 3) エラー/成功メッセージを隠す
+          errorEl.hidden = true;
+          successEl.hidden = true;
+
+          // 4) フォーカスを最初の項目に戻す
+          var nick = document.getElementById('pf-nickname');
+          if (nick) nick.focus();
+        });
+      }
+    })();
+  </script>
 
 </body>
 </html>

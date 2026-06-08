@@ -1,0 +1,116 @@
+/* ==========================================================================
+   x-TEN Global Navigation — 全ページ共通の "整理版" タクティカルナビ
+   ==========================================================================
+   依存なし。各ページから `<link rel="stylesheet" href="<path>/css/nav.css">` で読み込む。
+   このファイル単独で、漆黒地＋ゴールドアクセントのナビ帯を成立させる。
+   ========================================================================== */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  padding: 4px 16px;
+  background: rgba(10, 10, 11, 0.92);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+  box-shadow: 0 1px 0 rgba(0, 240, 255, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* 各ページの既存 layout 内に挿入されても自分自身で完結するため */
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.nav::-webkit-scrollbar { display: none; }
+
+.nav__link {
+  color: #8b8b94;
+  font-family: 'Inter', 'Noto Sans JP', -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
+  text-decoration: none;
+  padding: 12px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  white-space: nowrap;
+  transition: color 180ms ease;
+  flex-shrink: 0;
+  text-transform: none;       /* 「Today's」「タロット占い」を素のまま */
+  border: none;
+  background: transparent;
+}
+.nav__link:hover { color: #e8c95a; }
+.nav__link--active { color: #d4af37; }
+.nav__link--active::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 6px;
+  height: 1px;
+  background: #d4af37;
+  box-shadow: 0 0 8px #d4af37;
+}
+.nav__icon {
+  color: inherit;
+  opacity: 0.7;
+  font-size: 0.85rem;
+  font-style: normal;        /* SiteEditorial 等が i 要素に italic を当てる対策 */
+}
+.nav__link--active .nav__icon { opacity: 1; }
+
+/* month / year スケジュールのタブは現在非表示（戻す場合はこのルールを削除） */
+.nav__link[href*="month.html"],
+.nav__link[href*="year.html"],
+.nav__link[href*="astrology.html"] {
+  display: none;
+}
+
+/* グループ区切り（薄い縦線）—— astro グループの直前 / tarot の直前 */
+.nav__link[href*="#hack"]::before,
+.nav__link[href$="tarot.html"]::before,
+.nav__link[href$="xten/tarot.html"]::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 25%;
+  bottom: 25%;
+  width: 1px;
+  background: rgba(212, 175, 55, 0.18);
+}
+
+.plan-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  margin-left: auto;
+  background: #0a0a0b;
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', 'Roboto Mono', ui-monospace, monospace;
+  color: #8b8b94;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  transition: border-color 160ms ease;
+  flex-shrink: 0;
+}
+.plan-badge:hover { border-color: rgba(212, 175, 55, 0.45); }
+.plan-badge__value { color: #d4af37; font-weight: 600; }
+.plan-badge__label { color: #8b8b94; }
+
+@media (max-width: 720px) {
+  .nav { padding: 4px 12px; }
+  .nav__link { padding: 10px 10px; font-size: 0.7rem; }
+  .plan-badge { margin-left: 6px; }
+}

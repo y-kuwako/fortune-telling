@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>本日の診断結果 — 四柱推命 × 宿曜占星術 - x-TEN</title>
+  <meta name="description" content="今日のあなたへ。四柱推命 × 宿曜占星術 の 2 つの占術を統合した本日の運勢診断。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/nav.css?v=1">
+</head>
+<body>
+
+  <!-- Global Navigation -->
+  <nav class="nav" aria-label="グローバルナビゲーション">
+    <a href="../index.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> TOP
+    </a>
+    <a href="today.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> Today's アドバイス
+    </a>
+    <a href="month.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> This month's スケジュール
+    </a>
+    <a href="year.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> This year's スケジュール
+    </a>
+    <a href="astrology.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> あなたの基本構成
+    </a>
+  </nav>
+
+  <!-- Loading -->
+  <div id="phase-loading" class="section-dark">
+    <div class="container">
+      <div class="loading">
+        <div class="loading__spinner"></div>
+        <p class="loading__text">本日の運気を読み解いています...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div id="phase-result" class="section-dark hidden">
+    <div class="container">
+      <div class="astro-result">
+        <div class="astro-result__header">
+          <div id="astro-symbol" class="astro-result__symbol"></div>
+          <h2 id="astro-title" class="astro-result__title"></h2>
+          <p id="astro-subtitle" class="astro-result__subtitle"></p>
+          <p class="astro-result__systems">四柱推命 × 宿曜占星術 による本日の診断</p>
+        </div>
+
+        <!-- 4 ブロック -->
+        <div id="astro-chart" class="astro-result__chart"></div>
+
+        <!-- 詳細 5 ボックス -->
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 本日の総合運</div>
+          <p id="astro-overall" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 本日の仕事運</div>
+          <p id="astro-career" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 本日の対人運</div>
+          <p id="astro-love" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 本日の金運</div>
+          <p id="astro-money" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 本日の健康運</div>
+          <p id="astro-health" class="result__box-text"></p>
+        </div>
+
+        <div class="share-section">
+          <p class="share-section__label">S H A R E</p>
+          <div class="share">
+            <button class="share__btn" onclick="window.todayShareTwitter()" title="Xでシェア">&#120143;</button>
+            <button class="share__btn" onclick="window.todayShareThreads()" title="Threadsでシェア">@</button>
+          </div>
+        </div>
+
+        <!-- 「あなたの基本構成」ページは一旦非表示のため導線も隠す（戻す場合はコメント解除）
+        <div class="result__actions">
+          <a href="astrology.html" class="btn btn--dark">あなたの基本構成を見る</a>
+        </div>
+        -->
+      </div>
+    </div>
+  </div>
+
+  <!-- No profile fallback -->
+  <div id="phase-no-profile" class="section-dark hidden">
+    <div class="container">
+      <div class="page-hero">
+        <div class="deco-divider">&#10023; &#10023; &#10023;</div>
+        <h1 class="page-hero__title">プロフィール未入力</h1>
+        <p class="page-hero__desc">
+          本日の診断結果を表示するには、まず TOP ページで<br>
+          プロフィールを入力してください。
+        </p>
+        <div class="text-center mt-24">
+          <a href="../index.html" class="btn btn--dark">プロフィールを入力する</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__logo">x — T E N</div>
+    <p class="footer__text">&copy; 2026 x-TEN. All rights reserved.</p>
+    <div class="footer__links">
+      <a>利用規約</a>
+      <a>プライバシーポリシー</a>
+    </div>
+  </footer>
+
+  <script src="../js/today.js"></script>
+  <script src="../js/nav.js?v=1"></script>
+</body>
+</html>

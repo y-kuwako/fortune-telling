@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>今月の診断結果 — インド占星術 × 宿曜占星術 - x-TEN</title>
+  <meta name="description" content="今月のあなたへ。インド占星術 × 宿曜占星術 の 2 つの占術を統合した月間運勢診断。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/nav.css?v=1">
+</head>
+<body>
+
+  <!-- Global Navigation -->
+  <nav class="nav" aria-label="グローバルナビゲーション">
+    <a href="../index.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> TOP
+    </a>
+    <a href="today.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> Today's アドバイス
+    </a>
+    <a href="month.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> This month's スケジュール
+    </a>
+    <a href="year.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> This year's スケジュール
+    </a>
+    <a href="astrology.html" class="nav__link">
+      <span class="nav__icon">&#9671;</span> あなたの基本構成
+    </a>
+  </nav>
+
+  <!-- Loading -->
+  <div id="phase-loading" class="section-dark">
+    <div class="container">
+      <div class="loading">
+        <div class="loading__spinner"></div>
+        <p class="loading__text">今月の運気の波を読み解いています...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div id="phase-result" class="section-dark hidden">
+    <div class="container">
+      <div class="astro-result">
+        <div class="astro-result__header">
+          <div id="astro-symbol" class="astro-result__symbol"></div>
+          <h2 id="astro-title" class="astro-result__title"></h2>
+          <p id="astro-subtitle" class="astro-result__subtitle"></p>
+          <p class="astro-result__systems">インド占星術 × 宿曜占星術 による今月の診断</p>
+        </div>
+
+        <!-- 4 ブロック -->
+        <div id="astro-chart" class="astro-result__chart"></div>
+
+        <!-- 詳細 5 ボックス -->
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 今月の総合運</div>
+          <p id="astro-overall" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 今月の仕事運</div>
+          <p id="astro-career" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 今月の対人運</div>
+          <p id="astro-love" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 今月の金運</div>
+          <p id="astro-money" class="result__box-text"></p>
+        </div>
+
+        <div class="result__box">
+          <div class="result__box-title">&#10023; 今月の健康運</div>
+          <p id="astro-health" class="result__box-text"></p>
+        </div>
+
+        <div class="share-section">
+          <p class="share-section__label">S H A R E</p>
+          <div class="share">
+            <button class="share__btn" onclick="window.monthShareTwitter()" title="Xでシェア">&#120143;</button>
+            <button class="share__btn" onclick="window.monthShareThreads()" title="Threadsでシェア">@</button>
+          </div>
+        </div>
+
+        <div class="result__actions">
+          <a href="today.html" class="btn btn--dark">本日のアドバイスを見る</a>
+          <!-- 「あなたの基本構成」ページは一旦非表示（戻す場合はコメント解除）
+          <a href="astrology.html" class="btn btn--outline-light">あなたの基本構成を見る</a>
+          -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No profile fallback -->
+  <div id="phase-no-profile" class="section-dark hidden">
+    <div class="container">
+      <div class="page-hero">
+        <div class="deco-divider">&#10023; &#10023; &#10023;</div>
+        <h1 class="page-hero__title">プロフィール未入力</h1>
+        <p class="page-hero__desc">
+          今月の診断結果を表示するには、まず TOP ページで<br>
+          プロフィールを入力してください。
+        </p>
+        <div class="text-center mt-24">
+          <a href="../index.html" class="btn btn--dark">プロフィールを入力する</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__logo">x — T E N</div>
+    <p class="footer__text">&copy; 2026 x-TEN. All rights reserved.</p>
+    <div class="footer__links">
+      <a>利用規約</a>
+      <a>プライバシーポリシー</a>
+    </div>
+  </footer>
+
+  <script src="../js/month.js"></script>
+  <script src="../js/nav.js?v=1"></script>
+</body>
+</html>
