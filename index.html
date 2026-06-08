@@ -90,6 +90,12 @@
       display: none;
     }
 
+    /* アドバイス入口（日付CTA＋4枚のアドバイスカード）は一旦非表示（戻す場合はこのルールを削除） */
+    .header__advice-date,
+    .advice-cards {
+      display: none !important;
+    }
+
 @media (max-width: 720px) {
       .nav { padding: 4px 12px; }
       .nav__link { padding: 10px 10px; font-size: 0.7rem; }
