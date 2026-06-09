@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>x10 ロゴ パターン比較</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Cinzel:wght@400;700;900&family=DM+Serif+Display:ital@0;1&family=Bungee+Inline&family=Noto+Serif+JP:wght@400;600;700;900&family=Yusei+Magic&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #ebcccc;
+      --paper-warm: #f4dcdc;
+      --cream: #f7eee8;
+      --ink: #1a1410;
+      --ink-soft: #4a3b30;
+      --wine: #8b1f3a;
+      --wine-deep: #6a1228;
+      --mustard: #e0c25b;
+      --mustard-deep: #c8a93a;
+      --blue: #aec2d6;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--paper);
+      font-family: 'Noto Serif JP', serif;
+      padding: 48px 24px;
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 32px;
+      color: var(--ink);
+      letter-spacing: 0.1em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--cream);
+      border: 2px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--wine);
+      padding: 56px 24px 36px;
+      position: relative;
+      text-align: center;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .card__num {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      color: var(--wine);
+      font-weight: 700;
+    }
+    .card__label {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    /* ============================================================
+       Logo container shared
+       ============================================================ */
+    .logo {
+      display: inline-block;
+      text-align: center;
+      line-height: 1;
+    }
+    .logo .num { letter-spacing: -0.05em; }
+    .logo .ruby {
+      display: block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: 0.55em;
+      text-indent: 0.55em;
+      margin-top: 16px;
+      padding: 6px 0;
+      border-top: 1.2px solid var(--ink);
+      border-bottom: 1.2px solid var(--ink);
+      line-height: 1;
+    }
+
+    /* ===== PATTERN A: Vintage Magazine Masthead =====
+       重厚なイタリック・セリフ + 多層チゼル影（VOGUE / TIME 風） */
+    .pa { font-family: 'Playfair Display', serif; font-size: 6.4rem; font-style: italic; font-weight: 900; letter-spacing: -0.04em; color: var(--wine);
+      text-shadow:
+        1px 1px 0 var(--ink),
+        -1px -1px 0 var(--cream),
+        4px 4px 0 var(--mustard),
+        4px 4px 0 1px var(--ink);
+    }
+    .pa .x { font-size: 0.4em; vertical-align: 0.95em; color: var(--mustard); font-style: italic; font-weight: 700; margin-right: 4px; text-shadow: 2px 2px 0 var(--ink); }
+
+    /* ===== PATTERN B: Hollow Outlined Skeleton =====
+       輪郭のみ。中身は透ける。モダニスト / Bottega Veneta 風 */
+    .pb { font-family: 'DM Serif Display', serif; font-size: 7rem; font-weight: 900; letter-spacing: -0.05em; color: transparent;
+      -webkit-text-stroke: 3px var(--wine);
+    }
+    .pb .x { font-size: 0.4em; vertical-align: 0.9em; -webkit-text-stroke: 2px var(--mustard); margin-right: 4px; font-style: italic; }
+
+    /* ===== PATTERN C: Vintage Carnival Marquee =====
+       多重輪郭 + マスタード影。看板 / Coca-Cola 旧版風 */
+    .pc { font-family: 'Bungee Inline', 'DM Serif Display', serif; font-size: 5.6rem; letter-spacing: 0.02em; color: var(--cream);
+      text-shadow:
+        -2px 0 var(--wine), 2px 0 var(--wine), 0 -2px var(--wine), 0 2px var(--wine),
+        -2px -2px var(--wine), 2px -2px var(--wine), -2px 2px var(--wine), 2px 2px var(--wine),
+        6px 6px 0 var(--mustard),
+        6px 6px 0 2px var(--ink);
+    }
+    .pc .x { font-size: 0.5em; color: var(--mustard); vertical-align: 0.7em; margin-right: 6px; text-shadow:
+        -1px 0 var(--ink), 1px 0 var(--ink), 0 -1px var(--ink), 0 1px var(--ink); }
+
+    /* ===== PATTERN D: Art Deco Cinzel Banner =====
+       Cinzel 大文字 + 中心横ライン。建築 / 劇場看板風 */
+    .pd { font-family: 'Cinzel', serif; font-size: 6rem; font-weight: 900; letter-spacing: 0; color: var(--wine); position: relative; display: inline-block; padding: 0 12px; }
+    .pd::before, .pd::after {
+      content: ""; position: absolute; top: 50%; transform: translateY(-50%);
+      width: 28px; height: 6px; background: var(--mustard); border: 1.5px solid var(--ink);
+    }
+    .pd::before { left: -36px; }
+    .pd::after { right: -36px; }
+    .pd .x { font-size: 0.45em; color: var(--mustard); vertical-align: 0.6em; font-style: normal; font-weight: 700; margin-right: 4px; }
+
+    /* ===== PATTERN E: Italic + Swash Underline =====
+       細イタリック + マスタード下線。Hermès / Cartier 風 */
+    .pe { font-family: 'Playfair Display', serif; font-size: 7.2rem; font-style: italic; font-weight: 400; letter-spacing: -0.04em; color: var(--wine);
+      position: relative; padding-bottom: 4px;
+      background:
+        linear-gradient(180deg, transparent 0 calc(100% - 8px), var(--mustard) calc(100% - 8px) calc(100% - 5px), transparent calc(100% - 5px)) center / 86% 100% no-repeat;
+    }
+    .pe .x { font-size: 0.4em; color: var(--ink); vertical-align: 0.85em; font-style: italic; margin-right: 2px; }
+
+    /* ===== PATTERN F: Striped Fill (CURRENT) =====
+       縞充填 + インク輪郭 + マスタード影。Italian fashion 風 */
+    .pf { font-family: 'Playfair Display', serif; font-size: 6.4rem; font-style: italic; font-weight: 900; letter-spacing: -0.05em; color: transparent;
+      background-image: repeating-linear-gradient(180deg, var(--wine) 0 13px, rgba(247,238,232,0.92) 13px 15px, var(--wine) 15px 28px);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      -webkit-text-stroke: 2px var(--ink);
+      filter: drop-shadow(3px 3px 0 var(--mustard));
+    }
+    .pf .x { font-size: 0.4em; color: var(--mustard); -webkit-text-stroke: 1px var(--ink); -webkit-text-fill-color: var(--mustard); background: none; vertical-align: 0.95em; font-style: italic; margin-right: 4px; }
+  </style>
+</head>
+<body>
+  <h1>x10 ロゴ — 6 パターン比較</h1>
+  <div class="grid">
+
+    <div class="card">
+      <span class="card__num">PATTERN A</span>
+      <div class="logo">
+        <span class="num pa"><span class="x">x</span>10</span>
+        <span class="ruby">エクステン</span>
+      </div>
+      <span class="card__label">VINTAGE MAGAZINE — 多層チゼル影</span>
+    </div>
+
+    <div class="card">
+      <span class="card__num">PATTERN B</span>
+      <div class="logo">
+        <span class="num pb"><span class="x">x</span>10</span>
+        <span class="ruby">エクステン</span>
+      </div>
+      <span class="card__label">HOLLOW OUTLINE — 輪郭のみ</span>
+    </div>
+
+    <div class="card">
+      <span class="card__num">PATTERN C</span>
+      <div class="logo">
+        <span class="num pc"><span class="x">x</span>10</span>
+        <span class="ruby">エクステン</span>
+      </div>
+      <span class="card__label">CARNIVAL MARQUEE — 多重輪郭</span>
+    </div>
+
+    <div class="card">
+      <span class="card__num">PATTERN D</span>
+      <div class="logo">
+        <span class="num pd"><span class="x">X</span>10</span>
+        <span class="ruby">エクステン</span>
+      </div>
+      <span class="card__label">ART DECO CINZEL — 左右装飾帯</span>
+    </div>
+
+    <div class="card">
+      <span class="card__num">PATTERN E</span>
+      <div class="logo">
+        <span class="num pe"><span class="x">x</span>10</span>
+        <span class="ruby">エクステン</span>
+      </div>
+      <span class="card__label">ITALIC SWASH — Hermès 風</span>
+    </div>
+
+    <div class="card">
+      <span class="card__num">PATTERN F</span>
+      <div class="logo">
+        <span class="num pf"><span class="x">x</span>10</span>
+        <span class="ruby">エクステン</span>
+      </div>
+      <span class="card__label">STRIPED FILL — 縦縞充填（現行）</span>
+    </div>
+
+  </div>
+</body>
+</html>

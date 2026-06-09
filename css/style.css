@@ -1643,3 +1643,392 @@ a:hover {
     max-width: 560px;
   }
 }
+
+/* ==========================================================================
+   Queen City Ink — Vintage Lithograph Theme Overlay (xten 共通)
+   1920s 印刷広告の世界観: クリーム紙 × ベタ塗りカラー × 太い黒輪郭。
+   HTML / テキスト / 構成は変更せず、ビジュアルだけを差し替える。
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800;900&family=DM+Serif+Display:ital@0;1&family=Bungee+Inline&display=swap');
+
+:root {
+  /* 主役 3 色 */
+  --qc-pink:         #ebcccc;
+  --qc-pink-deep:    #d9aeb0;
+  --qc-pink-pale:    #f4dcdc;
+  --qc-blue:         #aec2d6;
+  --qc-blue-deep:    #8ba6c1;
+  --qc-blue-pale:    #cad8e6;
+  --qc-mustard:      #e0c25b;
+  --qc-mustard-deep: #c8a93a;
+  --qc-mustard-pale: #f0dc8c;
+
+  /* テキスト強調 / 輪郭 */
+  --qc-wine:         #8b1f3a;
+  --qc-wine-deep:    #6a1228;
+  --qc-cream:        #f7eee8;
+
+  /* 互換用エイリアス */
+  --qc-paper:        var(--qc-pink);
+  --qc-paper-dim:    var(--qc-pink-deep);
+  --qc-paper-warm:   var(--qc-pink-pale);
+  --qc-paper-bleach: var(--qc-cream);
+  --qc-ink:          #2a1e2a;
+  --qc-ink-soft:     #4a3a48;
+  --qc-vermilion:    var(--qc-wine);
+  --qc-vermilion-2:  var(--qc-wine-deep);
+  --qc-teal:         var(--qc-blue-deep);
+  --qc-teal-soft:    var(--qc-blue);
+  --qc-moss:         var(--qc-mustard-deep);
+  --qc-mustard-2:    var(--qc-mustard-deep);
+  --qc-plum:         var(--qc-wine);
+  --qc-rose:         var(--qc-pink-deep);
+
+  /* 既存トークンを QC パレットへ再マッピング */
+  --navy:             var(--qc-ink);
+  --navy-deep:        var(--qc-ink);
+  --navy-light:       var(--qc-ink-soft);
+  --cream:            var(--qc-paper);
+  --cream-dark:       var(--qc-paper-dim);
+  --gold:             var(--qc-vermilion);
+  --gold-light:       var(--qc-mustard);
+  --gold-dark:        var(--qc-vermilion-2);
+  --text-dark:        var(--qc-ink);
+  --text-light:       var(--qc-paper);
+  --text-muted-dark:  var(--qc-ink-soft);
+  --text-muted-light: var(--qc-paper-warm);
+  --border-light:     rgba(28,23,20,0.22);
+  --border-dark:      rgba(28,23,20,0.30);
+}
+
+body {
+  background-color: var(--qc-paper) !important;
+  color: var(--qc-ink) !important;
+  font-family: 'DM Serif Display', 'Playfair Display', 'Noto Serif JP', serif !important;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.07 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
+    radial-gradient(1.4px 1.4px at 22% 31%, rgba(26,20,16,0.10) 50%, transparent 51%),
+    radial-gradient(1.2px 1.2px at 71% 79%, rgba(26,20,16,0.08) 50%, transparent 51%),
+    radial-gradient(1.1px 1.1px at 41% 71%, rgba(26,20,16,0.06) 50%, transparent 51%);
+  background-size: 180px 180px, 220px 220px, 320px 320px, 180px 180px;
+  background-attachment: fixed;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, transparent 55%, rgba(139, 31, 58, 0.08) 100%),
+    radial-gradient(ellipse at 0% 0%, rgba(174, 194, 214, 0.18), transparent 45%),
+    radial-gradient(ellipse at 100% 100%, rgba(224, 194, 91, 0.14), transparent 45%);
+}
+
+body { position: relative; }
+
+/* ---- 昭和の円形シール: page-hero 左上 ---- */
+.page-hero { position: relative; overflow: hidden; padding-bottom: 200px !important; }
+.page-hero::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  width: 180px; height: 180px;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><circle cx='100' cy='100' r='95' fill='%23f4dcdc' stroke='%232a1e2a' stroke-width='2.5'/><circle cx='100' cy='100' r='86' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.5'/><circle cx='100' cy='100' r='75' fill='none' stroke='%23e0c25b' stroke-width='1.8' stroke-dasharray='5,4'/><circle cx='100' cy='100' r='64' fill='%23f4dcdc' stroke='%232a1e2a' stroke-width='1.5'/><circle cx='100' cy='100' r='52' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.5'/><g fill='%23e0c25b' stroke='%232a1e2a' stroke-width='1.5' stroke-linejoin='round'><path d='M 100 64 L 109 92 L 138 92 L 114 109 L 123 137 L 100 120 L 77 137 L 86 109 L 62 92 L 91 92 Z'/></g><g fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.5'><circle cx='100' cy='13' r='7'/><circle cx='187' cy='100' r='7'/><circle cx='100' cy='187' r='7'/><circle cx='13' cy='100' r='7'/></g></svg>");
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: rotate(-3deg);
+  z-index: 2;
+}
+
+/* ---- 太陽系 + 大地: page-hero 下部に巨大な山並みパノラマ ---- */
+.page-hero::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  height: 190px;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200' preserveAspectRatio='xMidYMax slice'><circle cx='950' cy='52' r='34' fill='%23e0c25b' stroke='%232a1e2a' stroke-width='2.5'/><g stroke='%23e0c25b' stroke-width='3' stroke-linecap='round'><line x1='950' y1='10' x2='950' y2='0'/><line x1='984' y1='20' x2='992' y2='12'/><line x1='916' y1='20' x2='908' y2='12'/><line x1='996' y1='52' x2='1006' y2='52'/><line x1='904' y1='52' x2='894' y2='52'/></g><circle cx='950' cy='100' r='80' fill='none' stroke='%238b1f3a' stroke-width='1.2' stroke-dasharray='3,4' opacity='0.5'/><circle cx='870' cy='100' r='5' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2'/><g fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' stroke-linejoin='round'><path d='M 180 28 L 184 40 L 196 44 L 184 48 L 180 60 L 176 48 L 164 44 L 176 40 Z'/><path d='M 480 18 L 483 28 L 493 31 L 483 34 L 480 44 L 477 34 L 467 31 L 477 28 Z'/></g><g fill='%232a1e2a'><circle cx='80' cy='40' r='2.5'/><circle cx='320' cy='20' r='2'/><circle cx='620' cy='25' r='2'/><circle cx='740' cy='40' r='2.5'/></g><path d='M 0 115 L 90 75 L 180 105 L 260 70 L 360 98 L 450 65 L 540 95 L 630 70 L 720 100 L 820 75 L 920 102 L 1020 80 L 1110 105 L 1200 85 L 1200 200 L 0 200 Z' fill='%23f4dcdc' stroke='%232a1e2a' stroke-width='2.2' stroke-linejoin='round'/><path d='M 0 145 L 100 100 L 200 125 L 290 90 L 390 120 L 480 95 L 570 125 L 660 100 L 760 130 L 860 105 L 950 130 L 1050 105 L 1140 135 L 1200 115 L 1200 200 L 0 200 Z' fill='%23aec2d6' stroke='%232a1e2a' stroke-width='2.5' stroke-linejoin='round'/><path d='M 0 170 L 110 135 L 220 158 L 330 130 L 440 162 L 550 135 L 660 162 L 770 135 L 880 165 L 990 138 L 1100 162 L 1200 148 L 1200 200 L 0 200 Z' fill='%23e0c25b' stroke='%232a1e2a' stroke-width='2.5' stroke-linejoin='round'/><path d='M 0 185 Q 100 168 200 182 Q 300 195 400 178 Q 500 195 600 178 Q 700 195 800 180 Q 900 195 1000 178 Q 1100 195 1200 182 L 1200 200 L 0 200 Z' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='3' stroke-linejoin='round'/><g stroke='%232a1e2a' stroke-width='2.5' stroke-linecap='round' fill='%232a1e2a'><line x1='60' y1='182' x2='60' y2='165'/><circle cx='60' cy='163' r='4'/><line x1='170' y1='180' x2='170' y2='163'/><circle cx='170' cy='161' r='4'/><line x1='280' y1='184' x2='280' y2='167'/><circle cx='280' cy='165' r='4'/><line x1='400' y1='182' x2='400' y2='163'/><circle cx='400' cy='161' r='4'/><line x1='520' y1='184' x2='520' y2='167'/><circle cx='520' cy='165' r='4'/><line x1='640' y1='180' x2='640' y2='163'/><circle cx='640' cy='161' r='4'/><line x1='760' y1='182' x2='760' y2='165'/><circle cx='760' cy='163' r='4'/><line x1='880' y1='184' x2='880' y2='167'/><circle cx='880' cy='165' r='4'/><line x1='1020' y1='180' x2='1020' y2='163'/><circle cx='1020' cy='161' r='4'/><line x1='1140' y1='184' x2='1140' y2='167'/><circle cx='1140' cy='165' r='4'/></g></svg>");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* ---- 大地: フッター上に巨大な山並みパノラマ ---- */
+.footer { position: relative; padding-top: 200px !important; }
+.footer::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 0;
+  height: 200px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200' preserveAspectRatio='xMidYMax slice'><g fill='%238b1f3a'><path d='M 140 28 L 144 40 L 156 44 L 144 48 L 140 60 L 136 48 L 124 44 L 136 40 Z'/><path d='M 480 18 L 483 28 L 493 31 L 483 34 L 480 44 L 477 34 L 467 31 L 477 28 Z'/><path d='M 820 30 L 824 42 L 836 46 L 824 50 L 820 62 L 816 50 L 804 46 L 816 42 Z'/></g><g fill='%232a1e2a'><circle cx='60' cy='40' r='2.5'/><circle cx='250' cy='20' r='2'/><circle cx='380' cy='45' r='2.5'/><circle cx='600' cy='25' r='2'/><circle cx='720' cy='40' r='2.5'/><circle cx='950' cy='20' r='2'/><circle cx='1100' cy='35' r='2.5'/></g><circle cx='200' cy='60' r='34' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='2.5'/><g stroke='%238b1f3a' stroke-width='3' stroke-linecap='round'><line x1='200' y1='14' x2='200' y2='4'/><line x1='234' y1='28' x2='242' y2='20'/><line x1='166' y1='28' x2='158' y2='20'/><line x1='246' y1='60' x2='256' y2='60'/><line x1='154' y1='60' x2='144' y2='60'/></g><circle cx='192' cy='52' r='3' fill='%23ebcccc'/><path d='M 0 115 L 90 75 L 180 105 L 260 70 L 360 98 L 450 65 L 540 95 L 630 70 L 720 100 L 820 75 L 920 102 L 1020 80 L 1110 105 L 1200 85 L 1200 200 L 0 200 Z' fill='%23f4dcdc' stroke='%232a1e2a' stroke-width='2.2' stroke-linejoin='round'/><path d='M 0 145 L 100 100 L 200 125 L 290 90 L 390 120 L 480 95 L 570 125 L 660 100 L 760 130 L 860 105 L 950 130 L 1050 105 L 1140 135 L 1200 115 L 1200 200 L 0 200 Z' fill='%23aec2d6' stroke='%232a1e2a' stroke-width='2.5' stroke-linejoin='round'/><path d='M 0 170 L 110 135 L 220 158 L 330 130 L 440 162 L 550 135 L 660 162 L 770 135 L 880 165 L 990 138 L 1100 162 L 1200 148 L 1200 200 L 0 200 Z' fill='%23e0c25b' stroke='%232a1e2a' stroke-width='2.5' stroke-linejoin='round'/><path d='M 0 185 Q 100 168 200 182 Q 300 195 400 178 Q 500 195 600 178 Q 700 195 800 180 Q 900 195 1000 178 Q 1100 195 1200 182 L 1200 200 L 0 200 Z' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='3' stroke-linejoin='round'/><g stroke='%232a1e2a' stroke-width='2.5' stroke-linecap='round' fill='%232a1e2a'><line x1='60' y1='182' x2='60' y2='165'/><circle cx='60' cy='163' r='4'/><line x1='170' y1='180' x2='170' y2='163'/><circle cx='170' cy='161' r='4'/><line x1='280' y1='184' x2='280' y2='167'/><circle cx='280' cy='165' r='4'/><line x1='400' y1='182' x2='400' y2='163'/><circle cx='400' cy='161' r='4'/><line x1='520' y1='184' x2='520' y2='167'/><circle cx='520' cy='165' r='4'/><line x1='640' y1='180' x2='640' y2='163'/><circle cx='640' cy='161' r='4'/><line x1='760' y1='182' x2='760' y2='165'/><circle cx='760' cy='163' r='4'/><line x1='880' y1='184' x2='880' y2='167'/><circle cx='880' cy='165' r='4'/><line x1='1020' y1='180' x2='1020' y2='163'/><circle cx='1020' cy='161' r='4'/><line x1='1140' y1='184' x2='1140' y2='167'/><circle cx='1140' cy='165' r='4'/></g></svg>");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+@media (max-width: 720px) {
+  .page-hero::before { width: 110px; height: 110px; }
+  .page-hero::after,
+  .footer::before    { height: 130px; }
+  .page-hero { padding-bottom: 140px !important; }
+  .footer { padding-top: 140px !important; }
+}
+
+/* ---- Nav ---- */
+.nav {
+  background: var(--qc-ink) !important;
+  border-bottom: 3px solid var(--qc-vermilion) !important;
+}
+.nav__link { color: #d6c89e !important; }
+.nav__link:hover,
+.nav__link--active { color: var(--qc-mustard) !important; }
+.nav__link--active::after {
+  background: var(--qc-mustard) !important;
+  box-shadow: none !important;
+}
+
+/* ---- Sections ---- */
+.section-dark {
+  background: var(--qc-paper) !important;
+  color: var(--qc-ink) !important;
+}
+.section-dark::before { display: none !important; }
+.section-light { background: var(--qc-paper-warm) !important; }
+
+/* ---- Page hero ---- */
+.page-hero {
+  position: relative;
+  padding: 50px 0 36px;
+  border-top: 6px solid var(--qc-ink);
+  border-bottom: 6px solid var(--qc-ink);
+  box-shadow:
+    inset 0 8px 0 var(--qc-vermilion),
+    inset 0 -8px 0 var(--qc-vermilion);
+  background:
+    repeating-linear-gradient(135deg,
+      transparent 0 22px,
+      rgba(26, 20, 16, 0.025) 22px 23px),
+    var(--qc-paper-warm) !important;
+}
+.deco-divider {
+  color: var(--qc-vermilion) !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.8em !important;
+}
+.page-hero__title {
+  color: var(--qc-ink) !important;
+  font-family: 'DM Serif Display', 'Playfair Display', 'Noto Serif JP', serif !important;
+  font-size: 2.8rem !important;
+  letter-spacing: 0.05em !important;
+  text-shadow: 3px 3px 0 var(--qc-vermilion);
+}
+.page-hero__desc {
+  color: var(--qc-ink) !important;
+  font-family: 'Noto Serif JP', serif !important;
+}
+
+/* ---- Astro result header ---- */
+.astro-result__header { border-bottom: 3px double var(--qc-ink) !important; padding-bottom: 30px; }
+.astro-result__symbol {
+  color: var(--qc-vermilion) !important;
+  font-family: 'Bungee Inline', 'DM Serif Display', serif !important;
+  text-shadow:
+    3px 3px 0 var(--qc-mustard),
+    3.5px 3.5px 0 var(--qc-ink);
+  font-size: 3.5rem !important;
+}
+.astro-result__title {
+  color: var(--qc-ink) !important;
+  font-family: 'DM Serif Display', 'Playfair Display', serif !important;
+  font-size: 1.7rem !important;
+}
+.astro-result__subtitle {
+  color: var(--qc-ink-soft) !important;
+  font-family: 'Cinzel', 'Inter', sans-serif !important;
+  letter-spacing: 0.3em !important;
+}
+.astro-result__systems {
+  color: var(--qc-paper) !important;
+  background: var(--qc-vermilion) !important;
+  border: 2px solid var(--qc-ink) !important;
+  border-radius: 0 !important;
+  font-family: 'Cinzel', 'Noto Serif JP', serif !important;
+  letter-spacing: 0.22em !important;
+  font-weight: 700 !important;
+  box-shadow: 3px 3px 0 var(--qc-ink);
+}
+
+/* ---- Result boxes ---- */
+.result__box {
+  background: var(--qc-cream) !important;
+  border: 2px solid var(--qc-ink) !important;
+  border-radius: 0 !important;
+  padding: 22px 24px !important;
+  margin-bottom: 14px !important;
+  box-shadow: 4px 4px 0 var(--qc-mustard);
+}
+.result__box-title {
+  color: var(--qc-vermilion) !important;
+  font-weight: 800 !important;
+  border-bottom: 2px solid var(--qc-ink) !important;
+  padding-bottom: 12px !important;
+  margin-bottom: 14px !important;
+  font-family: 'Cinzel', 'DM Serif Display', 'Noto Serif JP', serif !important;
+  letter-spacing: 0.2em !important;
+  font-size: 0.95rem !important;
+}
+.result__box-text {
+  color: var(--qc-ink) !important;
+  font-family: 'Noto Serif JP', 'DM Serif Display', serif !important;
+}
+
+/* ---- Astro blocks ---- */
+.astro-block {
+  background: var(--qc-cream) !important;
+  border: 2px solid var(--qc-ink) !important;
+  border-radius: 0 !important;
+  padding: 22px 24px !important;
+  margin-bottom: 0 !important;
+  box-shadow: none !important;
+}
+.astro-block--joined-down {
+  border-bottom: 1.5px dashed var(--qc-ink) !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.astro-block--joined-up {
+  border-top: none !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+.astro-block__title {
+  color: var(--qc-paper) !important;
+  background: var(--qc-ink) !important;
+  display: inline-block !important;
+  padding: 8px 18px !important;
+  border-bottom: none !important;
+  letter-spacing: 0.25em !important;
+  font-family: 'Cinzel', 'DM Serif Display', 'Noto Serif JP', serif !important;
+  font-weight: 700 !important;
+  box-shadow: 4px 4px 0 var(--qc-vermilion);
+}
+.astro-block__title--inner {
+  background: var(--qc-vermilion) !important;
+  color: var(--qc-paper) !important;
+}
+.astro-block__sub { color: var(--qc-vermilion) !important; font-weight: 700; }
+.astro-block__item {
+  background: var(--qc-blue-pale) !important;
+  border: 1.5px solid var(--qc-ink) !important;
+  border-radius: 0 !important;
+}
+.astro-block__label { color: var(--qc-ink-soft) !important; }
+.astro-block__value { color: var(--qc-ink) !important; font-weight: 700; }
+
+/* ---- Analysis panel ---- */
+.astro-analysis {
+  background: var(--qc-paper) !important;
+}
+.astro-analysis__title {
+  color: var(--qc-vermilion) !important;
+  border-left: 4px solid var(--qc-vermilion);
+  padding-left: 10px;
+}
+.astro-analysis__title::before { color: var(--qc-vermilion) !important; }
+.astro-analysis__text { color: var(--qc-ink) !important; }
+.astro-analysis__text strong { color: var(--qc-vermilion) !important; }
+
+/* ---- Tendency bars ---- */
+.tendency-bar__category { color: var(--qc-vermilion) !important; font-weight: 700; }
+.tendency-bar__side { color: var(--qc-ink-soft) !important; }
+.tendency-bar__visual {
+  background: rgba(28, 23, 20, 0.08) !important;
+  border: 1.5px solid var(--qc-ink) !important;
+  border-radius: 0 !important;
+}
+.tendency-bar__fill--left  { background: var(--qc-mustard) !important; }
+.tendency-bar__fill--right { background: var(--qc-ink-soft) !important; }
+
+/* ---- Emotion chart ---- */
+.emotion-chart__label-name { fill: var(--qc-ink) !important; font-weight: 700; }
+.emotion-chart__label-percent { fill: var(--qc-ink-soft) !important; }
+.emotion-chart__leader { stroke: var(--qc-ink-soft) !important; }
+
+/* ---- Buttons ---- */
+.btn--dark {
+  background: var(--qc-vermilion) !important;
+  color: var(--qc-paper) !important;
+  border: 2px solid var(--qc-ink) !important;
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0 var(--qc-ink) !important;
+  letter-spacing: 0.18em !important;
+}
+.btn--dark:hover {
+  background: var(--qc-vermilion-2) !important;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--qc-ink) !important;
+}
+.btn--outline,
+.btn--outline-light {
+  background: transparent !important;
+  border: 2px solid var(--qc-ink) !important;
+  color: var(--qc-ink) !important;
+  border-radius: 0 !important;
+}
+.btn--outline:hover,
+.btn--outline-light:hover {
+  background: var(--qc-mustard) !important;
+  color: var(--qc-ink) !important;
+}
+
+/* ---- Form fields (compatibility / numerology / seimei) ---- */
+.form-group__label {
+  color: var(--qc-vermilion) !important;
+  font-weight: 700;
+}
+.form-group__input,
+.form-group__select {
+  background: var(--qc-paper-warm) !important;
+  border: 2px solid var(--qc-ink) !important;
+  border-radius: 0 !important;
+  color: var(--qc-ink) !important;
+}
+.form-group__input:focus,
+.form-group__select:focus {
+  border-color: var(--qc-vermilion) !important;
+  box-shadow: 0 0 0 1px var(--qc-vermilion) !important;
+}
+
+/* ---- Loading ---- */
+.loading__spinner {
+  border-color: var(--qc-mustard) !important;
+  border-top-color: var(--qc-vermilion) !important;
+}
+.loading__text { color: var(--qc-ink) !important; }
+
+/* ---- Share buttons ---- */
+.share__btn {
+  background: var(--qc-ink) !important;
+  color: var(--qc-mustard) !important;
+  border: 2px solid var(--qc-ink) !important;
+  border-radius: 0 !important;
+}
+.share__btn:hover {
+  background: var(--qc-vermilion) !important;
+  color: var(--qc-paper) !important;
+  border-color: var(--qc-vermilion) !important;
+}
+.share-section__label { color: var(--qc-vermilion) !important; font-weight: 700; }
+
+/* ---- Footer ---- */
+.footer {
+  background: var(--qc-paper-dim) !important;
+  border-top: 3px double var(--qc-ink) !important;
+  color: var(--qc-ink) !important;
+}
+.footer__logo { color: var(--qc-vermilion) !important; font-weight: 700; }
+.footer__text { color: var(--qc-ink-soft) !important; }
+.footer__links a { color: var(--qc-ink) !important; }
