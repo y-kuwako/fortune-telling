@@ -1420,124 +1420,120 @@
     }
 
     /* x10 ロゴブロック: 中央に縦並びで x10 と エクステン を配置 */
-    /* x10 = ヴィンテージ・ワードマーク
-       共通: インクの太い輪郭 + マスタードのアクセント
-       "x" = ふくよかなブロック体（Bungee Inline・マスタード地） /
-       "10" = イタリック縦縞充填（Playfair Display Black）
-    */
+    /* x10 = FRAMED（二重インク枠 + 四隅ワイン円 + イタリック黒文字） */
     .header__title {
-      display: block !important;
-      position: relative;
-      width: auto !important;
-      background: none !important;
-      border: none !important;
-      box-shadow: none !important;
-      transform: none !important;
-      padding: 0 8px !important;
+      display: inline-block !important;
+      position: relative !important;
+      background: var(--qc-cream) !important;
+      border: 4px solid var(--qc-ink) !important;
+      box-shadow:
+        inset 0 0 0 8px var(--qc-cream),
+        inset 0 0 0 10px var(--qc-ink) !important;
+      padding: 32px 56px 26px !important;
       margin: 0 !important;
+      width: auto !important;
       text-align: center !important;
-      font-family: 'Playfair Display', 'DM Serif Display', serif !important;
-      font-size: 7rem !important;
-      line-height: 1 !important;
-      letter-spacing: -0.04em !important;
-      color: var(--qc-wine) !important;
-      text-shadow: none !important;
-    }
-    .header__title::before {
-      content: "◆";
-      display: block;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 0.16em;
-      color: var(--qc-mustard);
-      letter-spacing: 0.5em;
-      margin-bottom: 14px;
-      line-height: 1;
-      text-indent: 0.5em;
-    }
-    .header__title::after { display: none !important; }
-    .header__title br { display: none !important; }
-
-    /* "x": チャンキー・ブロック体 + マスタード地 + インク多方向シャドウ輪郭 */
-    .header__title-x {
-      font-family: 'Bungee Inline', 'DM Serif Display', sans-serif !important;
-      font-size: 0.55em !important;
-      font-style: normal !important;
-      font-weight: 400 !important;
-      vertical-align: 0.55em !important;
-      letter-spacing: 0 !important;
-      margin: 0 8px 0 0 !important;
-      color: var(--qc-mustard) !important;
-      text-shadow:
-        -2px 0 var(--qc-ink), 2px 0 var(--qc-ink),
-        0 -2px var(--qc-ink), 0 2px var(--qc-ink),
-        -2px -2px var(--qc-ink), 2px -2px var(--qc-ink),
-        -2px 2px var(--qc-ink), 2px 2px var(--qc-ink),
-        4px 4px 0 rgba(26, 20, 16, 0.18) !important;
-    }
-
-    /* "10": イタリック縦縞充填 + インク輪郭 + マスタード落とし影 */
-    .header__title-num {
-      font-family: 'Playfair Display', 'DM Serif Display', serif !important;
+      font-family: 'DM Serif Display', 'Playfair Display', serif !important;
       font-style: italic !important;
       font-weight: 900 !important;
-      letter-spacing: -0.06em !important;
-      color: transparent !important;
-      background-image: repeating-linear-gradient(
-        180deg,
-        var(--qc-wine) 0 14px,
-        rgba(247, 238, 232, 0.92) 14px 16px,
-        var(--qc-wine) 16px 30px
-      ) !important;
-      -webkit-background-clip: text !important;
-      background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-      -webkit-text-stroke: 2.5px var(--qc-ink);
-      filter: drop-shadow(4px 4px 0 var(--qc-mustard));
+      font-size: 6rem !important;
+      line-height: 1 !important;
+      letter-spacing: -0.05em !important;
+      color: var(--qc-ink) !important;
+      text-shadow: none !important;
+      transform: none !important;
     }
+    /* 角の円アクセント（左上 + 右下） */
+    .header__title::before,
+    .header__title::after {
+      content: "" !important;
+      display: block !important;
+      position: absolute !important;
+      width: 22px !important;
+      height: 22px !important;
+      background: var(--qc-wine) !important;
+      border: 2.5px solid var(--qc-ink) !important;
+      border-radius: 50% !important;
+      font-size: 0 !important;
+      color: transparent !important;
+      letter-spacing: 0 !important;
+      line-height: 1 !important;
+      margin: 0 !important;
+      text-indent: 0 !important;
+      pointer-events: none;
+    }
+    .header__title::before {
+      top: -13px !important;
+      left: -13px !important;
+    }
+    .header__title::after {
+      bottom: -13px !important;
+      right: -13px !important;
+    }
+    .header__title br { display: none !important; }
 
-    /* エクステン: Cinzel + 上下罫のキャプション風 */
+    .header__title-x {
+      font-size: 0.4em !important;
+      vertical-align: 0.95em !important;
+      color: var(--qc-ink) !important;
+      font-family: 'DM Serif Display', 'Playfair Display', serif !important;
+      font-style: italic !important;
+      font-weight: 900 !important;
+      text-shadow: none !important;
+      margin: 0 4px 0 0 !important;
+      letter-spacing: 0 !important;
+      background: none !important;
+      -webkit-text-fill-color: var(--qc-ink) !important;
+      -webkit-text-stroke: 0 !important;
+      filter: none !important;
+    }
+    .header__title-num {
+      color: var(--qc-ink) !important;
+      font-family: 'DM Serif Display', 'Playfair Display', serif !important;
+      font-style: italic !important;
+      font-weight: 900 !important;
+      letter-spacing: -0.05em !important;
+      background: none !important;
+      background-image: none !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      -webkit-text-fill-color: var(--qc-ink) !important;
+      -webkit-text-stroke: 0 !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
     .header__title-ruby {
       display: block !important;
       color: var(--qc-ink) !important;
-      font-family: 'Cinzel', 'Noto Serif JP', sans-serif !important;
+      font-family: 'Noto Serif JP', serif !important;
       font-style: normal !important;
-      font-size: 0.92rem !important;
+      font-size: 0.85rem !important;
       font-weight: 600 !important;
-      letter-spacing: 0.65em !important;
-      text-indent: 0.65em !important;
+      letter-spacing: 0.55em !important;
+      text-indent: 0.55em !important;
       text-shadow: none !important;
       line-height: 1 !important;
-      margin-top: 18px !important;
-      padding: 8px 0 !important;
+      margin-top: 14px !important;
+      padding: 8px 0 0 !important;
       border: none !important;
-      border-top: 1.4px solid var(--qc-ink) !important;
-      border-bottom: 1.4px solid var(--qc-ink) !important;
+      border-top: 1.5px solid var(--qc-ink) !important;
     }
 
     @media (max-width: 720px) {
-      .header__title { font-size: 4.4rem !important; }
-      .header__title::before { font-size: 0.2em; margin-bottom: 10px; }
-      .header__title-x {
-        font-size: 0.5em !important;
-        margin: 0 6px 0 0 !important;
-        text-shadow:
-          -1.5px 0 var(--qc-ink), 1.5px 0 var(--qc-ink),
-          0 -1.5px var(--qc-ink), 0 1.5px var(--qc-ink),
-          -1.5px -1.5px var(--qc-ink), 1.5px -1.5px var(--qc-ink),
-          -1.5px 1.5px var(--qc-ink), 1.5px 1.5px var(--qc-ink),
-          3px 3px 0 rgba(26, 20, 16, 0.18) !important;
+      .header__title {
+        font-size: 3.6rem !important;
+        padding: 22px 30px 20px !important;
+        box-shadow:
+          inset 0 0 0 6px var(--qc-cream),
+          inset 0 0 0 8px var(--qc-ink) !important;
       }
-      .header__title-num {
-        background-image: repeating-linear-gradient(
-          180deg,
-          var(--qc-wine) 0 9px,
-          rgba(247, 238, 232, 0.92) 9px 10px,
-          var(--qc-wine) 10px 19px
-        ) !important;
-        -webkit-text-stroke: 1.8px var(--qc-ink);
-        filter: drop-shadow(3px 3px 0 var(--qc-mustard));
+      .header__title::before,
+      .header__title::after {
+        width: 16px !important;
+        height: 16px !important;
       }
+      .header__title::before { top: -9px !important; left: -9px !important; }
+      .header__title::after { bottom: -9px !important; right: -9px !important; }
       .header__title-ruby {
         font-size: 0.7rem !important;
         letter-spacing: 0.4em !important;
