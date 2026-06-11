@@ -2032,3 +2032,60 @@ body { position: relative; }
 .footer__logo { color: var(--qc-vermilion) !important; font-weight: 700; }
 .footer__text { color: var(--qc-ink-soft) !important; }
 .footer__links a { color: var(--qc-ink) !important; }
+
+/* ===== タイトル横の「本日の一言」 ===== */
+.astro-block__title-row {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.astro-block__one-liner {
+  margin: 0;
+  color: var(--qc-ink) !important;
+  font-family: 'Noto Serif JP', 'DM Serif Display', serif !important;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+  flex: 1 1 280px;
+}
+.astro-block__one-liner-label {
+  color: var(--qc-vermilion) !important;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  margin-right: 4px;
+}
+@media (max-width: 720px) {
+  .astro-block__title-row { gap: 12px; }
+  .astro-block__one-liner { font-size: 0.92rem; flex-basis: 100%; }
+}
+
+/* ===== 本日のTODO 一括ボックス ===== */
+.result__box-text--todo {
+  display: block;
+  padding: 0;
+}
+.todo-item {
+  display: block;
+  padding: 14px 0;
+  border-bottom: 1.5px dashed rgba(28, 23, 20, 0.25);
+  line-height: 1.95;
+}
+.todo-item:first-child { padding-top: 4px; }
+.todo-item:last-child { border-bottom: none; padding-bottom: 4px; }
+.todo-item__label {
+  display: inline-block;
+  color: var(--qc-vermilion);
+  font-weight: 700;
+  font-family: 'Cinzel', 'DM Serif Display', 'Noto Serif JP', serif;
+  letter-spacing: 0.12em;
+  margin-right: 10px;
+  font-size: 0.92rem;
+  vertical-align: top;
+}
+.todo-item__text {
+  color: var(--qc-ink);
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.9rem;
+}
