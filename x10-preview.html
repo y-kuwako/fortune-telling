@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>x10 ロゴ パターン比較（Showa Retro）</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Cinzel:wght@400;700;900&family=DM+Serif+Display:ital@0;1&family=Bungee+Inline&family=Noto+Serif+JP:wght@400;600;700;900&family=Yusei+Magic&family=Reggae+One&family=RocknRoll+One&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:        #ebcccc;
+      --pink-pale:   #f4dcdc;
+      --pink-deep:   #d9aeb0;
+      --blue:        #aec2d6;
+      --blue-pale:   #cad8e6;
+      --blue-deep:   #8ba6c1;
+      --mustard:     #e0c25b;
+      --mustard-pale:#f0dc8c;
+      --mustard-deep:#c8a93a;
+      --cream:       #f7eee8;
+      --ink:         #1a1410;
+      --ink-soft:    #4a3b30;
+      --wine:        #8b1f3a;
+      --wine-deep:   #6a1228;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--pink);
+      font-family: 'Noto Serif JP', serif;
+      padding: 48px 24px 120px;
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 12px;
+      color: var(--ink);
+      letter-spacing: 0.1em;
+    }
+    h1 + p {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      margin-bottom: 36px;
+      letter-spacing: 0.08em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+    .card {
+      border: 2.5px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--wine);
+      padding: 70px 24px 50px;
+      position: relative;
+      text-align: center;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .card__num {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      font-weight: 700;
+      z-index: 5;
+    }
+    .card__label {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      z-index: 5;
+      background: var(--cream);
+      padding: 4px 10px;
+      border: 1.5px solid var(--ink);
+    }
+
+    /* ============================================================
+       Logo container shared
+       ============================================================ */
+    .logo {
+      display: inline-block;
+      text-align: center;
+      line-height: 1;
+      position: relative;
+      z-index: 3;
+    }
+    .logo .ruby {
+      display: block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.55em;
+      text-indent: 0.55em;
+      margin-top: 18px;
+      padding: 6px 12px;
+      line-height: 1;
+      background: var(--cream);
+      border: 1.5px solid var(--ink);
+      color: var(--ink);
+      display: inline-block;
+    }
+
+    /* ============================================================
+       PATTERN G: 5GO! Style Cheer Banner
+       三重輪郭 (cream + wine + ink) × 軽い傾き × 紙吹雪
+       背景: マスタード（強コントラスト）
+       ============================================================ */
+    .card-g {
+      background:
+        radial-gradient(circle at 12% 18%, var(--blue) 5px, transparent 6px),
+        radial-gradient(circle at 88% 24%, var(--pink-deep) 4px, transparent 5px),
+        radial-gradient(circle at 24% 78%, var(--wine) 4px, transparent 5px),
+        radial-gradient(circle at 78% 84%, var(--blue-deep) 5px, transparent 6px),
+        radial-gradient(circle at 50% 12%, var(--pink-deep) 4px, transparent 5px),
+        radial-gradient(circle at 5% 50%, var(--wine) 3px, transparent 4px),
+        radial-gradient(circle at 95% 50%, var(--blue) 3px, transparent 4px),
+        var(--mustard);
+    }
+    .card-g .card__num { color: var(--ink); }
+    .pg {
+      font-family: 'Reggae One', 'Bungee Inline', 'Noto Serif JP', serif;
+      font-size: 6.6rem;
+      letter-spacing: 0.02em;
+      color: var(--cream);
+      font-weight: 400;
+      transform: rotate(-4deg);
+      display: inline-block;
+      line-height: 1;
+      /* 三重輪郭: cream本体 → wine → ink */
+      text-shadow:
+        /* inner wine outline */
+        -3px 0 var(--wine), 3px 0 var(--wine), 0 -3px var(--wine), 0 3px var(--wine),
+        -3px -3px var(--wine), 3px -3px var(--wine), -3px 3px var(--wine), 3px 3px var(--wine),
+        /* outer ink outline */
+        -6px 0 var(--ink), 6px 0 var(--ink), 0 -6px var(--ink), 0 6px var(--ink),
+        -6px -6px var(--ink), 6px -6px var(--ink), -6px 6px var(--ink), 6px 6px var(--ink);
+    }
+    .pg .x {
+      font-size: 0.5em;
+      vertical-align: 0.85em;
+      color: var(--mustard-pale);
+      margin-right: 6px;
+    }
+    .card-g .ruby { transform: rotate(-2deg); }
+
+    /* ============================================================
+       PATTERN H: Maido Painted Hand-Drawn Tag
+       手描き風タッグ + 太いインク輪郭
+       背景: ワイン（強コントラスト）
+       ============================================================ */
+    .card-h {
+      background: var(--wine);
+    }
+    .card-h .card__num { color: var(--cream); }
+    /* 角度付きの白タグ背景 */
+    .card-h::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 78%;
+      height: 56%;
+      background: var(--cream);
+      border: 2.5px solid var(--ink);
+      transform: translate(-50%, -56%) rotate(-3deg);
+      box-shadow: 6px 6px 0 var(--mustard);
+      z-index: 1;
+    }
+    .ph {
+      font-family: 'RocknRoll One', 'Bungee Inline', sans-serif;
+      font-size: 6.4rem;
+      letter-spacing: -0.02em;
+      color: var(--wine);
+      font-weight: 400;
+      transform: rotate(-3deg);
+      display: inline-block;
+      line-height: 1;
+      text-shadow:
+        -2.5px 0 var(--ink), 2.5px 0 var(--ink),
+        0 -2.5px var(--ink), 0 2.5px var(--ink),
+        -2.5px -2.5px var(--ink), 2.5px -2.5px var(--ink),
+        -2.5px 2.5px var(--ink), 2.5px 2.5px var(--ink);
+      position: relative;
+      z-index: 3;
+    }
+    .ph .x {
+      font-size: 0.5em;
+      vertical-align: 0.85em;
+      color: var(--mustard);
+      margin-right: 4px;
+    }
+    .card-h .ruby { transform: rotate(-2deg); background: var(--mustard); position: relative; z-index: 3; }
+
+    /* ============================================================
+       PATTERN I: Bold Italic + Speed Lines
+       太いイタリック + 集中線（マンガ風）
+       背景: 青（強コントラスト）
+       ============================================================ */
+    .card-i {
+      background:
+        repeating-linear-gradient(45deg,
+          transparent 0 22px,
+          rgba(247, 238, 232, 0.3) 22px 24px),
+        var(--blue);
+    }
+    .card-i .card__num { color: var(--ink); }
+    /* 集中線 */
+    .card-i::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 460px;
+      height: 460px;
+      max-width: 95%;
+      max-height: 95%;
+      transform: translate(-50%, -50%);
+      background:
+        repeating-conic-gradient(from 0deg at 50% 50%,
+          transparent 0 4deg,
+          rgba(26, 20, 16, 0.18) 4deg 5deg);
+      border-radius: 50%;
+      mask: radial-gradient(circle, transparent 70px, black 90px);
+      -webkit-mask: radial-gradient(circle, transparent 70px, black 90px);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .pi {
+      font-family: 'DM Serif Display', 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 900;
+      font-size: 7rem;
+      letter-spacing: -0.04em;
+      color: var(--mustard);
+      transform: rotate(-3deg);
+      display: inline-block;
+      line-height: 1;
+      text-shadow:
+        -2.5px 0 var(--ink), 2.5px 0 var(--ink),
+        0 -2.5px var(--ink), 0 2.5px var(--ink),
+        -2.5px -2.5px var(--ink), 2.5px -2.5px var(--ink),
+        -2.5px 2.5px var(--ink), 2.5px 2.5px var(--ink),
+        6px 6px 0 var(--wine);
+      position: relative;
+      z-index: 3;
+    }
+    .pi .x {
+      font-size: 0.45em;
+      vertical-align: 0.9em;
+      color: var(--cream);
+      margin-right: 4px;
+    }
+    .card-i .ruby { background: var(--mustard); }
+
+    /* ============================================================
+       PATTERN J: Showa Flag Banner
+       のぼり旗風（縦帯）+ チャンキーロゴ
+       背景: マスタード × ピンク のストライプ
+       ============================================================ */
+    .card-j {
+      background:
+        repeating-linear-gradient(90deg,
+          var(--mustard) 0 50px,
+          var(--pink-pale) 50px 100px);
+    }
+    .card-j .card__num { color: var(--ink); }
+    /* 中央に縦帯 */
+    .card-j::before {
+      content: "";
+      position: absolute;
+      top: 12%;
+      bottom: 12%;
+      left: 50%;
+      width: 240px;
+      background: var(--cream);
+      border-left: 2.5px solid var(--ink);
+      border-right: 2.5px solid var(--ink);
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+    .pj {
+      font-family: 'Reggae One', 'Bungee Inline', sans-serif;
+      font-size: 6rem;
+      letter-spacing: 0.02em;
+      color: var(--wine);
+      font-weight: 400;
+      display: inline-block;
+      line-height: 1;
+      text-shadow:
+        -2px 0 var(--ink), 2px 0 var(--ink),
+        0 -2px var(--ink), 0 2px var(--ink),
+        -2px -2px var(--ink), 2px -2px var(--ink),
+        -2px 2px var(--ink), 2px 2px var(--ink),
+        5px 5px 0 var(--mustard-deep);
+      position: relative;
+      z-index: 3;
+    }
+    .pj .x {
+      font-size: 0.45em;
+      vertical-align: 0.85em;
+      color: var(--mustard-deep);
+      margin-right: 4px;
+    }
+    .card-j .ruby { position: relative; z-index: 3; }
+  </style>
+</head>
+<body>
+  <h1>x10 ロゴ — Showa Retro 4 パターン比較</h1>
+  <p>背景と文字の強い対比 + 太い輪郭 + 軽い傾き</p>
+  <div class="grid">
+
+    <div class="card card-g">
+      <span class="card__num">PATTERN G</span>
+      <div class="logo">
+        <span class="pg"><span class="x">x</span>10</span>
+        <span class="ruby">エクステン</span>
+      </div>
+      <span class="card__label">CHEER BANNER — 三重輪郭 + 紙吹雪</span>
+    </div>
+
+    <div class="card card-h">
+      <span class="card__num">PATTERN H</span>
+      <div class="logo">
+        <span class="ph"><span class="x">x</span>10</span>
+        <span class="ruby">エクステン</span>
+      </div>
+      <span class="card__label">PAINTED TAG — 手描き風 白タグ</span>
+    </div>
+
+    <div class="card card-i">
+      <span class="card__num">PATTERN I</span>
+      <div class="logo">
+        <span class="pi"><span class="x">x</span>10</span>
+        <span class="ruby">エクステン</span>
+      </div>
+      <span class="card__label">SPEED LINES — 集中線 + 太イタリック</span>
+    </div>
+
+    <div class="card card-j">
+      <span class="card__num">PATTERN J</span>
+      <div class="logo">
+        <span class="pj"><span class="x">x</span>10</span>
+        <span class="ruby">エクステン</span>
+      </div>
+      <span class="card__label">FLAG BANNER — のぼり旗 + チャンキー</span>
+    </div>
+
+  </div>
+</body>
+</html>
