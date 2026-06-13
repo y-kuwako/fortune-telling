@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800;900&family=DM+Serif+Display:ital@0;1&family=Bungee+Inline&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1035,6 +1036,890 @@
       }
     }
 
+    /* ============================================================
+       Pastel Retro Poster — Theme Overlay (v3)
+       Dusty Pink × Dusty Blue × Mustard を主役に、テキスト強調は
+       ディープ・ワイン（バーガンディ）で目立たせる。
+       構成・テキスト・HTML は変更せず、見え方だけを差し替える。
+       ============================================================ */
+    :root {
+      /* 主役 3 色（参考画像ベース） */
+      --qc-pink:         #ebcccc;
+      --qc-pink-deep:    #d9aeb0;
+      --qc-pink-pale:    #f4dcdc;
+      --qc-blue:         #aec2d6;
+      --qc-blue-deep:    #8ba6c1;
+      --qc-blue-pale:    #cad8e6;
+      --qc-mustard:      #e0c25b;
+      --qc-mustard-deep: #c8a93a;
+      --qc-mustard-pale: #f0dc8c;
+
+      /* テキスト強調 / 輪郭 */
+      --qc-wine:         #8b1f3a;
+      --qc-wine-deep:    #6a1228;
+      --qc-ink:          #2a1e2a;
+      --qc-ink-soft:     #4a3a48;
+      --qc-cream:        #f7eee8;
+
+      /* 互換用エイリアス（既存ルールが使うトークン名） */
+      --qc-paper:        var(--qc-pink);
+      --qc-paper-dim:    var(--qc-pink-deep);
+      --qc-paper-warm:   var(--qc-pink-pale);
+      --qc-paper-bleach: var(--qc-cream);
+      --qc-vermilion:    var(--qc-wine);
+      --qc-vermilion-2:  var(--qc-wine-deep);
+      --qc-teal:         var(--qc-blue-deep);
+      --qc-teal-soft:    var(--qc-blue);
+      --qc-moss:         var(--qc-mustard-deep);
+      --qc-mustard-2:    var(--qc-mustard-deep);
+      --qc-plum:         var(--qc-wine);
+      --qc-rose:         var(--qc-pink-deep);
+
+      /* 既存トークンを QC パレットへ再マッピング */
+      --bg:     var(--qc-paper);
+      --text:   var(--qc-ink);
+      --muted:  #7a6450;
+      --border: var(--qc-ink);
+      --accent: var(--qc-vermilion);
+    }
+
+    /* 紙テクスチャ用 SVG（クリーム地に微細なノイズ + 印刷の点描）*/
+    body {
+      background-color: var(--qc-paper) !important;
+      color: var(--qc-ink) !important;
+      font-family: 'DM Serif Display', 'Playfair Display', 'Noto Serif JP', serif !important;
+      background-image:
+        /* 微細な紙繊維ノイズ */
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.07 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
+        /* 印刷網点 */
+        radial-gradient(1.4px 1.4px at 22% 31%, rgba(26,20,16,0.10) 50%, transparent 51%),
+        radial-gradient(1.2px 1.2px at 71% 79%, rgba(26,20,16,0.08) 50%, transparent 51%),
+        radial-gradient(1.1px 1.1px at 41% 71%, rgba(26,20,16,0.06) 50%, transparent 51%);
+      background-size: 180px 180px, 220px 220px, 320px 320px, 180px 180px;
+      background-attachment: fixed;
+    }
+    /* 紙の四辺に淡いグラデ（柔らかいビネット） */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 50%, transparent 55%, rgba(139, 31, 58, 0.08) 100%),
+        radial-gradient(ellipse at 0% 0%, rgba(174, 194, 214, 0.18), transparent 45%),
+        radial-gradient(ellipse at 100% 100%, rgba(224, 194, 91, 0.14), transparent 45%);
+    }
+
+    /* セクションごとの色違い背景（HTMLを変えずに色を交互に） */
+    .profile-form-section { background-color: var(--qc-blue) !important; }
+    .footer { background-color: var(--qc-mustard) !important; }
+
+    /* ============================================================
+       ✦ 星 / 太陽系 / 大地 のモチーフ追加
+       ============================================================ */
+
+    /* ---- 太陽系: ヘッダー左上のロゼッタを太陽 + 軌道 + 惑星に置換 ---- */
+    .header::before {
+      background: none !important;
+      width: 150px !important;
+      height: 150px !important;
+      top: 24px !important;
+      left: 24px !important;
+      opacity: 1 !important;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><circle cx='100' cy='100' r='86' fill='none' stroke='%238b1f3a' stroke-width='1.2' stroke-dasharray='3,4'/><circle cx='100' cy='100' r='62' fill='none' stroke='%238b1f3a' stroke-width='1.2' stroke-dasharray='3,4'/><circle cx='100' cy='100' r='38' fill='none' stroke='%238b1f3a' stroke-width='1.2' stroke-dasharray='3,4'/><g stroke='%238b1f3a' stroke-width='2' stroke-linecap='round'><line x1='100' y1='78' x2='100' y2='66'/><line x1='100' y1='122' x2='100' y2='134'/><line x1='78' y1='100' x2='66' y2='100'/><line x1='122' y1='100' x2='134' y2='100'/><line x1='84' y1='84' x2='75' y2='75'/><line x1='116' y1='84' x2='125' y2='75'/><line x1='84' y1='116' x2='75' y2='125'/><line x1='116' y1='116' x2='125' y2='125'/></g><circle cx='100' cy='100' r='16' fill='%23e0c25b' stroke='%232a1e2a' stroke-width='2'/><circle cx='161' cy='100' r='4.5' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1'/><circle cx='100' cy='38' r='5.5' fill='%23aec2d6' stroke='%232a1e2a' stroke-width='1'/><circle cx='66' cy='136' r='7' fill='%23ebcccc' stroke='%232a1e2a' stroke-width='1.2'/><g fill='%232a1e2a'><circle cx='185' cy='30' r='1.5'/><circle cx='25' cy='60' r='1.5'/><circle cx='40' cy='180' r='1.5'/><circle cx='178' cy='168' r='1.5'/></g></svg>") !important;
+      background-size: contain !important;
+      background-repeat: no-repeat !important;
+      background-position: center !important;
+      transform: rotate(-6deg) !important;
+    }
+
+    /* ---- 大地: ヘッダー右下のロゼッタを地平線 + 山並みに置換 ---- */
+    .header::after {
+      background: none !important;
+      width: 170px !important;
+      height: 110px !important;
+      bottom: 24px !important;
+      right: 24px !important;
+      opacity: 1 !important;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 130'><g fill='%23aec2d6' stroke='%232a1e2a' stroke-width='2' stroke-linejoin='round'><path d='M 0 78 L 38 46 L 70 70 L 110 28 L 152 58 L 200 38 L 200 130 L 0 130 Z'/></g><g fill='%238b1f3a' stroke='%232a1e2a' stroke-width='2' stroke-linejoin='round'><path d='M 0 108 Q 50 78 100 102 Q 150 124 200 92 L 200 130 L 0 130 Z'/></g><g stroke='%232a1e2a' stroke-width='1.8' stroke-linecap='round'><line x1='38' y1='105' x2='38' y2='92'/><line x1='78' y1='117' x2='78' y2='104'/><line x1='128' y1='120' x2='128' y2='107'/><line x1='168' y1='100' x2='168' y2='87'/></g><g fill='%23e0c25b' stroke='%232a1e2a' stroke-width='1'><circle cx='170' cy='20' r='10'/></g><g stroke='%23e0c25b' stroke-width='1.5' stroke-linecap='round'><line x1='170' y1='4' x2='170' y2='-2'/><line x1='184' y1='10' x2='190' y2='6'/><line x1='156' y1='10' x2='150' y2='6'/></g></svg>") !important;
+      background-size: contain !important;
+      background-repeat: no-repeat !important;
+      background-position: bottom !important;
+      transform: rotate(2deg) !important;
+    }
+
+    /* ---- 大地: フッター上に巨大な山並みパノラマ（4 層 + 太陽 + 木立 + 星） ---- */
+    .footer {
+      position: relative;
+      padding-top: 200px !important;
+    }
+    .footer::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0;
+      top: 0;
+      height: 200px;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200' preserveAspectRatio='xMidYMax slice'><g fill='%238b1f3a'><path d='M 140 28 L 144 40 L 156 44 L 144 48 L 140 60 L 136 48 L 124 44 L 136 40 Z'/><path d='M 480 18 L 483 28 L 493 31 L 483 34 L 480 44 L 477 34 L 467 31 L 477 28 Z'/><path d='M 820 30 L 824 42 L 836 46 L 824 50 L 820 62 L 816 50 L 804 46 L 816 42 Z'/></g><g fill='%232a1e2a'><circle cx='60' cy='40' r='2.5'/><circle cx='250' cy='20' r='2'/><circle cx='380' cy='45' r='2.5'/><circle cx='600' cy='25' r='2'/><circle cx='720' cy='40' r='2.5'/><circle cx='950' cy='20' r='2'/><circle cx='1100' cy='35' r='2.5'/></g><circle cx='200' cy='60' r='34' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='2.5'/><g stroke='%238b1f3a' stroke-width='3' stroke-linecap='round'><line x1='200' y1='14' x2='200' y2='4'/><line x1='234' y1='28' x2='242' y2='20'/><line x1='166' y1='28' x2='158' y2='20'/><line x1='246' y1='60' x2='256' y2='60'/><line x1='154' y1='60' x2='144' y2='60'/></g><circle cx='192' cy='52' r='3' fill='%23ebcccc'/><path d='M 0 115 L 90 75 L 180 105 L 260 70 L 360 98 L 450 65 L 540 95 L 630 70 L 720 100 L 820 75 L 920 102 L 1020 80 L 1110 105 L 1200 85 L 1200 200 L 0 200 Z' fill='%23f4dcdc' stroke='%232a1e2a' stroke-width='2.2' stroke-linejoin='round'/><path d='M 0 145 L 100 100 L 200 125 L 290 90 L 390 120 L 480 95 L 570 125 L 660 100 L 760 130 L 860 105 L 950 130 L 1050 105 L 1140 135 L 1200 115 L 1200 200 L 0 200 Z' fill='%23aec2d6' stroke='%232a1e2a' stroke-width='2.5' stroke-linejoin='round'/><path d='M 0 170 L 110 135 L 220 158 L 330 130 L 440 162 L 550 135 L 660 162 L 770 135 L 880 165 L 990 138 L 1100 162 L 1200 148 L 1200 200 L 0 200 Z' fill='%23e0c25b' stroke='%232a1e2a' stroke-width='2.5' stroke-linejoin='round'/><path d='M 0 185 Q 100 168 200 182 Q 300 195 400 178 Q 500 195 600 178 Q 700 195 800 180 Q 900 195 1000 178 Q 1100 195 1200 182 L 1200 200 L 0 200 Z' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='3' stroke-linejoin='round'/><g stroke='%232a1e2a' stroke-width='2.5' stroke-linecap='round' fill='%232a1e2a'><line x1='60' y1='182' x2='60' y2='165'/><circle cx='60' cy='163' r='4'/><line x1='170' y1='180' x2='170' y2='163'/><circle cx='170' cy='161' r='4'/><line x1='280' y1='184' x2='280' y2='167'/><circle cx='280' cy='165' r='4'/><line x1='400' y1='182' x2='400' y2='163'/><circle cx='400' cy='161' r='4'/><line x1='520' y1='184' x2='520' y2='167'/><circle cx='520' cy='165' r='4'/><line x1='640' y1='180' x2='640' y2='163'/><circle cx='640' cy='161' r='4'/><line x1='760' y1='182' x2='760' y2='165'/><circle cx='760' cy='163' r='4'/><line x1='880' y1='184' x2='880' y2='167'/><circle cx='880' cy='165' r='4'/><line x1='1020' y1='180' x2='1020' y2='163'/><circle cx='1020' cy='161' r='4'/><line x1='1140' y1='184' x2='1140' y2='167'/><circle cx='1140' cy='165' r='4'/></g></svg>");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      pointer-events: none;
+    }
+
+    /* ---- 太陽系 + 星: プロフィールフォーム左上に星座バースト、右上に太陽系 ---- */
+    .profile-form-section {
+      position: relative;
+      overflow: hidden;
+    }
+    /* 左上に円形シール */
+    .profile-form-section::before {
+      content: "" !important;
+      display: block !important;
+      position: absolute !important;
+      top: 28px !important;
+      left: 28px !important;
+      inset: auto !important;
+      width: 180px !important;
+      height: 180px !important;
+      pointer-events: none !important;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><circle cx='100' cy='100' r='95' fill='%23cad8e6' stroke='%232a1e2a' stroke-width='2.5'/><circle cx='100' cy='100' r='86' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.5'/><circle cx='100' cy='100' r='75' fill='none' stroke='%23e0c25b' stroke-width='1.8' stroke-dasharray='5,4'/><circle cx='100' cy='100' r='64' fill='%23cad8e6' stroke='%232a1e2a' stroke-width='1.5'/><circle cx='100' cy='100' r='52' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.5'/><g fill='%23e0c25b' stroke='%232a1e2a' stroke-width='1.5' stroke-linejoin='round'><path d='M 100 64 L 109 92 L 138 92 L 114 109 L 123 137 L 100 120 L 77 137 L 86 109 L 62 92 L 91 92 Z'/></g><g fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.5'><circle cx='100' cy='13' r='7'/><circle cx='187' cy='100' r='7'/><circle cx='100' cy='187' r='7'/><circle cx='13' cy='100' r='7'/></g></svg>") !important;
+      background-size: contain !important;
+      background-repeat: no-repeat !important;
+      background-position: center !important;
+      transform: rotate(-3deg) !important;
+      opacity: 0.95 !important;
+    }
+    /* 右上に旭日 */
+    .profile-form-section::after {
+      content: "";
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 220px;
+      height: 220px;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><g transform='translate(150 150)'><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(22.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(45)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(67.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(90)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(112.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(135)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(157.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(180)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(202.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(225)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(247.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(270)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(292.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(315)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(337.5)'/></g><circle cx='150' cy='150' r='52' fill='%23e0c25b' stroke='%232a1e2a' stroke-width='3'/><circle cx='150' cy='150' r='42' fill='none' stroke='%232a1e2a' stroke-width='1.5' stroke-dasharray='4,3'/><circle cx='150' cy='150' r='30' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='2'/></svg>");
+      background-size: contain;
+      background-repeat: no-repeat;
+      transform: rotate(3deg);
+      opacity: 0.95;
+    }
+    @media (max-width: 720px) {
+      .profile-form-section::before { width: 120px !important; height: 120px !important; top: 18px !important; left: 18px !important; }
+      .profile-form-section::after  { width: 140px; height: 140px; top: 14px; right: 14px; }
+    }
+
+    /* ---- Nav: ダスティブルー帯 × ワイン枠 × マスタード下線 ---- */
+    .nav {
+      background: var(--qc-blue-deep) !important;
+      border-bottom: 3px solid var(--qc-wine) !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      box-shadow: inset 0 -1px 0 var(--qc-ink) !important;
+    }
+    .nav__link {
+      color: var(--qc-ink) !important;
+      font-family: 'Cinzel', 'Inter', 'Noto Sans JP', sans-serif !important;
+      letter-spacing: 0.15em !important;
+    }
+    .nav__link:hover { color: var(--qc-wine) !important; }
+    .nav__link--active { color: var(--qc-wine) !important; font-weight: 700 !important; }
+    .nav__link--active::after {
+      background: var(--qc-mustard) !important;
+      box-shadow: none !important;
+      height: 3px !important;
+    }
+    .nav__link[href*="#hack"]::before { background: rgba(42, 30, 42, 0.30) !important; }
+
+    /* ---- Header: ヴィンテージ広告の表紙ポスター ---- */
+    .header {
+      background:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 180' preserveAspectRatio='xMidYMax slice'><g fill='%238b1f3a'><path d='M 140 28 L 144 40 L 156 44 L 144 48 L 140 60 L 136 48 L 124 44 L 136 40 Z'/><path d='M 480 18 L 483 28 L 493 31 L 483 34 L 480 44 L 477 34 L 467 31 L 477 28 Z'/><path d='M 820 30 L 824 42 L 836 46 L 824 50 L 820 62 L 816 50 L 804 46 L 816 42 Z'/></g><g fill='%232a1e2a'><circle cx='60' cy='40' r='2.5'/><circle cx='250' cy='20' r='2'/><circle cx='380' cy='45' r='2.5'/><circle cx='600' cy='25' r='2'/><circle cx='720' cy='40' r='2.5'/><circle cx='950' cy='20' r='2'/><circle cx='1100' cy='35' r='2.5'/></g><circle cx='1000' cy='52' r='32' fill='%23e0c25b' stroke='%232a1e2a' stroke-width='2.5'/><g stroke='%23e0c25b' stroke-width='3' stroke-linecap='round'><line x1='1000' y1='10' x2='1000' y2='0'/><line x1='1032' y1='25' x2='1040' y2='17'/><line x1='968' y1='25' x2='960' y2='17'/><line x1='1042' y1='52' x2='1052' y2='52'/><line x1='958' y1='52' x2='948' y2='52'/></g><path d='M 0 105 L 90 65 L 180 95 L 260 60 L 360 88 L 450 55 L 540 85 L 630 60 L 720 90 L 820 65 L 920 92 L 1020 70 L 1110 95 L 1200 75 L 1200 180 L 0 180 Z' fill='%23f4dcdc' stroke='%232a1e2a' stroke-width='2.2' stroke-linejoin='round'/><path d='M 0 130 L 100 90 L 200 115 L 290 80 L 390 110 L 480 85 L 570 115 L 660 90 L 760 120 L 860 95 L 950 120 L 1050 95 L 1140 125 L 1200 105 L 1200 180 L 0 180 Z' fill='%23aec2d6' stroke='%232a1e2a' stroke-width='2.5' stroke-linejoin='round'/><path d='M 0 150 L 110 120 L 220 142 L 330 115 L 440 145 L 550 120 L 660 145 L 770 120 L 880 148 L 990 122 L 1100 145 L 1200 130 L 1200 180 L 0 180 Z' fill='%23e0c25b' stroke='%232a1e2a' stroke-width='2.5' stroke-linejoin='round'/><path d='M 0 162 Q 100 145 200 160 Q 300 175 400 155 Q 500 175 600 155 Q 700 175 800 158 Q 900 175 1000 155 Q 1100 175 1200 160 L 1200 180 L 0 180 Z' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='3' stroke-linejoin='round'/><g stroke='%232a1e2a' stroke-width='2.5' stroke-linecap='round' fill='%232a1e2a'><line x1='60' y1='160' x2='60' y2='142'/><circle cx='60' cy='140' r='4'/><line x1='170' y1='158' x2='170' y2='140'/><circle cx='170' cy='138' r='4'/><line x1='280' y1='162' x2='280' y2='144'/><circle cx='280' cy='142' r='4'/><line x1='400' y1='160' x2='400' y2='140'/><circle cx='400' cy='138' r='4'/><line x1='520' y1='162' x2='520' y2='145'/><circle cx='520' cy='143' r='4'/><line x1='640' y1='160' x2='640' y2='140'/><circle cx='640' cy='138' r='4'/><line x1='760' y1='160' x2='760' y2='143'/><circle cx='760' cy='141' r='4'/><line x1='880' y1='162' x2='880' y2='145'/><circle cx='880' cy='143' r='4'/><line x1='1020' y1='160' x2='1020' y2='140'/><circle cx='1020' cy='138' r='4'/><line x1='1140' y1='162' x2='1140' y2='145'/><circle cx='1140' cy='143' r='4'/></g></svg>") bottom center / 100% 200px no-repeat,
+        repeating-linear-gradient(135deg,
+          transparent 0 22px,
+          rgba(26, 20, 16, 0.025) 22px 23px),
+        var(--qc-paper-warm) !important;
+      border-top: 6px solid var(--qc-ink) !important;
+      border-bottom: 6px solid var(--qc-ink) !important;
+      box-shadow:
+        inset 0 8px 0 var(--qc-vermilion);
+      position: relative;
+      padding: 80px 24px 240px !important;
+      overflow: hidden;
+    }
+    /* 左上: 昭和の円形シール（多重リング + 中央スター + 四方アクセント） */
+    .header::before {
+      content: "";
+      position: absolute;
+      top: 28px;
+      left: 28px;
+      width: 220px; height: 220px;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><circle cx='100' cy='100' r='95' fill='%23f4dcdc' stroke='%232a1e2a' stroke-width='2.5'/><circle cx='100' cy='100' r='86' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.5'/><circle cx='100' cy='100' r='75' fill='none' stroke='%23e0c25b' stroke-width='1.8' stroke-dasharray='5,4'/><circle cx='100' cy='100' r='64' fill='%23f4dcdc' stroke='%232a1e2a' stroke-width='1.5'/><circle cx='100' cy='100' r='52' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.5'/><g fill='%23e0c25b' stroke='%232a1e2a' stroke-width='1.5' stroke-linejoin='round'><path d='M 100 64 L 109 92 L 138 92 L 114 109 L 123 137 L 100 120 L 77 137 L 86 109 L 62 92 L 91 92 Z'/></g><g fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.5'><circle cx='100' cy='13' r='7'/><circle cx='187' cy='100' r='7'/><circle cx='100' cy='187' r='7'/><circle cx='13' cy='100' r='7'/></g><g fill='%23e0c25b' stroke='%232a1e2a' stroke-width='1.2'><circle cx='160' cy='40' r='4'/><circle cx='160' cy='160' r='4'/><circle cx='40' cy='160' r='4'/><circle cx='40' cy='40' r='4'/></g></svg>");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      transform: rotate(-3deg);
+    }
+
+    /* 右上: 旭日（16 本の朝日の光線 + 中央の太陽円盤） */
+    .header::after {
+      content: "";
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 280px; height: 280px;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><g transform='translate(150 150)'><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(22.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(45)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(67.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(90)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(112.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(135)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(157.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(180)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(202.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(225)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(247.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(270)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(292.5)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(315)'/><polygon points='0,-148 -18,-42 18,-42' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='1.2' transform='rotate(337.5)'/></g><circle cx='150' cy='150' r='52' fill='%23e0c25b' stroke='%232a1e2a' stroke-width='3'/><circle cx='150' cy='150' r='42' fill='none' stroke='%232a1e2a' stroke-width='1.5' stroke-dasharray='4,3'/><circle cx='150' cy='150' r='30' fill='%238b1f3a' stroke='%232a1e2a' stroke-width='2'/></svg>");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      transform: rotate(4deg);
+    }
+    @media (max-width: 720px) {
+      .header::before { width: 120px; height: 120px; }
+      .header::after  { width: 160px; height: 160px; }
+    }
+
+    /* ---- サイト説明文（サブタイトル下）= 卓上カレンダー ---- */
+    .header__description {
+      margin: 80px auto 70px !important;
+      max-width: 780px;
+      text-align: left;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.95rem;
+      color: var(--qc-ink);
+      line-height: 2.1;
+      letter-spacing: 0.04em;
+      position: relative;
+      z-index: 1;
+      padding: 56px 52px !important;
+      border: 3px solid var(--qc-ink);
+      box-shadow: 10px 10px 0 var(--qc-ink);
+      background:
+        /* 内側の白紙パネル（本文がのる範囲）*/
+        linear-gradient(var(--qc-cream), var(--qc-cream))
+          center / calc(100% - 60px) calc(100% - 60px) no-repeat,
+        /* 卓上カレンダー表紙のXスプリット（マスタード × ワインの 4 三角） */
+        conic-gradient(from 45deg at 50% 50%,
+          var(--qc-wine) 0deg 90deg,
+          var(--qc-mustard) 90deg 180deg,
+          var(--qc-wine) 180deg 270deg,
+          var(--qc-mustard) 270deg 360deg);
+    }
+    /* 上部の螺旋リング（ツインリング製本） */
+    .header__description::before {
+      content: "";
+      position: absolute;
+      top: -36px;
+      left: 60px;
+      right: 60px;
+      height: 40px;
+      pointer-events: none;
+      background:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 40' width='56' height='40'><rect x='0' y='18' width='56' height='10' fill='%232a1e2a'/><ellipse cx='28' cy='16' rx='13' ry='18' fill='none' stroke='%232a1e2a' stroke-width='4'/></svg>")
+        repeat-x center;
+      background-size: 56px 40px;
+    }
+    /* 下部のスタンド/イーゼル土台（黒） */
+    .header__description::after {
+      content: "";
+      position: absolute;
+      bottom: -30px;
+      left: -14px;
+      right: -14px;
+      height: 30px;
+      pointer-events: none;
+      background: var(--qc-ink);
+      box-shadow: 10px 4px 0 var(--qc-ink);
+    }
+    .header__description p {
+      margin: 0 0 14px;
+    }
+    .header__description p:last-child { margin-bottom: 0; }
+    .header__description strong {
+      color: var(--qc-wine);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    @media (max-width: 720px) {
+      .header__description {
+        margin: 56px auto 56px !important;
+        padding: 38px 26px !important;
+        font-size: 0.9rem;
+        box-shadow: 6px 6px 0 var(--qc-ink);
+      }
+      .header__description::before {
+        top: -28px;
+        left: 28px;
+        right: 28px;
+        height: 32px;
+        background-size: 44px 32px;
+      }
+      .header__description::after {
+        bottom: -22px;
+        left: -8px;
+        right: -8px;
+        height: 22px;
+        box-shadow: 6px 3px 0 var(--qc-ink);
+      }
+    }
+
+    .header__label {
+      color: var(--qc-paper-bleach) !important;
+      font-weight: 700 !important;
+      font-family: 'DM Serif Display', 'Noto Serif JP', serif !important;
+      letter-spacing: 0.1em !important;
+      font-size: 1.5rem !important;
+      line-height: 1.5 !important;
+      padding: 14px 40px !important;
+      border: 3px solid var(--qc-ink) !important;
+      background: var(--qc-wine) !important;
+      display: inline-block !important;
+      text-transform: none !important;
+      position: relative;
+      z-index: 1;
+      margin: 0 auto 28px !important;
+      box-shadow:
+        8px 8px 0 var(--qc-mustard),
+        8px 8px 0 3px var(--qc-ink);
+    }
+    .header__label::before,
+    .header__label::after {
+      content: "❖";
+      display: inline-block;
+      color: var(--qc-mustard);
+      margin: 0 0.7em;
+      font-size: 0.85em;
+      vertical-align: middle;
+    }
+    @media (max-width: 720px) {
+      .header__label {
+        font-size: 1.05rem !important;
+        padding: 10px 20px !important;
+        letter-spacing: 0.06em !important;
+        box-shadow:
+          5px 5px 0 var(--qc-mustard),
+          5px 5px 0 3px var(--qc-ink);
+      }
+      .header__label::before,
+      .header__label::after { margin: 0 0.45em; }
+    }
+    /* ---- ヒーロー: x10 + キャッチを同じラインで横並び ---- */
+    .header__title-row {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 44px !important;
+      flex-wrap: wrap !important;
+      position: relative;
+      margin: 20px auto 36px !important;
+      padding: 18px 24px !important;
+      z-index: 1;
+    }
+
+    /* x10 ロゴブロック: 中央に縦並びで x10 と エクステン を配置 */
+    /* x10 = FRAMED（二重インク枠 + 四隅ワイン円 + イタリック黒文字） */
+    .header__title {
+      display: inline-block !important;
+      position: relative !important;
+      background: var(--qc-cream) !important;
+      border: 4px solid var(--qc-ink) !important;
+      box-shadow:
+        inset 0 0 0 8px var(--qc-cream),
+        inset 0 0 0 10px var(--qc-ink) !important;
+      padding: 32px 56px 26px !important;
+      margin: 0 !important;
+      width: auto !important;
+      text-align: center !important;
+      font-family: 'DM Serif Display', 'Playfair Display', serif !important;
+      font-style: italic !important;
+      font-weight: 900 !important;
+      font-size: 6rem !important;
+      line-height: 1 !important;
+      letter-spacing: -0.05em !important;
+      color: var(--qc-ink) !important;
+      text-shadow: none !important;
+      transform: none !important;
+    }
+    /* 角の円アクセント（左上 + 右下） */
+    .header__title::before,
+    .header__title::after {
+      content: "" !important;
+      display: block !important;
+      position: absolute !important;
+      width: 22px !important;
+      height: 22px !important;
+      background: var(--qc-wine) !important;
+      border: 2.5px solid var(--qc-ink) !important;
+      border-radius: 50% !important;
+      font-size: 0 !important;
+      color: transparent !important;
+      letter-spacing: 0 !important;
+      line-height: 1 !important;
+      margin: 0 !important;
+      text-indent: 0 !important;
+      pointer-events: none;
+    }
+    .header__title::before {
+      top: -13px !important;
+      left: -13px !important;
+    }
+    .header__title::after {
+      bottom: -13px !important;
+      right: -13px !important;
+    }
+    .header__title br { display: none !important; }
+
+    .header__title-x {
+      font-size: 0.4em !important;
+      vertical-align: 0.95em !important;
+      color: var(--qc-ink) !important;
+      font-family: 'DM Serif Display', 'Playfair Display', serif !important;
+      font-style: italic !important;
+      font-weight: 900 !important;
+      text-shadow: none !important;
+      margin: 0 4px 0 0 !important;
+      letter-spacing: 0 !important;
+      background: none !important;
+      -webkit-text-fill-color: var(--qc-ink) !important;
+      -webkit-text-stroke: 0 !important;
+      filter: none !important;
+    }
+    .header__title-num {
+      color: var(--qc-ink) !important;
+      font-family: 'DM Serif Display', 'Playfair Display', serif !important;
+      font-style: italic !important;
+      font-weight: 900 !important;
+      letter-spacing: -0.05em !important;
+      background: none !important;
+      background-image: none !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      -webkit-text-fill-color: var(--qc-ink) !important;
+      -webkit-text-stroke: 0 !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+    .header__title-ruby {
+      display: block !important;
+      color: var(--qc-ink) !important;
+      font-family: 'Noto Serif JP', serif !important;
+      font-style: normal !important;
+      font-size: 0.85rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.55em !important;
+      text-indent: 0.55em !important;
+      text-shadow: none !important;
+      line-height: 1 !important;
+      margin-top: 14px !important;
+      padding: 8px 0 0 !important;
+      border: none !important;
+      border-top: 1.5px solid var(--qc-ink) !important;
+    }
+
+    @media (max-width: 720px) {
+      .header__title {
+        font-size: 3.6rem !important;
+        padding: 22px 30px 20px !important;
+        box-shadow:
+          inset 0 0 0 6px var(--qc-cream),
+          inset 0 0 0 8px var(--qc-ink) !important;
+      }
+      .header__title::before,
+      .header__title::after {
+        width: 16px !important;
+        height: 16px !important;
+      }
+      .header__title::before { top: -9px !important; left: -9px !important; }
+      .header__title::after { bottom: -9px !important; right: -9px !important; }
+      .header__title-ruby {
+        font-size: 0.7rem !important;
+        letter-spacing: 0.4em !important;
+        text-indent: 0.4em !important;
+      }
+    }
+
+    /* キャッチ: 上下二重罫の昭和プラーク（額装風） */
+    .header__catch {
+      color: var(--qc-ink) !important;
+      font-family: 'DM Serif Display', 'Noto Serif JP', serif !important;
+      font-style: italic !important;
+      font-size: 1.55rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em !important;
+      padding: 14px 28px !important;
+      background: transparent !important;
+      border-top: 4px double var(--qc-wine) !important;
+      border-bottom: 4px double var(--qc-wine) !important;
+      position: relative;
+      z-index: 1;
+      text-align: center !important;
+      max-width: 600px;
+    }
+    /* キャッチの左右に小さなワインアクセント帯 */
+    .header__catch::before,
+    .header__catch::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 32px;
+      background: var(--qc-wine);
+    }
+    .header__catch::before { left: -16px; }
+    .header__catch::after  { right: -16px; }
+
+    @media (max-width: 720px) {
+      .header__title-row {
+        gap: 24px !important;
+        padding: 12px 16px !important;
+      }
+      .header__title { font-size: 3.6rem !important; }
+      .header__title-ruby {
+        font-size: 0.72rem !important;
+        letter-spacing: 0.5em !important;
+        text-indent: 0.5em !important;
+      }
+      .header__catch {
+        font-size: 1.1rem !important;
+        padding: 10px 18px !important;
+        letter-spacing: 0.04em !important;
+        max-width: 92%;
+      }
+      .header__catch::before,
+      .header__catch::after { width: 4px; height: 24px; }
+      .header__catch::before { left: -10px; }
+      .header__catch::after  { right: -10px; }
+    }
+    .header__subtitle {
+      color: var(--qc-ink) !important;
+      font-family: 'Noto Serif JP', 'DM Serif Display', serif !important;
+      font-size: 0.92rem !important;
+      position: relative;
+      z-index: 1;
+      padding: 0;
+      border-top: none;
+      margin-top: 20px !important;
+    }
+
+    /* ---- Header advice CTA（隠れている時の見た目も整える） ---- */
+    .header__advice-date {
+      background: var(--qc-paper-warm) !important;
+      border: 2.5px solid var(--qc-ink) !important;
+      border-radius: 0 !important;
+      box-shadow: 6px 6px 0 var(--qc-vermilion) !important;
+      animation: none !important;
+    }
+    .header__advice-date::before {
+      background: var(--qc-ink) !important;
+      color: var(--qc-mustard) !important;
+      border-radius: 0 !important;
+    }
+    .header__advice-date__num { color: var(--qc-vermilion) !important; }
+    .header__advice-date__sep { color: var(--qc-ink) !important; }
+    .header__advice-date__arrow {
+      background: var(--qc-vermilion) !important;
+      color: var(--qc-paper) !important;
+      border: 2px solid var(--qc-ink) !important;
+      box-shadow: none !important;
+    }
+
+    /* ---- Section / Portfolio ---- */
+    .section {
+      position: relative;
+      padding: 70px 24px !important;
+    }
+    /* セクション上下に印刷職人の装飾ライン（ベタ罫 + 二重罫 + 角丸抜き） */
+    .section::before {
+      content: "❖ ❖ ❖";
+      display: block;
+      text-align: center;
+      color: var(--qc-vermilion);
+      font-size: 0.9rem;
+      letter-spacing: 1.2em;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 3px double var(--qc-ink);
+    }
+    .section__label {
+      color: var(--qc-vermilion) !important;
+      font-weight: 700 !important;
+      font-family: 'Cinzel', 'Playfair Display', serif !important;
+      letter-spacing: 0.45em !important;
+    }
+    .section__title {
+      color: var(--qc-ink) !important;
+      font-family: 'DM Serif Display', 'Playfair Display', 'Noto Serif JP', serif !important;
+      font-size: 2.4rem !important;
+      letter-spacing: 0.02em !important;
+    }
+
+    .card {
+      background: var(--qc-cream) !important;
+      border: 3px solid var(--qc-ink) !important;
+      border-radius: 0 !important;
+      box-shadow:
+        6px 6px 0 var(--qc-mustard),
+        6px 6px 0 3px var(--qc-ink) !important;
+      transition: transform .22s ease, box-shadow .22s ease;
+      position: relative;
+    }
+    .card::after {
+      content: "✦";
+      position: absolute;
+      top: 8px; right: 10px;
+      color: var(--qc-wine);
+      font-family: 'Inter', serif;
+      font-size: 1rem;
+      line-height: 1;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px) !important;
+      box-shadow:
+        9px 9px 0 var(--qc-mustard),
+        9px 9px 0 3px var(--qc-ink) !important;
+    }
+    .card__number {
+      color: var(--qc-vermilion) !important;
+      font-weight: 700;
+      font-family: 'Cinzel', 'Playfair Display', serif !important;
+      letter-spacing: 0.3em !important;
+    }
+    .card__title  {
+      color: var(--qc-ink) !important;
+      font-family: 'DM Serif Display', 'Playfair Display', serif !important;
+      letter-spacing: 0.04em !important;
+    }
+    .card__desc   {
+      color: var(--qc-ink-soft) !important;
+      font-family: 'Noto Serif JP', serif !important;
+    }
+    .tag {
+      border: 1.5px solid var(--qc-ink) !important;
+      color: var(--qc-ink) !important;
+      border-radius: 0 !important;
+      background: var(--qc-paper);
+      font-family: 'Cinzel', monospace !important;
+      letter-spacing: 0.18em !important;
+    }
+
+    /* ---- Advice cards（非表示中だが配色だけ揃える） ---- */
+    .advice-card {
+      background: var(--qc-paper-warm) !important;
+      border: 2px solid var(--qc-ink) !important;
+      border-radius: 0 !important;
+      box-shadow: 5px 5px 0 var(--qc-mustard) !important;
+    }
+    .advice-card__thumb {
+      background: var(--qc-ink) !important;
+      border-radius: 0 !important;
+      color: var(--qc-mustard) !important;
+    }
+    .advice-card--basic   .advice-card__thumb { color: var(--qc-teal-soft) !important; }
+    .advice-card--monthly .advice-card__thumb { color: var(--qc-moss) !important; }
+    .advice-card--yearly  .advice-card__thumb { color: var(--qc-plum) !important; }
+    .advice-card__title { color: var(--qc-ink) !important; }
+    .advice-card__desc  { color: var(--qc-ink-soft) !important; }
+    .advice-card__tag {
+      border: 1.5px solid var(--qc-ink) !important;
+      color: var(--qc-ink) !important;
+      border-radius: 0 !important;
+      background: var(--qc-paper);
+    }
+    .advice-card__foot {
+      background: var(--qc-paper-dim) !important;
+      border-top: 1.5px solid var(--qc-ink) !important;
+      color: var(--qc-vermilion) !important;
+    }
+
+    /* ---- Profile form セクション: ダスティブルー島 ---- */
+    .profile-form-section {
+      background:
+        radial-gradient(circle at 18px 30px, var(--qc-blue-pale) 4px, transparent 5px) 0 0 / 36px 60px repeat-y,
+        radial-gradient(circle at calc(100% - 18px) 30px, var(--qc-blue-pale) 4px, transparent 5px) 0 0 / 36px 60px repeat-y,
+        repeating-linear-gradient(0deg, var(--qc-blue) 0 28px, var(--qc-blue-deep) 28px 29px),
+        var(--qc-blue) !important;
+      color: var(--qc-ink) !important;
+      border-top: 6px solid var(--qc-ink) !important;
+      border-bottom: 6px solid var(--qc-ink) !important;
+      box-shadow:
+        inset 0 8px 0 var(--qc-wine),
+        inset 0 -8px 0 var(--qc-wine);
+      padding: 80px 60px 80px !important;
+    }
+    .profile-form-section::before { display: none !important; }
+    .profile-form-section__label {
+      color: var(--qc-vermilion) !important;
+      font-family: 'Cinzel', 'Playfair Display', serif !important;
+      font-weight: 800 !important;
+      font-size: 0.85rem !important;
+      letter-spacing: 0.5em !important;
+      padding: 6px 14px !important;
+      border-top: 2px solid var(--qc-ink) !important;
+      border-bottom: 2px solid var(--qc-ink) !important;
+      display: inline-block !important;
+      background: var(--qc-paper-bleach);
+    }
+    .profile-form-section__note {
+      border-top: 2px solid var(--qc-ink) !important;
+      border-bottom: 2px solid var(--qc-ink) !important;
+      background: var(--qc-paper-warm) !important;
+      color: var(--qc-ink) !important;
+      font-family: 'Noto Serif JP', serif !important;
+      padding: 18px 24px !important;
+    }
+    .profile-form-section__note-marker { color: var(--qc-vermilion) !important; font-weight: 800; }
+
+    .profile-form__label {
+      color: var(--qc-ink) !important;
+      font-family: 'Cinzel', 'Playfair Display', 'Noto Serif JP', serif !important;
+      letter-spacing: 0.22em !important;
+      text-transform: none !important;
+      font-size: 0.92rem !important;
+      font-weight: 700 !important;
+    }
+    .profile-form__required {
+      background: var(--qc-vermilion) !important;
+      color: var(--qc-paper) !important;
+      border: 2px solid var(--qc-ink) !important;
+      border-radius: 0 !important;
+      padding: 2px 8px !important;
+      font-family: 'Cinzel', sans-serif !important;
+      font-size: 0.55rem !important;
+      letter-spacing: 0.25em !important;
+    }
+    .profile-form__input,
+    .profile-form__select {
+      background: var(--qc-cream) !important;
+      border: 2px solid var(--qc-ink) !important;
+      border-radius: 0 !important;
+      color: var(--qc-ink) !important;
+      font-family: 'Noto Serif JP', 'DM Serif Display', serif !important;
+      box-shadow: 3px 3px 0 var(--qc-ink);
+    }
+    .profile-form__input:focus,
+    .profile-form__select:focus {
+      border-color: var(--qc-wine) !important;
+      background: var(--qc-pink-pale) !important;
+      box-shadow: 3px 3px 0 var(--qc-wine) !important;
+    }
+    .profile-form__input::placeholder { color: rgba(74, 59, 48, 0.55) !important; }
+    .profile-form__select {
+      background-image:
+        linear-gradient(45deg, transparent 50%, var(--qc-vermilion) 50%),
+        linear-gradient(135deg, var(--qc-vermilion) 50%, transparent 50%) !important;
+      color-scheme: light !important;
+    }
+    .profile-form__select option,
+    .profile-form__select optgroup {
+      background: var(--qc-paper) !important;
+      color: var(--qc-ink) !important;
+    }
+
+    .profile-form__pill {
+      background: var(--qc-cream) !important;
+      border: 2px solid var(--qc-ink) !important;
+      color: var(--qc-ink) !important;
+      border-radius: 0 !important;
+      box-shadow: 3px 3px 0 var(--qc-ink);
+      font-family: 'Cinzel', 'Noto Serif JP', serif !important;
+      letter-spacing: 0.15em !important;
+    }
+    .profile-form__pill:hover {
+      background: var(--qc-mustard-pale) !important;
+    }
+    .profile-form__pill[aria-pressed="true"] {
+      background: var(--qc-wine) !important;
+      border-color: var(--qc-ink) !important;
+      color: var(--qc-cream) !important;
+      box-shadow: 3px 3px 0 var(--qc-ink);
+    }
+
+    .profile-form__toggle label { color: var(--qc-ink-soft) !important; }
+
+    .profile-form__submit {
+      background: var(--qc-wine) !important;
+      color: var(--qc-cream) !important;
+      border: 3px solid var(--qc-ink) !important;
+      border-radius: 0 !important;
+      box-shadow:
+        6px 6px 0 var(--qc-mustard),
+        6px 6px 0 3px var(--qc-ink) !important;
+      font-family: 'Bungee Inline', 'Cinzel', serif !important;
+      letter-spacing: 0.22em !important;
+      font-size: 1rem !important;
+      padding: 18px 28px !important;
+    }
+    .profile-form__submit:hover {
+      background: var(--qc-wine-deep) !important;
+      transform: translate(-2px, -2px);
+      box-shadow:
+        9px 9px 0 var(--qc-mustard),
+        9px 9px 0 3px var(--qc-ink) !important;
+    }
+    .profile-form__reset {
+      background: var(--qc-cream) !important;
+      color: var(--qc-ink) !important;
+      border: 2px solid var(--qc-ink) !important;
+      border-radius: 0 !important;
+      box-shadow: 4px 4px 0 var(--qc-ink);
+      font-family: 'Cinzel', serif !important;
+      letter-spacing: 0.22em !important;
+    }
+    .profile-form__error {
+      background: var(--qc-vermilion) !important;
+      border: 2px solid var(--qc-ink) !important;
+      color: var(--qc-paper) !important;
+      border-radius: 0 !important;
+      font-family: 'Noto Serif JP', serif !important;
+    }
+    .profile-form__success {
+      background: var(--qc-moss) !important;
+      border: 2px solid var(--qc-ink) !important;
+      color: var(--qc-paper) !important;
+      border-radius: 0 !important;
+      font-family: 'Noto Serif JP', serif !important;
+    }
+
+    /* ---- Footer: マスタード・タグ ---- */
+    .footer {
+      background: var(--qc-mustard) !important;
+      border-top: 6px solid var(--qc-ink) !important;
+      box-shadow: inset 0 8px 0 var(--qc-wine);
+      color: var(--qc-ink) !important;
+      padding: 60px 24px 50px !important;
+    }
+    .footer::before {
+      content: "✦  ✦  ✦";
+      display: block;
+      text-align: center;
+      color: var(--qc-wine);
+      letter-spacing: 0.8em;
+      margin-bottom: 18px;
+      font-size: 0.8rem;
+    }
+    .footer__logo {
+      color: var(--qc-wine) !important;
+      font-family: 'Bungee Inline', 'Cinzel', serif !important;
+      font-weight: 900 !important;
+      font-size: 1.6rem !important;
+      letter-spacing: 0.3em !important;
+    }
+    .footer__text {
+      color: var(--qc-ink) !important;
+      font-family: 'Cinzel', serif !important;
+      letter-spacing: 0.18em !important;
+    }
+    .footer__links a {
+      color: var(--qc-wine) !important;
+      font-family: 'Cinzel', serif !important;
+      letter-spacing: 0.18em !important;
+      font-weight: 700 !important;
+    }
+
   </style>
 </head>
 <body>
@@ -1045,7 +1930,7 @@
       <span class="nav__icon">&#9671;</span> TOP
     </a>
     <a href="xten/today.html" class="nav__link">
-      <span class="nav__icon">&#9671;</span> Today's アドバイス
+      <span class="nav__icon">&#9671;</span> 本日のTODO
     </a>
     <a href="xten/month.html" class="nav__link">
       <span class="nav__icon">&#9671;</span> This month's スケジュール
@@ -1060,15 +1945,21 @@
 
   <!-- Header -->
   <header class="header">
-    <p class="header__label">Tactical Analysis Engine</p>
+    <p class="header__label">あなただけの【次世代人生攻略エンジン】</p>
     <div class="header__title-row">
-      <h1 class="header__title"><span class="header__title-x">x</span><span class="header__title-num">10</span><br><span class="header__title-ruby">エクス・テン</span></h1>
+      <h1 class="header__title"><span class="header__title-x">x</span><span class="header__title-num">10</span><br><span class="header__title-ruby">エクステン</span></h1>
       <p class="header__catch">-運命-を10倍速で攻略せよ。</p>
     </div>
     <p class="header__subtitle">
-      ―― 複数の占星術から、人々の生まれ持った資質を解析し、人生の最適行動を紐解く。<br>
-      あなただけの【次世代人生攻略エンジン】です。
+      ―― 複数の占星術から、人々の生まれ持った資質を解析し、人生の最適行動を紐解く。
     </p>
+    <div class="header__description">
+      <p><strong>x10(エクステン)</strong>が提供するのは、「占い」ではなく「行動指示（TODO）」です。</p>
+      <p>あなたが【今日どう動くべきか】の決断を、「四柱推命」「インド占星術」「宿曜占星術」この3つの占星術を掛け合わせ、AIが最適化します。</p>
+      <p>あなたの【生活そのもの】を、最も運気の良い流れへと自動でチューニングしてくれるので、これまでの占い結果のように、【あなたが合わせる】必要はありません。</p>
+      <p>あなたがやるべきことは、<strong>x10(エクステン)</strong>にアクセスし、「本日のTODO」を確認、実行する。</p>
+      <p>それだけで、あなたは<strong>人生を10倍速で攻略</strong>できます。</p>
+    </div>
   </header>
 
   <!-- ============================================================
@@ -1076,11 +1967,11 @@
        ============================================================ -->
   <section class="profile-form-section" id="profile-form-section">
     <div class="profile-form-section__inner">
-      <p class="profile-form-section__label">// PROFILE INTAKE</p>
+      <p class="profile-form-section__label">プロフィール入力</p>
 
       <p class="profile-form-section__note">
-        <span class="profile-form-section__note-marker">※</span>あなたを攻略するための入力項目です。<br>
-        <span class="profile-form-section__note-indent">回答が多いほど適切な結果が表れ、ブーストがかかります。</span>
+        あなたの運命を攻略するために重要な項目です。<br>
+        入力が正確で多いほど、最適化されたTODOが表示されます。
       </p>
 
       <form class="profile-form" id="profile-form" novalidate>
@@ -1199,7 +2090,7 @@
         <p class="profile-form__success" id="profile-form-success" hidden>✓ プロフィールを保存しました。</p>
 
         <div class="profile-form__actions">
-          <button type="submit" class="profile-form__submit">&gt; RUN ANALYSIS</button>
+          <button type="submit" class="profile-form__submit">本日のTODOを確認(無料)</button>
           <button type="button" class="profile-form__reset" id="profile-form-reset">リセット</button>
         </div>
       </form>
@@ -1214,7 +2105,7 @@
   <section class="advice-cards" aria-label="アドバイス入口">
     <div class="advice-cards__grid">
 
-      <!-- 1. Today's アドバイス -->
+      <!-- 1. 本日のTODO -->
       <a href="xten/today.html" class="advice-card advice-card--today">
         <div class="advice-card__top">
           <div class="advice-card__thumb">
@@ -1222,7 +2113,7 @@
             <span class="advice-card__thumb-sub">TODAY</span>
           </div>
           <div class="advice-card__head">
-            <h3 class="advice-card__title">Today's アドバイス</h3>
+            <h3 class="advice-card__title">本日のTODO</h3>
             <p class="advice-card__price"><strong>0円</strong></p>
           </div>
         </div>
@@ -1230,7 +2121,7 @@
           <span class="advice-card__tag">完全無料</span>
           <p class="advice-card__desc">世界に一人だけの「今日、何時に、何を実行すべきか」のTODOリスト。宿曜占星術（ベース）× 四柱推命（補正）。AIが「キーマン1人と1対1で会え」など、行動をピンポイント最適化。</p>
         </div>
-        <div class="advice-card__foot">今日のTODOを受け取る →</div>
+        <div class="advice-card__foot">本日のTODOを受け取る →</div>
       </a>
 
       <!-- 2. あなたの基本スペック -->

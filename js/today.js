@@ -288,11 +288,11 @@
 
   // ----------------- ラッキー要素 -----------------
   const ELEMENT_LUCKY = {
-    '木': { color: '緑・水色',  direction: '東',   time: '午前 5-7時',   number: '3 / 8' },
-    '火': { color: '赤・ピンク', direction: '南',   time: '午前 11-13時', number: '2 / 7' },
-    '土': { color: '黄・茶',    direction: '中央', time: '午後 1-3時',   number: '5 / 0' },
-    '金': { color: '白・銀',    direction: '西',   time: '午後 5-7時',   number: '4 / 9' },
-    '水': { color: '黒・青',    direction: '北',   time: '夜 23-1時',    number: '1 / 6' }
+    '木': { time: '午前 5-7時',   timeAction: '一日のテーマを整理し、優先順位を決める',     number: '3・8', color: '緑・水色',  food: '葉物野菜・サラダ',  item: '観葉植物・木製グッズ' },
+    '火': { time: '午前 11-13時', timeAction: '大事な提案・プレゼン・決断を行う',           number: '2・7', color: '赤・ピンク', food: '辛い料理・赤い食材', item: 'キャンドル・赤い小物' },
+    '土': { time: '午後 1-3時',   timeAction: '地道な作業や仕込み、根回しを進める',         number: '5・0', color: '黄・茶',    food: '根菜・甘味',        item: '陶器・アースカラーの小物' },
+    '金': { time: '午後 5-7時',   timeAction: '商談・契約・まとめの作業を一気に片付ける',   number: '4・9', color: '白・銀',    food: 'ナッツ・白い食材',  item: 'シルバーアクセ・金属小物' },
+    '水': { time: '夜 23-1時',    timeAction: '内省や創造的なアイデア出し、執筆を行う',     number: '1・6', color: '黒・青',    food: '魚介・海藻',        item: '香水・ガラス雑貨' }
   };
 
   // ----------------- 本日の運勢生成 -----------------
@@ -311,7 +311,7 @@
     const birthPillar  = calcDayPillar(profile.birthYear, profile.birthMonth, profile.birthDay);
 
     const relation = calcShukuyoRelation(birthShukuyo.index, todayShukuyo.index);
-    const lucky    = ELEMENT_LUCKY[todayPillar.stem.element] || { color: '—', direction: '—', time: '—', number: '—' };
+    const lucky    = ELEMENT_LUCKY[todayPillar.stem.element] || { time: '—', timeAction: '—', number: '—', color: '—', food: '—', item: '—' };
 
     // --- プロフィール基本データ ---
     const animalIdx = ((profile.birthYear - 4) % 12 + 12) % 12;
@@ -339,6 +339,7 @@
     });
 
     return {
+      nickname: (profile && profile.nickname) ? String(profile.nickname).trim() : '',
       date: `${tm}月${td}日（${dow}）`,
       sevenLum: `${sevenLum}曜`,
       todayShukuyo: todayShukuyo.name,
@@ -428,17 +429,123 @@
 
   // ----------------- レンダリング -----------------
   function displayResult(r) {
-    document.getElementById('astro-symbol').textContent  = r.relation.icon;
-    document.getElementById('astro-title').textContent   = `${r.date}のあなた`;
-    document.getElementById('astro-subtitle').textContent = `${r.relation.label} × ${r.todayElement}の${r.todayYinYang}`;
+    const symEl = document.getElementById('astro-symbol');
+    if (symEl) symEl.textContent = r.relation.icon;
+    document.getElementById('astro-title').textContent   = `${r.date}`;
+    const subEl = document.getElementById('astro-subtitle');
+    if (subEl) subEl.textContent = `${r.relation.label} × ${r.todayElement}の${r.todayYinYang}`;
 
     document.getElementById('astro-chart').innerHTML = renderBlocks(r);
 
-    document.getElementById('astro-overall').textContent = r.overall;
-    document.getElementById('astro-career').textContent  = r.career;
-    document.getElementById('astro-love').textContent    = r.love;
-    document.getElementById('astro-money').textContent   = r.money;
-    document.getElementById('astro-health').textContent  = r.health;
+    renderTodoList(r);
+  }
+
+  // 統合判定（四柱推命 × 宿曜）から「本日のアドバイス」を生成
+  function generateDailyAdvice(r) {
+    const ACTION_BY_TYPE = {
+      '栄': '攻めの一手を打って吉。',
+      '親': '感謝を行動で示そう。',
+      '友': '仲間と協力すれば成果倍増。',
+      '衰': '休息と栄養を最優先に。',
+      '安': '無理せず丁寧に過ごそう。',
+      '危': '冷静さを保って慎重に判断を。',
+      '成': '小さな勝利を積み重ねよう。',
+      '壊': '無理は禁物、現状維持でOK。',
+      '命': '自分の本質に向き合おう。',
+      '業': '逃げずに課題と対処して。',
+      '胎': '新しい縁を大切に育てよう。'
+    };
+    const base = (r.relation && r.relation.desc) || '';
+    const type = r.relation && r.relation.type;
+    const action = ACTION_BY_TYPE[type] || 'マイペースで進めよう。';
+    return `${base}。${action}`;
+  }
+
+  // 性格傾向 + 感情から「本日の一言」を生成（30 パターン）
+  function generateOneLiner(tendency) {
+    if (!tendency) return '今日はバランスの取れた日、マイペースで進めば良い流れに乗れそう。';
+    const p = {};
+    (tendency.personality || []).forEach(d => { p[d.label] = d.leftValue; });
+    const top = (tendency.emotion && tendency.emotion[0]) || {};
+    const lbl = top.label || '';
+    const pct = top.percent || 0;
+    const STRONG = pct >= 18;       // トップ感情が強い
+    const VERY_STRONG = pct >= 26;  // トップ感情が非常に強い
+
+    const extro    = p['関心']||50;  // 外向性
+    const active   = p['姿勢']||50;  // 積極性
+    const approach = p['目的']||50;  // 接近性
+    const initiate = p['行動']||50;  // 能動性
+    const optimism = p['思考']||50;  // 楽観性
+    const receive  = p['器']||50;    // 受容性
+
+    const energy   = (extro + active + initiate) / 3;
+    const openness = (approach + receive) / 2;
+
+    // ===== Group A: トップ感情に強く引きずられる場合（10 種）=====
+    if (VERY_STRONG && lbl === '興味/発見')   return '好奇心が冴える日、新しい情報や学びに飛び込もう。';
+    if (VERY_STRONG && lbl === '興奮/恍惚')   return 'テンションが高まる日、勢いに任せて行動を起こそう。';
+    if (VERY_STRONG && lbl === '満足/歓喜')   return '心が満たされる日、感謝の気持ちで周りに優しく接して。';
+    if (VERY_STRONG && lbl === '悩み/葛藤')   return '決断を迫られる日、紙に書き出して頭の中を整理しよう。';
+    if (VERY_STRONG && lbl === '疑問/混乱')   return '思考がまとまりにくい日、情報の取捨選択を慎重に。';
+    if (VERY_STRONG && lbl === '疑心/警戒')   return '警戒心が強い日、信頼できる相手とだけ深く関わろう。';
+    if (VERY_STRONG && lbl === '不安/恐怖')   return '不安に押されそうな日、深呼吸して足元を確かめて。';
+    if (VERY_STRONG && lbl === '怒り/憤慨')   return 'カチンと来やすい日、即返信せず一晩寝かせてみよう。';
+    if (VERY_STRONG && lbl === '悲しみ/落胆') return 'センチメンタルな日、無理に明るく振る舞わず素直に。';
+    if (VERY_STRONG && lbl === '親愛/感謝')   return '人との縁が温まる日、感謝の言葉を惜しまず伝えて。';
+
+    // ===== Group B: トップ感情 × 性格軸の組み合わせ（15 種）=====
+    if (STRONG && lbl === '驚き')           return '予想外の出来事が起こりやすい日、柔軟に受け止めて吉。';
+    if (STRONG && lbl === '冷静')           return '落ち着いた判断ができる日、重要な決断は今日のうちに。';
+    if (STRONG && lbl === '退屈')           return '刺激不足を感じる日、新しい場所や本でリフレッシュしよう。';
+    if (STRONG && lbl === '軽蔑')           return '人にイライラしやすい日、距離をとって冷静さを保とう。';
+    if (STRONG && lbl === '妄想/空想' && approach >= 55) return 'アイデアが湧く日、思いついたことをメモに残しておこう。';
+    if (STRONG && lbl === '畏怖')           return '大きな存在を感じる日、謙虚な姿勢で物事に向き合おう。';
+    if (STRONG && lbl === '羞恥')           return '自意識が高まる日、完璧を求めすぎず気楽にいこう。';
+    if (STRONG && lbl === '興味/発見' && extro <= 50)    return '静かな探究心が湧く日、興味のあるテーマを深掘りしよう。';
+    if (STRONG && lbl === '興奮/恍惚' && initiate <= 50) return '気分が舞い上がる日、地に足をつけて行動を選ぼう。';
+    if (STRONG && lbl === '満足/歓喜' && active <= 50)   return '穏やかな幸福感が広がる日、現状の幸せを噛み締めて。';
+    if (STRONG && lbl === '親愛/感謝' && extro <= 50)    return '大切な人の存在を実感する日、静かに想いを伝えよう。';
+    if (STRONG && lbl === '不安/恐怖' && receive <= 50)  return '警戒モードに入る日、無理に動かず一旦様子見でOK。';
+    if (STRONG && lbl === '怒り/憤慨' && initiate <= 50) return '不満が溜まる日、運動や散歩で発散するのがおすすめ。';
+    if (STRONG && lbl === '疑問/混乱' && optimism >= 55) return '答えが見えない日、明るく問いを持ち続けるのが吉。';
+    if (STRONG && lbl === '悩み/葛藤' && receive >= 55)  return '迷いが多い日、信頼できる人に相談してみよう。';
+
+    // ===== Group C: 性格軸主導（5 種 + フォールバック）=====
+    if (energy >= 70 && optimism >= 65)
+      return '心身共に充実している日、何をやってもうまくいきそう。';
+    if (energy <= 35 && optimism <= 40)
+      return 'じっくり内省する日、無理せず自分のペースで動こう。';
+    if (energy >= 65 && optimism <= 40)
+      return 'やる気はあるが慎重な日、計画を立ててから動こう。';
+    if (energy <= 40 && optimism >= 60)
+      return '省エネで効率的に動く日、要所を見極めて手を打とう。';
+    if (openness >= 70)
+      return '受け入れる力が高まる日、人との対話で新しい発見がありそう。';
+
+    return 'バランスの取れた日、マイペースで進めば良い流れに乗れそう。';
+  }
+
+  function escapeHTML(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function renderTodoList(r, overrides) {
+    overrides = overrides || {};
+    const sections = [
+      { label: '総合', text: overrides.overall || r.overall },
+      { label: '仕事', text: overrides.career  || r.career  },
+      { label: '対人', text: overrides.love    || r.love    },
+      { label: '金運', text: overrides.money   || r.money   },
+      { label: '健康', text: overrides.health  || r.health  }
+    ];
+    const html = sections.map(s =>
+      `<div class="todo-item"><span class="todo-item__label">【${s.label}】</span><span class="todo-item__text">${escapeHTML(s.text)}</span></div>`
+    ).join('');
+    const el = document.getElementById('astro-todo');
+    if (el) el.innerHTML = html;
   }
 
   // ----------------- AI解釈エンハンス（/api/fortune） -----------------
@@ -476,12 +583,7 @@
 
     const byKey = {};
     data.sections.forEach(s => { if (s && s.key) byKey[s.key] = s.body; });
-    const set = (id, txt) => { if (txt) { const el = document.getElementById(id); if (el) el.textContent = txt; } };
-    set('astro-overall', byKey.overall);
-    set('astro-career',  byKey.career);
-    set('astro-love',    byKey.love);
-    set('astro-money',   byKey.money);
-    set('astro-health',  byKey.health);
+    renderTodoList(r, byKey);
   }
 
   function renderBlocks(r) {
@@ -493,15 +595,14 @@
 
     const levelLabel = r.relation.level === 'best' ? '最良' : r.relation.level === 'good' ? '良好' : '要注意';
 
-    // Block 0: プロフィール基本データ
+    // Block 0: 性格傾向 + 感情（プロフィール基本データは非表示）
+    const nicknameTitle = '本日の成分表';
+    const oneLiner = escapeHTML(generateOneLiner(r.tendency));
     const block0 = `
       <section class="astro-block astro-block--joined-down">
-        <h3 class="astro-block__title">プロフィール基本データ</h3>
-        <div class="astro-block__grid">
-          ${item('血液型', r.basic.blood)}
-          ${item('星座',   r.basic.zodiac)}
-          ${item('干支',   r.basic.chineseZodiac)}
-          ${item('MBTI',  r.basic.mbti)}
+        <div class="astro-block__title-row">
+          <h3 class="astro-block__title">${nicknameTitle}</h3>
+          <p class="astro-block__one-liner"><span class="astro-block__one-liner-label">箴言（しんげん）：</span>${oneLiner}</p>
         </div>
       </section>` + renderTendencyBlock(r.tendency);
 
@@ -538,28 +639,35 @@
     // Block 統合判定
     const blockIntegration = `
       <section class="astro-block">
-        <h3 class="astro-block__title">統合判定（四柱推命 × 宿曜）</h3>
+        <div class="astro-block__title-row">
+          <h3 class="astro-block__title">マッピング（四柱推命 × 宿曜）</h3>
+          <p class="astro-block__one-liner"><span class="astro-block__one-liner-label">運勢＝${escapeHTML(levelLabel)}：</span>${escapeHTML(generateDailyAdvice(r))}</p>
+        </div>
         <div class="astro-block__grid">
-          ${item('四柱推命の流れ',   `${r.todayElement}の${r.todayYinYang}`)}
-          ${item('宿曜の関係',       r.relation.label)}
-          ${item('運勢レベル',       levelLabel)}
-          ${item('本日の判定',       `${r.relation.type} × ${r.todayElement}`)}
+          ${item('本日の判定',       `${r.todayElement} × ${r.relation.type}`)}
+          ${item('運勢',             levelLabel)}
+          ${item('四柱推命',         `${r.todayElement}の${r.todayYinYang}`)}
+          ${item('宿曜占星術',       r.relation.label)}
         </div>
       </section>`;
 
     // Block ラッキー
     const blockLucky = `
       <section class="astro-block">
-        <h3 class="astro-block__title">本日のラッキー要素</h3>
+        <div class="astro-block__title-row">
+          <h3 class="astro-block__title">本日のブースト</h3>
+          <p class="astro-block__one-liner"><span class="astro-block__one-liner-label">ゴールデンタイム＝${escapeHTML(r.lucky.time)}：</span>この時間に${escapeHTML(r.lucky.timeAction)}</p>
+        </div>
         <div class="astro-block__grid">
-          ${item('ラッキーカラー', r.lucky.color)}
-          ${item('ラッキー方角',   r.lucky.direction)}
-          ${item('ラッキータイム', r.lucky.time)}
-          ${item('ラッキー数字',   r.lucky.number)}
+          ${item('ゴールデンタイム', r.lucky.time)}
+          ${item('チャンスナンバー', r.lucky.number)}
+          ${item('ハッピーカラー',   r.lucky.color)}
+          ${item('パワーアイテム',   r.lucky.item)}
+          ${item('デトックスフード', r.lucky.food)}
         </div>
       </section>`;
 
-    return block0 + blockFourPillars + blockShukuyo + blockIntegration + blockLucky;
+    return blockIntegration + blockLucky + block0;
   }
 
   // 性格傾向 + 感情円グラフ（astrology.js と同じ構造）
@@ -617,7 +725,7 @@
       <section class="astro-block astro-block--tendency astro-block--joined-up">
         <div class="tendency-columns">
           <div class="tendency-column tendency-column--left">
-            <h3 class="astro-block__title astro-block__title--inner">性格傾向</h3>
+            <h3 class="astro-block__title astro-block__title--inner">性格</h3>
             <div class="tendency-bars">${bars}</div>
           </div>
           <div class="tendency-column tendency-column--right">
